@@ -21,9 +21,9 @@
         <div>
             <nav class="transparent z-depth-0">
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" class="nav-logo" alt="Mongo Quiz Logo"/></a>
+                    <a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" class="nav-logo" alt="Mongo Quiz Logo"/></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Register</a></li>
                         <li><a href="#">Login</a></li>
@@ -47,46 +47,41 @@
             <li><a href="#">Log Out</a></li>
         </ul>
     </header>
-
+   
     <div class="parallax-container">
         <div class="parallax">
             <img src="{{ url_for('static', filename='images/pink_Q_mark.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
         </div>
     </div>
-   
-    <div class="container">
-        <h1>Mongo Quiz</h1>
-        <h3>The quick and easy way to create quizzes for friends and family</h3>
-        <p>Fed up wasting hours trying to find quiz questions? With Mongo Quiz becoming the ultimate quiz master has never been easier. 
-        Tell us how many questions you want to ask, the difficulty of each, and we'll create the quiz for you. All you need do then is 
-        invite your friends and family and let the fun begin!</p>
-        <button>How it works</button>
-        <button>Create a Quiz</button>
-    </div>
 
-    <div class="parallax-container">
-        <div class="parallax">
-            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
-        </div>
-    </div>
+    <main class="container">
+    
+        {% block content %}
+            
+        {% endblock %}
+    </main>
+
+    {% block parallax2 %}
+
+    {% endblock %}
 
     <footer class="page-footer blue">
         <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-            <h5 class="white-text">Footer Content</h5>
-            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            <div class="row">
+                <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+                </div>
             </div>
-            <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
-            <ul>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-            </ul>
-            </div>
-        </div>
         </div>
         <div class="footer-copyright">
         <div class="container">

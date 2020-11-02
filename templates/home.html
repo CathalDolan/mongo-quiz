@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h1>Mongo Quiz</h1>
+        <h3>The quick and easy way to create quizzes for friends and family</h3>
+        <p>Fed up wasting hours trying to find quiz questions? With Mongo Quiz becoming the ultimate quiz master has never been easier. 
+        Tell us how many questions you want to ask, the difficulty of each, and we'll create the quiz for you. All you need do then is 
+        invite your friends and family and let the fun begin!</p>
+        <button>How it works</button>
+        <button>Create a Quiz</button>
+    </div>
+
+{% endblock %}
+
+{% block parallax2 %}
+
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
+
+{% endblock %}
