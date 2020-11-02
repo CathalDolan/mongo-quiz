@@ -17,12 +17,11 @@
 <body>
 
     <header>
-
         <!-- Desktop/Tablet Navbar -->
-        <div class="navbar-fixed">
+        <div>
             <nav class="transparent z-depth-0">
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo"><img src="assets/images/mongo_quiz_logo.png" alt="Mongo Quiz Logo"/></a>
+                    <a href="#" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" class="nav-logo" alt="Mongo Quiz Logo"/></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#">Home</a></li>
                         <li><a href="#">About</a></li>
@@ -36,9 +35,9 @@
             </nav>
         </div>
         
-        <!-- Mobile Navbar -->
+        <!-- Mobile Side Navbar -->
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="#" class="brand-logo"><img src="assets/images/mongo_quiz_logo.png" alt="Mongo Quiz Logo"/></a></li>
+            <li><a href="#" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" alt="Mongo Quiz Logo"/></a></li>
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Register</a></li>
@@ -47,15 +46,13 @@
             <li><a href="#">Create a Quiz</a></li>
             <li><a href="#">Log Out</a></li>
         </ul>
-
     </header>
 
     <div class="parallax-container">
         <div class="parallax">
-            <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2019/05/Spotify-Quiz-Header.jpg" alt="Quiz Image" class="responsive-img">
+            <img src="{{ url_for('static', filename='images/pink_Q_mark.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
         </div>
     </div>
-
    
     <div class="container">
         <h1>Mongo Quiz</h1>
@@ -69,11 +66,11 @@
 
     <div class="parallax-container">
         <div class="parallax">
-            <img src="https://blog.woobox.com/wp-content/uploads/8-Best-Quiz-Ideas-to-Entertain-Inform-Your-Audience-v1.png" alt="Quiz Light Bulbs" class="responsive-img">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
         </div>
     </div>
 
-    <footer class="page-footer transparent">
+    <footer class="page-footer blue">
         <div class="container">
         <div class="row">
             <div class="col l6 s12">
