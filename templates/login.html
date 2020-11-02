@@ -1,35 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h1 class="center-align">Register</h1>
+    <h3 class="center-align">Login</h3>
 
     <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
+        <!-- Form is 8 columns wide withe an ofset of 2 on each side (medium devices and above) to centre it-->
+        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
             <div class="card-panel">
 
                 <!-- Username Input-->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <i class="fas fa-user-cog prefix light-blue-text text-darken-4"></i>
                         <input id="username" name="username" type="text" minlength="5" 
                             maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                         <label for="username">Username</label>
                     </div>
                 </div>
 
-                <!-- Email Input-->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="fas fa-at prefix color-green"></i>
-                        <input id="email" name="email" type="email" class="validate" required>
-                        <label for="email">Email</label>
-                    </div>
-                </div>
-
                 <!-- Password Input -->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-lock prefix color-green"></i>
+                        <i class="fas fa-user-lock prefix light-blue-text text-darken-4"></i>
                         <input id="password" name="password" type="password" minlength="5" 
                             maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                         <label for="password">Password</label>
@@ -38,22 +30,20 @@
 
                 <!-- Register Button-->
                 <div class="row">
-                    <button class="submit col s12 btn-large bg-color-green text-shadow">
-                        Register <i class="fas fa fa-sign-in-alt"></i>
+                    <button class="submit col s12 btn-large light-blue darken-4 text-shadow">
+                        Log In <i class="fas fa fa-sign-in-alt"></i>
                     </button>
                 </div>
             </div>
         </form>
     </div>
 
-
-{% endblock %}
-
-{% block parallax2 %}
-
-    <div class="parallax-container">
-        <div class="parallax">
-            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+    <div class="row">
+        <div class="col s12">
+            <p class="center-align">
+                New Here? 
+                <a href="{{ url_for('register') }}" class="light-blue-text text-darken-4">Register Account</a>
+            </p>
         </div>
     </div>
 

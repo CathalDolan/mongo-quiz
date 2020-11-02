@@ -19,14 +19,15 @@
     <header>
         <!-- Desktop/Tablet Navbar -->
         <div>
-            <nav class="transparent z-depth-0">
-                <div class="nav-wrapper">
-                    <a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" class="nav-logo" alt="Mongo Quiz Logo"/></a>
+            <nav class="navbar no-shadows transparent z-depth-0">
+                <div class="nav-wrapper container">
+                    <a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" 
+                        class="nav-logo" alt="Mongo Quiz Logo"/></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}">Home</a></li>
                         <li><a href="#">About</a></li>
-                        <li><a href="#">Register</a></li>
-                        <li><a href="#">Login</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="#">Create a Quiz</a></li>
                         <li><a href="#">Log Out</a></li>
@@ -37,11 +38,11 @@
         
         <!-- Mobile Side Navbar -->
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="#" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" alt="Mongo Quiz Logo"/></a></li>
-            <li><a href="#">Home</a></li>
+            <li><a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" alt="Mongo Quiz Logo"/></a></li>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Register</a></li>
-            <li><a href="#">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
             <li><a href="#">Profile</a></li>
             <li><a href="#">Create a Quiz</a></li>
             <li><a href="#">Log Out</a></li>
@@ -53,6 +54,21 @@
             <img src="{{ url_for('static', filename='images/pink_Q_mark.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
         </div>
     </div>
+
+    <section>
+        <!-- Position and allowed flash messages to display -->
+        {% with messages = get_flashed_messages() %}
+            <!-- Check if there are any messages -->
+            {% if messages %}
+                <!-- If there are, display as a h4 -->
+                {% for message in messages %}
+                    <div class="row flashes">
+                        <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
 
     <main class="container">
     

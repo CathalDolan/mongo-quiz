@@ -1,9 +1,32 @@
-.transparent {
+/*--- Colours & Fonts ---*/
+:root {
+    --green: #29837a;
+    --blue: #102759;
+    --pink1: #ff7ea4;
+    --pink2: #f5b5d2;
+    --black: #5b5b5b;
+    --white: #fefefe;
+    --transparent: rgba(0, 255, 255, 0);
+}
+
+.color-green {
+    color: var(--green);
+}
+
+.bg-color-green {
+    background-color: var(--green);
+}
+
+.navbar {
     position: absolute;
+    z-index:999999999;
 }
 
 .nav-logo {
-    height: 60px;
+    height: 45px;
     margin-top: 10px;
-    margin-left: 10px;
+}
+
+.no-shadows {
+    box-shadow: none!important;
 }
