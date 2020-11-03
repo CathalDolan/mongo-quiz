@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1 class="center-align">Hi {{ username }}</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s3 m2">
+                <p><strong>Name:</strong></p>
+                <p><strong>Email:</strong></p>
+                <p><strong>Password:</strong></p>
+            </div>
+            <div class="col s9 m4">
+                <p>{{ username }}</p>
+                <p>Email:</p>
+                <p>Password:</p>
+            </div>
+            <div class="button-div col s12 m6">
+                <button class="quiz-button btn-large bg-color-green text-shadow">
+                    <i class="fas fa fa-question"></i>
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a class="active" href="#test1">
+                        Quiz 1
+                        </a></li>
+                        <li class="tab col s3"><a href="#test2">Quiz 2</a></li>
+                        <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12">
+                    <div class="row">
+                        <div class="col s5 m3">
+                            <p><strong>Quiz Master:</strong></p>
+                            <p><strong>Quiz Date:</strong></p>
+                        </div>
+                        <div class="col s7 m4">
+                            <p>Name of owner</p>
+                            <p>Unpublished</p>
+                        </div>
+                        <div class="button-div col s12 m5">
+                            <button class="quiz-button btn-large bg-color-green text-shadow">
+                                <i class="fas fa-box-open"></i>
+                                Open 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="test2" class="col s12">Quiz 2 details</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block parallax2 %}
+
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
+
+{% endblock %}

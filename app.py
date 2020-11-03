@@ -51,7 +51,7 @@ def register():
         print(f"User in the session is this: {session['user']}, user form the request is this: {request.form.get('username')}!!!")
         flash("Registration Successful!")
         # Username needs to be from Session so as to match Profile page
-        return redirect(url_for("home", username=session["user"]))
+        return redirect(url_for("profile", username=session["user"]))
         print(session)
 
     return render_template("register.html")
@@ -71,15 +71,15 @@ def login():
             # Compare passwords using Werkzeug hash to check for a match
             # If it does add a session cookie and flash message
             if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
+                existing_user["password"], request.form.get("password")):
 
-                        # The cookie is called "Session" and contains "user"
-                        session["user"] = request.form.get("username").lower()
-                        flash("Welcome, {}".format(
-                            request.form.get("username")))
-                        # Redirects User to Profile page, just like Register
-                        return redirect(url_for(
-                            "profile", username=session["user"]))
+                # The cookie is called "Session" and contains "user"
+                session["user"] = request.form.get("username").lower()
+                flash("Welcome, {}".format(
+                    request.form.get("username")))
+                # Redirects User to Profile page, just like Register
+                return redirect(url_for(
+                    "profile", username=session["user"]))
             else:
                 # If the password doesn't match then...
                 flash("Incorrect password and/or Username")
@@ -92,6 +92,13 @@ def login():
 
     return render_template("login.html")
 
+
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # Get the session user's username from db
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("profile.html", username=username)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

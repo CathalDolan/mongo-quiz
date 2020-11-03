@@ -61,3 +61,29 @@ h1 {
     margin-top: 25px;
     margin-bottom: 25px;
 }
+
+.page-footer, .page-footer a {
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.button-div {
+    text-align: center;
+}
+
+@media (min-width: 576px) {  
+    .quiz-button {
+        float: right;
+    }
+}
+
+
+@media (max-width: 576px) {  
+    .card-panel {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .col.s5.m3 {
+        padding: 0;
+    }
+}

@@ -4,7 +4,6 @@
     <h1 class="center-align">Login</h1>
 
     <div class="row">
-        <!-- Form is 8 columns wide withe an ofset of 2 on each side (medium devices and above) to centre it-->
         <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
             <div class="card-panel">
 
@@ -38,7 +37,7 @@
                 <!-- Register an Account Link -->
                 <div class="row input-row">
                     <p class="center-align">
-                        New Here? 
+                        Not already registered? 
                         <a href="{{ url_for('register') }}" class="color-pink1">Register Account</a>
                     </p>
                 </div>
@@ -47,5 +46,14 @@
         </form>
     </div>
 
+{% endblock %}
+
+{% block parallax2 %}
+
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
 
 {% endblock %}
