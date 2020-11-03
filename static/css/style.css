@@ -77,6 +77,47 @@ h1 {
     }
 }
 
+.card-panel {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.container .tabs-width {
+    padding: 0;
+}
+.container .tabs-height {
+    margin: 0;
+}
+.container .tabs-panel {
+    margin-top: 0;
+    margin-bottom: 50px;
+    border: solid 1px grey;
+}
+.tabs .tab a{
+    color: var(--white);
+    background-color: var(--green);
+}
+.tabs .tab a.round-tab {
+    color: var(--white);
+    background-color: var(--pink1);
+}
+.tabs .tab a:hover {
+    color: var(--white);
+    background-color: var(--blue);
+}
+.tabs .tab a.active {
+    color: var(--white);
+    background-color: var(--green) !important;
+    font-size: 1.25em;
+    font-weight: 600;
+}
+.tabs .tab .round-tab.active {
+    color: var(--white);
+    background-color: var(--pink2) !important;
+}
+.tabs .indicator {
+    background-color: var(--pink1);
+}
 
 @media (max-width: 576px) {  
     .card-panel {
@@ -84,6 +125,13 @@ h1 {
         padding-right: 10px;
     }
     .col.s5.m3 {
+        padding-right: 0;
+    }
+    .col.s7.m4 {
         padding: 0;
     }
+}
+
+.button-div.col.s12.m5 {
+    padding-top: 10px;
 }
