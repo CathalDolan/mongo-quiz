@@ -4,3 +4,13 @@ lightbulbs - https://blog.woobox.com/wp-content/uploads/8-Best-Quiz-Ideas-to-Ent
 
 Outside
 - Navbar on image - https://codepen.io/j_holtslander/pen/RVXzqm?html-preprocessor=pug
+
+Testing
+
+Registration
+1 - Are Username, Password and Email being added to database? - Yes
+2 - Does USername have minlength?
+3 - Does Username have max length?
+4 - Is Username Pattern working?
+5 - Is Email validation/pattern in place? Expand
+6 - Does Password have minlength?

@@ -34,7 +34,7 @@ def register():
 
         # If there is an existing user with that name...
         if existing_user:
-            
+            flash("Username already exists", "error")
             return redirect(url_for("register"))
 
         # This acts as the "else" statement if no matching Username is found

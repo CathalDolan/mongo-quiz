@@ -12,7 +12,7 @@
                     <div class="input-field col s12">
                         <i class="fas fa-user-plus prefix color-green"></i>
                         <input id="username" name="username" type="text" minlength="5" 
-                            maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                            maxlength="25" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                         <label for="username">Username</label>
                     </div>
                 </div>
@@ -37,11 +37,20 @@
                 </div>
 
                 <!-- Register Button-->
-                <div class="row">
+                <div class="row input-row">
                     <button class="submit col s12 btn-large bg-color-green text-shadow">
                         Register <i class="fas fa fa-sign-in-alt"></i>
                     </button>
                 </div>
+
+                <!-- Already Register? Link -->
+                <div class="row input-row">
+                    <p class="center-align">
+                        Already Registered? 
+                        <a href="{{ url_for('login') }}" class="color-pink1">Log In</a>
+                    </p>
+                </div>
+
             </div>
         </form>
     </div>

@@ -17,6 +17,22 @@
     background-color: var(--green);
 }
 
+.color-pink1 {
+    color: var(--pink1);
+}
+
+.bg-color-pink {
+    background-color: var(--pink);
+}
+
+.btn-large:hover {
+    background-color: var(--blue);
+}
+
+.alert-error {
+    background-color: var(--pink);
+}
+
 .navbar {
     position: absolute;
     z-index:999999999;
@@ -29,4 +45,19 @@
 
 .no-shadows {
     box-shadow: none!important;
+}
+
+.input-row {
+    margin: 0;
+
+}
+
+.input-field {
+    margin: 0;
+    max-height: 60px;
+}
+
+h1 {
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
