@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h1 class="center-align">Register</h1>
+    <div class="container">
+        <h1 class="center-align">Register</h1>
+        <p>Make sure to pick a fun username as this is what other players will see.</p>
+        <p>Click or hover over the icons on each line for helpful tips. You can 
+            do this throughout the site.</p>
+    </div>
 
     <div class="row">
         <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
@@ -10,7 +15,8 @@
                 <!-- Username Input-->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Add a Username"></i>
                         <input id="username" name="username" type="text" minlength="5" 
                             maxlength="25" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                         <label for="username">Username</label>
@@ -20,7 +26,8 @@
                 <!-- Email Input-->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-at prefix color-green"></i>
+                        <i class="fas fa-at prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Add your email address"></i>
                         <input id="email" name="email" type="email" class="validate" required>
                         <label for="email">Email</label>
                     </div>
@@ -29,17 +36,22 @@
                 <!-- Password Input -->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-lock prefix color-green"></i>
+                        <i class="fas fa-user-lock prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="6 characters minimum, plus at least one Uppercase, 
+                            Number and Special Character"></i>
                         <input id="password" name="password" type="password" minlength="5" 
                             maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                         <label for="password">Password</label>
                     </div>
                 </div>
 
-                <!-- Register Button-->
+                <!-- Buttons -->
                 <div class="row input-row">
-                    <button class="submit col s12 btn-large bg-color-green text-shadow">
+                    <button class="submit col s6 btn-large bg-color-green text-shadow">
                         Register <i class="fas fa fa-sign-in-alt"></i>
+                    </button>
+                    <button class="submit col s6 btn-large red text-shadow">
+                        Cancel <i class="fas fa-times-circle"></i>
                     </button>
                 </div>
 

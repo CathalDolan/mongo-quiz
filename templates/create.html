@@ -16,7 +16,8 @@
                 <!-- 1. Quiz Name-->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Add a name for your quiz"></i>
                         <input id="quiz-name" name="quiz-name" type="text" minlength="5" 
                             maxlength="50" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                         <label for="quiz-name">1. Quiz Name</label>
@@ -25,8 +26,9 @@
 
                 <!-- 2. Rounds -->
                 <div class="row">
-                    <div class="input-field col s6">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                    <div class="input-field col s12 m6">
+                        <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Select the number of rounds in your quiz"></i>
                         <select>
                             <option value="" disabled selected># of Rounds</option>
                             <option value="1">1</option>
@@ -44,8 +46,9 @@
                     </div>
                 
                 <!-- 3. Questions per Round-->
-                    <div class="input-field col s6">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                    <div class="input-field col s12 m6">
+                        <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Select the number of questions in each round"></i>
                         <select>
                             <option value="" disabled selected>Questions per Round</option>
                             <option value="1">1</option>
@@ -66,7 +69,9 @@
                 <!-- 4. Categories -->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <i class="fas fa-book prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Choose a category for each round. Selection total should 
+                                match number of rounds."></i>
                         <select multiple>
                             <option value="" disabled selected>Round Categories</option>
                             <option value="1">Category 1</option>
@@ -87,7 +92,9 @@
                 <!-- 5. Questions Difficulty -->
                 <div class="row">
                     <div class="input-field col s6 m4">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Choose the difficulty of individual questions. The total for
+                                all three options should match the number of questions per round"></i>
                         <select>
                             <option value="" disabled selected>Easy</option>
                             <option value="1">1</option>
@@ -138,7 +145,9 @@
                 <!-- 6. Invitees -->
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
+                            data-tooltip="Add individual email addresses for those you want to take part.
+                                Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
                         <textarea id="textarea1" class="materialize-textarea"></textarea>
                         <label for="textarea1">6. Invitees (comma separate emails)</label>
                     </div>
@@ -147,7 +156,7 @@
                 <!-- Register Button-->
                 <div class="row input-row">
                     <button class="submit col s12 btn-large bg-color-green text-shadow">
-                        Create <i class="fas fa fa-sign-in-alt"></i>
+                        Create <i class="fas fa-plus-circle"></i>
                     </button>
                 </div>
 
