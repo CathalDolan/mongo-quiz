@@ -23,6 +23,11 @@ def home():
     return render_template("home.html")
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -99,6 +104,12 @@ def profile(username):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     return render_template("profile.html", username=username)
+
+
+@app.route("/create")
+def create():
+    return render_template("create.html")
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

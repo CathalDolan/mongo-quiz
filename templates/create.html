@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h1 class="center-align">Create a Quiz</h1>
+        <p>To quickly create a quiz, complete all of the fields below and click
+            the “Create” button. If you need to make any changes or invite more 
+            players, you can do so later by accessing the quiz on your profile 
+            page.</p>
+    </div>
+
+    <div class="row">
+        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
+            <div class="card-panel">
+
+                <!-- 1. Quiz Name-->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <input id="quiz-name" name="quiz-name" type="text" minlength="5" 
+                            maxlength="50" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                        <label for="quiz-name">1. Quiz Name</label>
+                    </div>
+                </div>
+
+                <!-- 2. Rounds -->
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <select>
+                            <option value="" disabled selected># of Rounds</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <label for="rounds">2. Rounds</label>
+                    </div>
+                
+                <!-- 3. Questions per Round-->
+                    <div class="input-field col s6">
+                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <select>
+                            <option value="" disabled selected>Questions per Round</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <label for="rounds">3. Questions</label>
+                    </div>
+                </div>
+
+                <!-- 4. Categories -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <select multiple>
+                            <option value="" disabled selected>Round Categories</option>
+                            <option value="1">Category 1</option>
+                            <option value="2">Category 2</option>
+                            <option value="3">Category 3</option>
+                            <option value="4">Category 4</option>
+                            <option value="5">Category 5</option>
+                            <option value="6">Category 6</option>
+                            <option value="7">Category 7</option>
+                            <option value="8">Category 8</option>
+                            <option value="9">Category 9</option>
+                            <option value="10">Category 10</option>
+                        </select>
+                        <label for="rounds">4. Categories</label>
+                    </div>
+                </div>
+
+                <!-- 5. Questions Difficulty -->
+                <div class="row">
+                    <div class="input-field col s6 m4">
+                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <select>
+                            <option value="" disabled selected>Easy</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <label for="rounds">5. Difficulty</label>
+                    </div>
+                    <div class="input-field col s6 m4">
+                        <select>
+                            <option value="" disabled selected>Medium</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s12 m4">
+                        <select>
+                            <option value="" disabled selected>Hard</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 6. Invitees -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="fas fa-user-plus prefix color-green"></i>
+                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <label for="textarea1">6. Invitees (comma separate emails)</label>
+                    </div>
+                </div>
+
+                <!-- Register Button-->
+                <div class="row input-row">
+                    <button class="submit col s12 btn-large bg-color-green text-shadow">
+                        Create <i class="fas fa fa-sign-in-alt"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
+
+{% block parallax2 %}
+
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
+
+{% endblock %}

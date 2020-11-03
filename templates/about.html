@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h1 class="center-align">About Mongo Quiz</h1>
+        <h3 class="center-align">The quick and easy way to create quizzes for friends and family</h3>
+        <p>Mongo Quiz is designed as a bit of social fun to be played among friends and family.
+            It is played in real-time, meaning everyone plays at the same time. We suggest using 
+            two devices, one to allow the Quiz Master and players to communicate with each other 
+            (using platforms* such as Zoom, Skype or Hangouts), and a second where the game is 
+            played.</p>
+        <p>The Quiz Master creates the quiz, deciding on how many rounds, the subject of each,
+            the number of questions per round, and the difficulty of each question. When all 
+            players are ready, the Quiz Master publishes the quiz and begins to launch/ask the
+            questions one by one. As the questions are asked, they become visible to each player.
+            You will be given 4 possible options and 20 seconds to answer. When everyone has
+            answered the question, the Quiz Master will launch the next, and so on until all
+            questions have been asked and rounds played.</p>
+        <p>At the end of each round the Quiz Master will publish the scores. Players will be
+        able to see where they rank in each round and overall, as well as seeing everyone’s
+        scores.</p>
+        <br>
+        <div class="row input-row">
+            <button class="col s6 m6 btn-large bg-color-green text-shadow">
+                Create <i class="fas fa fa-sign-in-alt"></i>
+            </button>
+        </div>
+        <br>
+        <p>*Please note, Mongo quiz does not incorporate any communication platforms and can
+            be played just as well without. However, it's much more fun is you can see each 
+            other!</p> 
+    </div>
+
+{% endblock %}
+
+{% block parallax2 %}
+
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
+
+{% endblock %}

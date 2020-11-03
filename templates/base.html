@@ -27,11 +27,11 @@
                     <a href="{{ url_for('home') }}" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a href="#">About</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
                         <li><a href="{{ url_for('register') }}">Register</a></li>
                         <li><a href="{{ url_for('login') }}">Login</a></li>
                         <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
-                        <li><a href="#">Create a Quiz</a></li>
+                        <li><a href="{{ url_for('create') }}">Create a Quiz</a></li>
                         <li><a href="#">Log Out</a></li>
                     </ul>
                 </div>
@@ -42,11 +42,11 @@
         <ul class="sidenav" id="mobile-demo">
             <li><a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" alt="Mongo Quiz Logo"/></a></li>
             <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
             <li><a href="{{ url_for('login') }}">Login</a></li>
             <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
-            <li><a href="#">Create a Quiz</a></li>
+            <li><a href="{{ url_for('create') }}">Create a Quiz</a></li>
             <li><a href="#">Log Out</a></li>
         </ul>
     </header>
