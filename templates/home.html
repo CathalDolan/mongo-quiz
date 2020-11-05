@@ -4,17 +4,25 @@
     <div class="container">
         <h1 class="center-align">Mongo Quiz</h1>
         <h3 class="center-align">The quick and easy way to create quizzes for friends and family</h3>
-        <p>Fed up wasting hours trying to find quiz questions? With Mongo Quiz becoming the ultimate quiz master has never been easier. 
-        Tell us how many questions you want to ask, the difficulty of each, and we'll create the quiz for you. All you need do then is 
-        invite your friends and family and let the fun begin!</p>
-        <div class="row input-row">
-            <button class="col s6 btn-large bg-color-green text-shadow">
-                More <i class="fas fa-info-circle"></i>
-            </button>
-            <button class="col s6 m6 btn-large bg-color-green text-shadow">
-                Create <i class="fas fa-plus-circle"></i>
-            </button>
+        <p>Fed up wasting hours trying to find quiz questions? With Mongo Quiz becoming the ultimate 
+        quiz master has never been easier. Tell us how many questions you want to ask, the difficulty 
+        of each, and we'll create the quiz for you. All you need do then is invite your friends and 
+        family and let the fun begin!</p>
+        <div class="button-div row input-row">
+            <div class="button-div row input-row">
+                <a href="{{ url_for('about') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow col s10 offset-s1 m6">
+                    More 
+                    <i class="fas fa-info-circle"></i>
+                </a>
+            </div>
+            <div class="button-div row input-row">
+                <a href="{{ url_for('create') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow col s10 offset-s1 m6">
+                    Create 
+                    <i class="fas fa-plus-circle"></i>
+                </a>
+            </div>
         </div>
+        <br>
     </div>
 
 {% endblock %}

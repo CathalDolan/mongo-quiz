@@ -67,7 +67,15 @@ h1 {
 }
 
 .button-div {
-    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+.button-div .btn-large {
+    width: 225px !important;
+    margin: auto !important;
 }
 
 @media (min-width: 576px) {  
@@ -133,4 +141,18 @@ h1 {
 
 .button-div.col.s12.m5 {
     padding-top: 10px;
+}
+
+[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+    left: 14px;
+}
+div.categories_row.col.s12 {
+    margin-left: 45px;
+    padding: 0;
+    width: auto;
+}
+@media (max-width: 996px) {  
+    div.categories_row.col.s12 {
+    margin-left: 42px;
+    }
 }

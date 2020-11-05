@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h1 class="center-align">Quiz Name Here</h1>
+        <p>Being Quiz Master is so simple. Click the “Publish” button to launch the quiz. 
+        When everyone is ready, launch the first question. When all teams have answered 
+        it, launch the next question and so on until each question in each category have 
+        been asked.</p>
+        <p> Keep an eye on how each team is doing in the “Scores” tab. At the end of each 
+        round update the scores so that everyone can see them. Create a bit of excitement 
+        by calling out the top three in advance!</p>
+
+        <div class="button-div row input-row">
+            <div class="button-div">
+                <a class="btn-large waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                    Publish 
+                    <i class="fas fa fa-upload"></i>
+                </a>
+            </div>
+            <div class="button-div">
+                <a class="btn-large waves-effect waves-light red text-shadow col s12 m6">
+                    Delete 
+                    <i class="fas fa-times-circle"></i>
+                </a>
+            </div>
+        </div>
+        <br>
+    </div>
+
+{% endblock %}
+
+{% block parallax2 %}
+
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
+
+{% endblock %}

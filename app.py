@@ -32,32 +32,27 @@ def about():
 def register():
     if request.method == "POST":
 
-        # Check if Username already exists in DB
+        # Check if user email already exists in DB
         existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()}
+            {"email": request.form.get("email")}
         )
 
-        # If there is an existing user with that name...
         if existing_user:
-            flash("Username already exists", "error")
+            flash("Email already exists", "error")
             return redirect(url_for("register"))
 
-        # This acts as the "else" statement if no matching Username is found
         register = {
-            "username": request.form.get("username").lower(),
+            "username": request.form.get("username"),
             "email": request.form.get("email"),
             "password": generate_password_hash(request.form.get("password"))
         }
-        # Insert the dictionary into the database
         mongo.db.users.insert_one(register)
 
         # Put the new User into "session" via a session cookie
-        session["user"] = request.form.get("username").lower()
-        print(f"User in the session is this: {session['user']}, user form the request is this: {request.form.get('username')}!!!")
+        session["user"] = request.form.get("username")
         flash("Registration Successful!")
         # Username needs to be from Session so as to match Profile page
         return redirect(url_for("profile", username=session["user"]))
-        print(session)
 
     return render_template("register.html")
 
@@ -66,32 +61,24 @@ def register():
 def login():
     if request.method == "POST":
 
-        # Check if Username already exists in DB
         existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()}
+            {"email": request.form.get("email")}
         )
 
-        # If username does exist then...
         if existing_user:
-            # Compare passwords using Werkzeug hash to check for a match
-            # If it does add a session cookie and flash message
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
 
-                # The cookie is called "Session" and contains "user"
-                session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}".format(
-                    request.form.get("username")))
-                # Redirects User to Profile page, just like Register
-                return redirect(url_for(
-                    "profile", username=session["user"]))
+                    # The cookie is called "Session" and contains "user"
+                    session["user"] = existing_user["username"]
+                    flash("Welcome, {}".format(existing_user["username"]))
+                    return redirect(url_for("profile", username=session["user"]))
+
             else:
-                # If the password doesn't match then...
                 flash("Incorrect password and/or Username")
                 return redirect(url_for("login"))
 
         else:
-            # If Username doesn't exist then...
             flash("Incorrect password and/or Username")
             return redirect(url_for("login"))
 
@@ -103,12 +90,50 @@ def profile(username):
     # Get the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    return render_template("profile.html", username=username)
+    email = mongo.db.users.find_one("email")
+    return render_template("profile.html", username=username, email=email)
 
 
-@app.route("/create")
+@app.route("/logout")
+def logout():
+    flash("You're logged out")
+    # Remove session cookie
+    session.pop("user")
+    return redirect(url_for("login"))
+
+
+@app.route("/create", methods=["GET", "POST"])
 def create():
+    if request.method == "POST":
+
+        quiz_details = {
+            "quiz_name": request.form.get("quiz_name"),
+            "rounds": request.form.get("rounds"),
+            "questions": request.form.get("rounds"),
+            "category1": request.form.get("category1"),
+            "easy": request.form.get("easy"),
+            "medium": request.form.get("medium"),
+            "hard": request.form.get("hard"),
+            "invitees": request.form.get("invitees")
+        }
+        # Insert the dictionary into the database
+        mongo.db.quizzes.insert_one(quiz_details)
+
+        flash("Quiz Successfully Created!")
+        return render_template("profile.html")
+
     return render_template("create.html")
+
+
+@app.route("/quiz_admin/<quiz_id>")
+def quiz_admin(quiz_id):
+
+    quiz_id = mongo.db.quizzes.find_one(
+        {"username": session["user"]})["username"]
+
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("quiz_admin.html")
 
 
 if __name__ == "__main__":

@@ -3,14 +3,15 @@
 
     <div class="container">
         <h1 class="center-align">Create a Quiz</h1>
-        <p>Complete all of the fields below, click the “Create” button and
-            we will automatically compile the questions for you. If you 
-            need to make any changes or invite more players, you can do so 
-            later by accessing the quiz on your profile page.</p>
+        <p>Complete all of the fields below (click the icons for tips), 
+            click the “Create” button and we will automatically compile the 
+            questions for you. If you need to make any changes or invite 
+            more players, you can do so later by accessing the quiz on your 
+            profile page.</p>
     </div>
 
     <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
+        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('create') }}">
             <div class="card-panel">
 
                 <!-- 1. Quiz Name-->
@@ -18,9 +19,9 @@
                     <div class="input-field col s12">
                         <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Add a name for your quiz"></i>
-                        <input id="quiz-name" name="quiz-name" type="text" minlength="5" 
-                            maxlength="50" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
-                        <label for="quiz-name">1. Quiz Name</label>
+                        <input id="quiz_name" name="quiz_name" type="text" minlength="5" 
+                            maxlength="50" class="validate" required>
+                        <label for="quiz_name">Quiz Name</label>
                     </div>
                 </div>
 
@@ -29,116 +30,76 @@
                     <div class="input-field col s12 m6">
                         <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of rounds in your quiz"></i>
-                        <select>
-                            <option value="" disabled selected># of Rounds</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <label for="rounds">2. Rounds</label>
+                        <input id="rounds" name="rounds" type="number" minlength="1" 
+                            class="validate" required>
+                        <label for="rounds">Rounds</label>
                     </div>
                 
                 <!-- 3. Questions per Round-->
                     <div class="input-field col s12 m6">
                         <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of questions in each round"></i>
-                        <select>
-                            <option value="" disabled selected>Questions per Round</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <label for="rounds">3. Questions</label>
+                        <input id="questions" name="questions" type="number" minlength="1" 
+                            class="validate" required>
+                        <label for="questions">Questions</label>
                     </div>
                 </div>
 
-                <!-- 4. Categories -->
+                <!-- 4 Categories -->
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="fas fa-book prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Choose a category for each round. Selection total should 
                                 match number of rounds."></i>
-                        <select multiple>
-                            <option value="" disabled selected>Round Categories</option>
-                            <option value="1">Category 1</option>
-                            <option value="2">Category 2</option>
-                            <option value="3">Category 3</option>
-                            <option value="4">Category 4</option>
-                            <option value="5">Category 5</option>
-                            <option value="6">Category 6</option>
-                            <option value="7">Category 7</option>
-                            <option value="8">Category 8</option>
-                            <option value="9">Category 9</option>
-                            <option value="10">Category 10</option>
-                        </select>
-                        <label for="rounds">4. Categories</label>
+                        <label for="categories">Categories</label>
+                    </div>
+                </div>
+                <br>
+                <div class="row ">
+                    <div class="categories_row col s12">
+                        <label for="category1">
+                            <input id="category1" name="category1" value="category1" 
+                                type="checkbox" class="checkbox validate" required />
+                            <span>Category 1</span>
+                        </label>
+                        <label>
+                            <input class="checkbox" type="checkbox" />
+                            <span>Category 2 is Longer</span>
+                        </label>
+                        <label>
+                            <input class="checkbox" type="checkbox" />
+                            <span>Category 3</span>
+                        </label>
+                        <label>
+                            <input class="checkbox" type="checkbox" />
+                            <span>Category 4</span>
+                        </label>
+                        <label>
+                            <input class="checkbox" type="checkbox" />
+                            <span>Category 5 is very long indeed</span>
+                        </label>
                     </div>
                 </div>
 
                 <!-- 5. Questions Difficulty -->
                 <div class="row">
-                    <div class="input-field col s6 m4">
+                    <div class="input-field col s4">
                         <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Choose the difficulty of individual questions. The total for
                                 all three options should match the number of questions per round"></i>
-                        <select>
-                            <option value="" disabled selected>Easy</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <label for="rounds">5. Difficulty</label>
+                        <input id="easy" name="easy" type="number" minlength="1" 
+                            class="validate" required>
+                        <label for="easy">Easy</label>
                     </div>
-                    <div class="input-field col s6 m4">
-                        <select>
-                            <option value="" disabled selected>Medium</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+                    <div class="input-field col s4">
+                        <input id="medium" name="medium" type="number" minlength="1" 
+                            class="validate" required>
+                        <label for="medium">Med</label>
                     </div>
-                    <div class="input-field col s12 m4">
-                        <select>
-                            <option value="" disabled selected>Hard</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+                    <div class="input-field col s4">
+                        <input id="hard" name="hard" type="number" minlength="1" 
+                            class="validate" required>
+                        <label for="hard">Hard</label>
                     </div>
                 </div>
 
@@ -148,19 +109,22 @@
                         <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Add individual email addresses for those you want to take part.
                                 Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
-                        <label for="textarea1">6. Invitees (comma separate emails)</label>
+                        <textarea id="invitees" name="invitees" text="text" class="materialize-textarea"></textarea>
+                        <label for="invitees">Invitees (comma separate emails)</label>
                     </div>
                 </div>
 
                 <!-- Register Button-->
-                <div class="row input-row">
-                    <button class="submit col s6 btn-large bg-color-green text-shadow">
+                <div class="button-div row input-row">
+                    <button type="submit" class="button submit col s6 btn-large bg-color-green text-shadow">
                         Create <i class="fas fa-plus-circle"></i>
                     </button>
-                    <button class="submit col s6 btn-large red text-shadow">
-                        Cancel <i class="fas fa-times-circle"></i>
-                    </button>
+                    <div class="button-div">
+                        <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
+                            Cancel
+                            <i class="fas fa-times-circle"></i>
+                        </a>
+                    </div>
                 </div>
 
             </div>

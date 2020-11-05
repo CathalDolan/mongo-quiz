@@ -12,14 +12,14 @@
             </div>
             <div class="col s8 m4">
                 <p>{{ username }}</p>
-                <p>Email:</p>
+                <p>{{ email }}</p>
                 <p>Password:</p>
             </div>
             <div class="button-div col s12 m6">
-                <button class="quiz-button btn-large bg-color-green text-shadow">
+                <a href="{{ url_for('create') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                    Create 
                     <i class="fas fa-plus-circle"></i>
-                    Create
-                </button>
+                </a>
             </div>
         </div>
     </div>
