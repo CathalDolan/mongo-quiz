@@ -75,13 +75,6 @@ h1 {
     padding-right: 0;
 }
 
-.vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
 .inline-block {
     display: inline-block;
 }
@@ -94,14 +87,40 @@ h1 {
     box-shadow: none!important;
 }
 
+.parallax-container {
+    height: 320px;
+}
+@media (max-width: 576px) {  
+    .parallax-container {
+    height: 220px;
+    }
+}
+
+/* Center logo at top of the page */
+.nav-div {
+  position: relative;
+}
+.brand-logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 50%);
+}
+@media (max-width: 576px) {  
+    .brand-logo {
+        transform: translate(-50%, 15%);
+    }
+}
+
 /* Navbar */
+
 .navbar {
     position: absolute;
     z-index:999999999;
 }
 
 .nav-logo {
-    height: 45px;
+    height: 150px;
     margin-top: 10px;
 }
 

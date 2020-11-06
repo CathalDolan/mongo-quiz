@@ -18,12 +18,15 @@
 
     <header>
         <!-- Desktop/Tablet Navbar -->
-        <div>
+        <div class="nav-div">
+            <div class="brand-logo vertical-center">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" 
+                        class="nav-logo" alt="Mongo Quiz Logo"/>
+                </a>
+            </div>
             <nav class="navbar no-shadows transparent z-depth-0">
                 <div class="nav-wrapper container">
-                    <a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" 
-                        class="nav-logo" alt="Mongo Quiz Logo"/></a>
-
                     <a href="{{ url_for('home') }}" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -43,7 +46,6 @@
         
         <!-- Mobile Side Navbar -->
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{ url_for('home') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" alt="Mongo Quiz Logo"/></a></li>
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
