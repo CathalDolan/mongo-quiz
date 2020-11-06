@@ -52,9 +52,16 @@ def register():
 
         # ...and put the new User into "session" via a session cookie
         session["user"] = request.form.get("username")
-        flash("Registration Successful!")
-        # Username needs to be from Session so as to match Profile page
-        return redirect(url_for("profile", username=session["user"]))
+
+        # Checks if there is a Quiz session in place
+        if "quiz_name" in session:
+            session.pop("quiz_name")
+            flash("Quiz Creation and Registration Successful!")
+            return render_template("quiz_admin.html")
+        else:
+            flash("Registration Successful!")
+            # Username needs to be from Session so as to match Profile page
+            return redirect(url_for("profile", username=session["user"]))
 
     return render_template("register.html")
 
@@ -76,8 +83,16 @@ def login():
 
                     # If password match, a session cookie is added
                     session["user"] = existing_user["username"]
-                    flash("Welcome, {}".format(existing_user["username"]))
-                    return redirect(url_for("profile", username=session["user"]))
+
+                    # Checks if there is a Quiz session in place
+                    if "quiz_name" in session:
+                        session.pop("quiz_name")
+                        flash("Quiz Creation and Login Successful!")
+                        return render_template("quiz_admin.html")
+                    else:
+                        flash("Welcome, {}".format(existing_user["username"]))
+                        # Username needs to be from Session so as to match Profile page
+                        return redirect(url_for("profile", username=session["user"]))
 
             # If password doesn't match
             else:
@@ -132,11 +147,17 @@ def create():
         # Insert the dictionary into the database
         mongo.db.quizzes.insert_one(quiz_details)
 
-        flash("Quiz Successfully Created!")
-        return render_template("quiz_admin.html")
+        # Checks to see if the User is logged in or not
+        if "user" in session:
+            flash("Quiz Successfully Created!")
+            return render_template("quiz_admin.html")
+        else:
+            # Session added so as to correctly redirect User once registered
+            session["quiz_name"] = request.form.get("quiz_name")
+            flash("Please register or login to finish your quiz.")
+            return redirect(url_for("register"))
 
     return render_template("create.html")
-
 
 @app.route("/quiz_admin")
 def quiz_admin():

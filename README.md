@@ -3,7 +3,8 @@ Pink Q Mark - https://storage.googleapis.com/pr-newsroom-wp/1/2019/05/Spotify-Qu
 lightbulbs - https://blog.woobox.com/wp-content/uploads/8-Best-Quiz-Ideas-to-Entertain-Inform-Your-Audience-v1.png
 
 Outside
-- Navbar on image - https://codepen.io/j_holtslander/pen/RVXzqm?html-preprocessor=pug
+- Navbar on Image: https://codepen.io/j_holtslander/pen/RVXzqm?html-preprocessor=pug
+- Navbar Active: https://stackoverflow.com/questions/18600031/changing-the-active-class-of-a-link-with-the-twitter-bootstrap-css-in-python-fla
 
 Testing
 

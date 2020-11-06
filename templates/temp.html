@@ -1,0 +1,24 @@
+@app.route("/create", methods=["GET", "POST"])
+def create():
+    existing_user = mongo.db.users.find_one()
+
+    if request.method == "POST":
+
+        quiz_details = {
+            "user_id": existing_user["_id"],
+            "quiz_name": request.form.get("quiz_name"),
+            "rounds": request.form.get("rounds"),
+            "questions": request.form.get("rounds"),
+            "category1": request.form.get("category1"),
+            "easy": request.form.get("easy"),
+            "medium": request.form.get("medium"),
+            "hard": request.form.get("hard"),
+            "invitees": request.form.get("invitees")
+        }
+        # Insert the dictionary into the database
+        mongo.db.quizzes.insert_one(quiz_details)
+
+        flash("Quiz Successfully Created!")
+        return render_template("quiz_admin.html")
+
+    return render_template("create.html")
