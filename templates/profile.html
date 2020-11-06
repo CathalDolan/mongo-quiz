@@ -15,7 +15,7 @@
                 <p>{{ email }}</p>
                 <p>Password:</p>
             </div>
-            <div class="button-div col s12 m6">
+            <div class="profile-create-button alignR paddingR0 col s12 m6">
                 <a href="{{ url_for('create') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
                     Create 
                     <i class="fas fa-plus-circle"></i>
@@ -28,29 +28,36 @@
         <div class="tabs-height row">
             <div class="tabs-width col s12">
                 <ul class="tabs">
+                    {% for quiz in quizzes %}
+                        {% if quiz.user_id == profile_id %}
+                            <li class="tab col s3"><a class="active" href="#test1">
+                                {{ quiz.quiz_name }}
+                            </a></li>
+                        {% endif %}
+                    {% endfor %}
                     <li class="tab col s3"><a class="active" href="#test1">
-                    Quiz 1
+                        Quiz Name
                     </a></li>
-                    <li class="tab col s3"><a href="#test2">Quiz 2</a></li>
                 </ul>
             </div>
         </div>
         <div class="card-panel tabs-panel">
             <div id="test1" class="col s12">
                 <div class="row">
-                    <div class="col s5 m3">
+                    <div class="col s5 m2">
                         <p><strong>Quiz Master:</strong></p>
                         <p><strong>Quiz Date:</strong></p>
                     </div>
-                    <div class="col s7 m4">
-                        <p>Name of owner</p>
+                    <div class="col s7 m5">
+                        <p>{{ username }}</p>
                         <p>Unpublished</p>
                     </div>
-                    <div class="button-div col s12 m5">
-                        <button class="quiz-button btn-small bg-color-green text-shadow">
+                    <div class="profile-create-button alignR paddingR0 col s12 m5">
+                        <a href="{{ url_for('quiz_admin') }}" class="btn-small waves-effect 
+                            waves-light bg-color-green text-shadow">
+                            Open
                             <i class="fas fa-box-open"></i>
-                            Open 
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="row">

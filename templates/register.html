@@ -45,14 +45,19 @@
                     </div>
                 </div>
 
-                <!-- Buttons -->
-                <div class="button-div row input-row">
-                    <button class="button submit col s6 btn-large bg-color-green text-shadow">
-                        Register <i class="fas fa fa-sign-in-alt"></i>
-                    </button>
-                    <button class="button submit col s6 btn-large red text-shadow">
-                        Cancel <i class="fas fa-times-circle"></i>
-                    </button>
+                <!-- Register & Cancel Buttons-->
+                <div class="flex">
+                    <div class="button-div">
+                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                            Register <i class="fas fa fa-sign-in-alt"></i>
+                        </button>
+                    </div>
+                    <div class="button-div">
+                        <a href="{{ url_for('home') }}" class="btn-large waves-effect waves-light red text-shadow">
+                            Cancel
+                            <i class="fas fa-times-circle"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Already Register? Link -->

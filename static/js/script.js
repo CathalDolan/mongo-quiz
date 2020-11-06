@@ -4,7 +4,10 @@ $(document).ready(function(){
     $('.tabs').tabs();
     $('select').formSelect();
     $('.tooltipped').tooltip();
+    $('.collapsible').collapsible();
+    
     $('#textarea1').val('');
     M.textareaAutoResize($('#textarea1'));
+    
 });
 

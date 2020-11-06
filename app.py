@@ -32,15 +32,17 @@ def about():
 def register():
     if request.method == "POST":
 
-        # Check if user email already exists in DB
+        # Check if User email already exists in DB
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email")}
         )
 
+        # Activates if the email is already registered
         if existing_user:
             flash("Email already exists", "error")
             return redirect(url_for("register"))
 
+        # "else" Register User and add form data to the database...
         register = {
             "username": request.form.get("username"),
             "email": request.form.get("email"),
@@ -48,7 +50,7 @@ def register():
         }
         mongo.db.users.insert_one(register)
 
-        # Put the new User into "session" via a session cookie
+        # ...and put the new User into "session" via a session cookie
         session["user"] = request.form.get("username")
         flash("Registration Successful!")
         # Username needs to be from Session so as to match Profile page
@@ -61,23 +63,28 @@ def register():
 def login():
     if request.method == "POST":
 
+        # Check to see if the email is already registered
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email")}
         )
 
+        # Activates if the email is already registered
         if existing_user:
+            # Compares registered password to that entered by the User
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
 
-                    # The cookie is called "Session" and contains "user"
+                    # If password match, a session cookie is added
                     session["user"] = existing_user["username"]
                     flash("Welcome, {}".format(existing_user["username"]))
                     return redirect(url_for("profile", username=session["user"]))
 
+            # If password doesn't match
             else:
                 flash("Incorrect password and/or Username")
                 return redirect(url_for("login"))
 
+        # If User email is not already registered
         else:
             flash("Incorrect password and/or Username")
             return redirect(url_for("login"))
@@ -90,8 +97,11 @@ def profile(username):
     # Get the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+    _id = mongo.db.users.find_one("_id")
     email = mongo.db.users.find_one("email")
-    return render_template("profile.html", username=username, email=email)
+    quizzes = list(mongo.db.quizzes.find())
+    return render_template("profile.html",
+        username=username, profile_id=_id, email=email, quizzes=quizzes)
 
 
 @app.route("/logout")
@@ -104,9 +114,12 @@ def logout():
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
+    existing_user = mongo.db.users.find_one()
+
     if request.method == "POST":
 
         quiz_details = {
+            "user_id": existing_user["_id"],
             "quiz_name": request.form.get("quiz_name"),
             "rounds": request.form.get("rounds"),
             "questions": request.form.get("rounds"),
@@ -120,19 +133,13 @@ def create():
         mongo.db.quizzes.insert_one(quiz_details)
 
         flash("Quiz Successfully Created!")
-        return render_template("profile.html")
+        return render_template("quiz_admin.html")
 
     return render_template("create.html")
 
 
-@app.route("/quiz_admin/<quiz_id>")
-def quiz_admin(quiz_id):
-
-    quiz_id = mongo.db.quizzes.find_one(
-        {"username": session["user"]})["username"]
-
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
+@app.route("/quiz_admin")
+def quiz_admin():
     return render_template("quiz_admin.html")
 
 

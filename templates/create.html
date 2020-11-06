@@ -87,7 +87,7 @@
                         <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Choose the difficulty of individual questions. The total for
                                 all three options should match the number of questions per round"></i>
-                        <input id="easy" name="easy" type="number" minlength="1" 
+                        <input id="easy" name="easy" type="number" minlength="1"
                             class="validate" required>
                         <label for="easy">Easy</label>
                     </div>
@@ -114,11 +114,13 @@
                     </div>
                 </div>
 
-                <!-- Register Button-->
-                <div class="button-div row input-row">
-                    <button type="submit" class="button submit col s6 btn-large bg-color-green text-shadow">
-                        Create <i class="fas fa-plus-circle"></i>
-                    </button>
+                <!-- Create & Cancel Buttons-->
+                <div class="flex">
+                    <div class="button-div">
+                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                            Create <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
                     <div class="button-div">
                         <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
                             Cancel
