@@ -12,7 +12,15 @@
         <p> Keep an eye on how each team is doing in the “Scores” tab. At the end of each 
         round update the scores so that everyone can see them. Create a bit of excitement 
         by calling out the top three in advance!</p>
+        <br>
 
+        <div class="button-div">
+            <a class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                Publish 
+                <i class="fas fa fa-upload"></i>
+            </a>
+        </div>
+        <br>
         <ul class="collapsible popout">
             <li>
                 <div class="collapsible-header">Rounds</div>
@@ -68,15 +76,18 @@
                 <div class="collapsible-body"><span>Details</span></div>
             </li>
         </ul>
+        <br>
 
         <!-- Publish & Delete Buttons-->
+        
         <div class="flex">
             <div class="button-div">
-                <a class="btn-large waves-effect waves-light bg-color-green text-shadow">
-                    Publish 
-                    <i class="fas fa fa-upload"></i>
+                <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                    All Quizzes 
+                    <i class="fas fa-object-group"></i>
                 </a>
             </div>
+        
             <div class="button-div">
                 <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
                     Delete 

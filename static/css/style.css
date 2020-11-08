@@ -111,6 +111,12 @@ h1 {
         transform: translate(-50%, 15%);
     }
 }
+/* .brand-logo a {
+    position: relative;
+    z-index: 999999999;
+} Not working. */
+
+
 
 /* Navbar */
 
@@ -161,6 +167,10 @@ h1 {
 .card-panel.tabs-panel {
     padding-top: 0;
     padding-bottom: 0;
+}
+
+div#test1.col.s12.active {
+    display: block;
 }
 
 .container .tabs-width {

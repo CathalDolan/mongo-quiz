@@ -4,6 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -109,14 +110,13 @@ def login():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    # Get the session user's username from db
+    # Get the session user's details from db
     username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    _id = mongo.db.users.find_one("_id")
-    email = mongo.db.users.find_one("email")
+        {"username": session["user"]})
+    print(f"USERNAME: {username}")
     quizzes = list(mongo.db.quizzes.find())
     return render_template("profile.html",
-        username=username, profile_id=_id, email=email, quizzes=quizzes)
+        username=username, quizzes=quizzes)
 
 
 @app.route("/logout")
@@ -131,6 +131,11 @@ def logout():
 def create():
     existing_user = mongo.db.users.find_one()
 
+    # current date and time
+    dateTimeObj = datetime.now()
+    timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+    print(timestampStr)
+
     if request.method == "POST":
 
         quiz_details = {
@@ -142,7 +147,8 @@ def create():
             "easy": request.form.get("easy"),
             "medium": request.form.get("medium"),
             "hard": request.form.get("hard"),
-            "invitees": request.form.get("invitees")
+            "invitees": request.form.get("invitees"),
+            "created": timestampStr
         }
         # Insert the dictionary into the database
         mongo.db.quizzes.insert_one(quiz_details)
@@ -159,8 +165,20 @@ def create():
 
     return render_template("create.html")
 
+
 @app.route("/quiz_admin")
 def quiz_admin():
+
+    # current date and time
+    dateTimeObj = datetime.now()
+    timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+    print(timestampStr)
+
+    quiz_details = list(mongo.db.quizzes.find())
+
+    # Have to id which quiz!
+    mongo.db.quizzes.insert_one(quiz_details)
+
     return render_template("quiz_admin.html")
 
 

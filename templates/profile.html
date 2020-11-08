@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h1 class="center-align">Hi {{ username }}</h1>
+    <h1 class="center-align">Hi {{ username.username }}</h1>
 
     <div class="container">
         <div class="row">
@@ -13,8 +13,8 @@
                 <p><strong>Password:</strong></p>
             </div>
             <div class="col s8 m4">
-                <p>{{ username }}</p>
-                <p>{{ email }}</p>
+                <p>{{ username.username }}</p>
+                <p>{{ username.email }}</p>
                 <p>Password:</p>
             </div>
             <div class="profile-create-button alignR paddingR0 col s12 m6">
@@ -27,57 +27,61 @@
     </div>
     
     <div class="container">
-        <div class="tabs-height row">
-            <div class="tabs-width col s12">
-                <ul class="tabs">
+        <div class="card">
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
                     {% for quiz in quizzes %}
-                        {% if quiz.user_id == profile_id %}
-                            <li class="tab col s3"><a class="active" href="#test1">
-                                {{ quiz.quiz_name }}
-                            </a></li>
-                        {% endif %}
+                        <li class="tab"><a href="#{{ quiz._id }}">{{ quiz.quiz_name }}</a></li>
                     {% endfor %}
-                    <li class="tab col s3"><a class="active" href="#test1">
-                        Quiz Name
-                    </a></li>
                 </ul>
             </div>
-        </div>
-        <div class="card-panel tabs-panel">
-            <div id="test1" class="col s12">
-                <div class="row">
-                    <div class="col s5 m2">
-                        <p><strong>Quiz Master:</strong></p>
-                        <p><strong>Quiz Date:</strong></p>
+            <div class="card-content">
+                {% for quiz in quizzes %}
+
+                    <div id="{{ quiz._id }}" class="col s12 active">
+                        <div class="row">
+                            <div class="col s5 m2">
+                                <p><strong>Quiz Name:</strong></p>
+                                <p><strong>Quiz Master:</strong></p>
+                                <p><strong>Created:</strong></p>
+                                <p><strong>Played:</strong></p>
+                            </div>
+                            <div class="col s7 m5">
+                                <p>{{ quiz.quiz_name }}</p>
+                                <p>{{ username.username }}</p>
+                                <p>{{ quiz.created }}</p>
+                                <p>
+                                    {% if quiz.played %}
+                                        {{ quiz.played }}
+                                    {% else %}
+                                        Not Played Yet
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="profile-create-button alignR paddingR0 col s12 m5">
+                                <a href="{{ url_for('quiz_admin') }}"
+                                    class="btn-small waves-effect waves-light bg-color-green text-shadow">
+                                    Open <i class="fas fa-box-open"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <ul class="tabs">
+                                    <li class="tab col s3"><a class="overall-tab" href="#overall">Overall</a></li>
+                                    <li class="tab col s3"><a class="round-tab" href="#round1">Round 1</a></li>
+                                    <li class="tab col s3"><a class="round-tab" href="#round2">Round 2</a></li>
+                                    <li class="tab col s3"><a class="round-tab" href="#round3">Round 3</a></li>
+                                </ul>
+                            </div>
+                            <div id="overall" class="col s12">Overall</div>
+                            <div id="round1" class="col s12">Round 1</div>
+                            <div id="round2" class="col s12">Round 2</div>
+                            <div id="round3" class="col s12">Round 3</div>
+                        </div>
                     </div>
-                    <div class="col s7 m5">
-                        <p>{{ username }}</p>
-                        <p>Unpublished</p>
-                    </div>
-                    <div class="profile-create-button alignR paddingR0 col s12 m5">
-                        <a href="{{ url_for('quiz_admin') }}" class="btn-small waves-effect 
-                            waves-light bg-color-green text-shadow">
-                            Open
-                            <i class="fas fa-box-open"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <ul class="tabs">
-                            <li class="tab col s3"><a class="overall-tab" href="#overall">Overall</a></li>
-                            <li class="tab col s3"><a class="round-tab" href="#round1">Round 1</a></li>
-                            <li class="tab col s3"><a class="round-tab" href="#round2">Round 2</a></li>
-                            <li class="tab col s3"><a class="round-tab" href="#round3">Round 3</a></li>
-                        </ul>
-                    </div>
-                    <div id="overall" class="col s12">Test 1</div>
-                    <div id="round1" class="col s12">Round 1</div>
-                    <div id="round2" class="col s12">Round 2</div>
-                    <div id="round3" class="col s12">Round 3</div>
-                </div>
+                {% endfor %}
             </div>
-            <div id="test2" class="col s12">Quiz 2 details</div>
         </div>
     </div>
 
