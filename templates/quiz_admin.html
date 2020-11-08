@@ -4,7 +4,13 @@
 {% block content %}
 
     <div class="container">
-        <h1 class="center-align">Quiz Name Here</h1>
+
+        {% for quiz in quizzes %}
+            {% if quiz._id == url_quiz_id %}
+                <h1 class="center-align">{{ quiz.quiz_name }}</h1>
+            {% endif %}
+        {% endfor %}
+
         <p>Being Quiz Master is so simple. Click the “Publish” button to launch the quiz. 
         When everyone is ready, launch the first question. When all teams have answered 
         it, launch the next question and so on until each question in each category have 

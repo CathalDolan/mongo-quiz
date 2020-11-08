@@ -157,6 +157,9 @@ h1 {
     width: 125px;
     }
 }
+.btn-small {
+    width: 100px;
+}
 
 @media (min-width: 576px) {  
     .quiz-button {
@@ -252,5 +255,15 @@ div.categories_row.col.s12 {
     .profile-create-button.paddingR0 {
     padding-top: 0;
     text-align: center;
+    }
+}
+
+.profile-delete-button.paddingR0 {
+    padding-top: 10px;
+}
+@media (max-width: 576px) {  
+    .profile-delete-button.paddingR0, .profile-open-button.paddingR0{
+        padding-top: 10px;
+        text-align: center;
     }
 }

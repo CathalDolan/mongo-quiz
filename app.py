@@ -166,20 +166,46 @@ def create():
     return render_template("create.html")
 
 
-@app.route("/quiz_admin")
-def quiz_admin():
+@app.route("/quiz_admin/<quiz_id>")
+def quiz_admin(quiz_id):
+
+    # Extracts the quiz _id from the URL
+    url = str(request.base_url)
+    url_quiz_id = url.split('/')[-1]
+
+    quizzes = list(mongo.db.quizzes.find())
+
+    return render_template("quiz_admin.html",
+        quizzes=quizzes, url_quiz_id=url_quiz_id)
+
+
+@app.route("/", methods=["GET", "POST"])
+def publish():
 
     # current date and time
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y")
-    print(timestampStr)
 
-    quiz_details = list(mongo.db.quizzes.find())
+    if request.method == "POST":
 
-    # Have to id which quiz!
-    mongo.db.quizzes.insert_one(quiz_details)
+        published_date = {
+            "played": timestampStr
+        }
+        # Insert the dictionary into the database
+        mongo.db.quizzes.insert_one(published_date)
 
-    return render_template("quiz_admin.html")
+        return render_template("quiz_admin.html")
+
+
+@app.route("/delete_quiz/<quiz_id>")
+def delete_quiz(quiz_id):
+
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})
+        
+    mongo.db.quizzes.remove({"_id": ObjectId(quiz_id)})
+    flash("Quiz successfully deleted")
+    return redirect(url_for("profile", username=session["user"]))
 
 
 if __name__ == "__main__":
