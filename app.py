@@ -171,7 +171,10 @@ def quiz_admin(quiz_id):
 
     # Extracts the quiz _id from the URL
     url = str(request.base_url)
+    print(url)
     url_quiz_id = url.split('/')[-1]
+    print(url_quiz_id)
+    print(quiz_id)
 
     quizzes = list(mongo.db.quizzes.find())
 
@@ -179,8 +182,8 @@ def quiz_admin(quiz_id):
         quizzes=quizzes, url_quiz_id=url_quiz_id)
 
 
-@app.route("/", methods=["GET", "POST"])
-def publish():
+@app.route("/publish/<quiz_id>", methods=["GET", "POST"])
+def publish(quiz_id):
 
     # current date and time
     dateTimeObj = datetime.now()

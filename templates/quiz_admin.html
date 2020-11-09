@@ -6,26 +6,26 @@
     <div class="container">
 
         {% for quiz in quizzes %}
-            {% if quiz._id == url_quiz_id %}
+            {% if quiz._id|string == url_quiz_id|string %}
                 <h1 class="center-align">{{ quiz.quiz_name }}</h1>
+
+                <p>Being Quiz Master is so simple. Click the “Publish” button to launch the quiz. 
+                When everyone is ready, launch the first question. When all teams have answered 
+                it, launch the next question and so on until each question in each category have 
+                been asked.</p>
+                <p> Keep an eye on how each team is doing in the “Scores” tab. At the end of each 
+                round update the scores so that everyone can see them. Create a bit of excitement 
+                by calling out the top three in advance!</p>
+                <br>
+                <div class="button-div">
+                    <a href="{{ url_for('publish', quiz_id=quiz._id) }}"
+                        class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                        Publish 
+                        <i class="fas fa fa-upload"></i>
+                    </a>
+                </div>
             {% endif %}
         {% endfor %}
-
-        <p>Being Quiz Master is so simple. Click the “Publish” button to launch the quiz. 
-        When everyone is ready, launch the first question. When all teams have answered 
-        it, launch the next question and so on until each question in each category have 
-        been asked.</p>
-        <p> Keep an eye on how each team is doing in the “Scores” tab. At the end of each 
-        round update the scores so that everyone can see them. Create a bit of excitement 
-        by calling out the top three in advance!</p>
-        <br>
-
-        <div class="button-div">
-            <a class="btn-large waves-effect waves-light bg-color-green text-shadow">
-                Publish 
-                <i class="fas fa fa-upload"></i>
-            </a>
-        </div>
         <br>
         <ul class="collapsible popout">
             <li>
