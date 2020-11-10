@@ -59,11 +59,13 @@
                 <br>
                 <div class="row ">
                     <div class="categories_row col s12">
-                        <label for="art">
-                            <input id="art" name="art" value="art" 
-                                type="checkbox" class="checkbox validate" required />
-                            <span>Art</span>
-                        </label>
+                        {% for categories in quiz_categories %}
+                            <label for="{{ categories.name }}">
+                                <input id="{{ categories.name }}" name="{{ categories.name }}" value="{{ categories.name }}" 
+                                    type="checkbox" class="checkbox validate" required />
+                                <span>{{ categories.name }}</span>
+                            </label>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -75,7 +77,7 @@
                                 all three options should match the number of questions per round"></i>
                         <input id="easy" name="easy" type="number" min="0"
                             class="validate" required>
-                        <label for="easy">Easy*</label>
+                        <label id="label_easy" for="easy">Easy*</label>
                     </div>
                     <div class="input-field col s4">
                         <input id="medium" name="medium" type="number" min="0"

@@ -128,6 +128,18 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
+# Extracting the catagories from the DB
+def get_categories():
+    url = "https://opentdb.com/api_category.php"
+    payload = {}
+    headers = {}
+
+    cat_response = requests.request("GET", url, headers=headers, data=payload)
+    categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
+    print("Categories:", categories)
+
+    return render_template("create.html", categories=categories)
+
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
@@ -138,20 +150,21 @@ def create():
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y")
 
-    # Extracting the token from the DB
+    # Extracting the Categories from the API
+    url = "https://opentdb.com/api_category.php"
+    payload = {}
+    headers = {}
+
+    cat_response = requests.request("GET", url, headers=headers, data=payload)
+    quiz_categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
+    print("Categories:", quiz_categories)
+
+    # Extracting the token from the API
     url = "https://opentdb.com/api_token.php?command=request"
     payload = {}
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
     quiz_token = json.loads(response.text.encode("utf8"))["token"]
-
-    # Extracting the catagories from the DB
-    url = "https://opentdb.com/api_category.php"
-    payload = {}
-    headers = {}
-    cat_response = requests.request("GET", url, headers=headers, data=payload)
-    categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
-    print("Categories", categories)
 
     if request.method == "POST":
 
@@ -172,6 +185,7 @@ def create():
         # Insert the dictionary into the database
         mongo.db.quizzes.insert_one(quiz_details)
 
+        # Get the total of the three Difficulty fields
         difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
 
         # Validate whether Difficulty totals match the number of Questions
@@ -181,7 +195,7 @@ def create():
                 quiz_questions = getRequest(quiz_details)
                 print("token", quiz_details['token'])
                 flash(quiz_questions)
-                return render_template("quiz_admin.html", categories=categories)
+                return render_template("quiz_admin.html")
             else:
                 # Session added so as to correctly redirect User once registered
                 session["quiz_name"] = request.form.get("quiz_name")
@@ -190,7 +204,7 @@ def create():
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
 
-    return render_template("create.html")
+    return render_template("create.html", quiz_categories=quiz_categories)
 
 
 def getRequest(quiz_details):
