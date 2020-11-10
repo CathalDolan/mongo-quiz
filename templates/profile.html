@@ -31,59 +31,62 @@
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                     {% for quiz in quizzes %}
-                        <li class="tab"><a href="#{{ quiz._id }}">{{ quiz.quiz_name }}</a></li>
+                        {% if quiz.user_id == username._id %}
+                            <li class="tab"><a href="#{{ quiz._id }}">{{ quiz.quiz_name }}</a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
             <div class="card-content">
                 {% for quiz in quizzes %}
-
-                    <div id="{{ quiz._id }}" class="col s12 active">
-                        <div class="row">
-                            <div class="col s5 m2">
-                                <p><strong>Quiz Name:</strong></p>
-                                <p><strong>Quiz Master:</strong></p>
-                                <p><strong>Created:</strong></p>
-                                <p><strong>Played:</strong></p>
-                            </div>
-                            <div class="col s7 m5">
-                                <p>{{ quiz.quiz_name }}</p>
-                                <p>{{ username.username }}</p>
-                                <p>{{ quiz.created }}</p>
-                                <p>
-                                    {% if quiz.played %}
-                                        {{ quiz.played }}
-                                    {% else %}
-                                        Not Played Yet
-                                    {% endif %}
-                                </p>
+                    {% if quiz.user_id == username._id %}
+                        <div id="{{ quiz._id }}" class="col s12 active">
+                            <div class="row">
+                                <div class="col s5 m2">
+                                    <p><strong>Quiz Name:</strong></p>
+                                    <p><strong>Quiz Master:</strong></p>
+                                    <p><strong>Created:</strong></p>
+                                    <p><strong>Played:</strong></p>
+                                </div>
+                                <div class="col s7 m5">
+                                    <p>{{ quiz.quiz_name }}</p>
+                                    <p>{{ username.username }}</p>
+                                    <p>{{ quiz.created }}</p>
+                                    <p>
+                                        {% if quiz.played %}
+                                            {{ quiz.played }}
+                                        {% else %}
+                                            Not Played Yet
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <div class="profile-open-button alignR paddingR0 col s12 m5">
+                                        <a href="{{ url_for('quiz_admin', quiz_id=quiz._id) }}"
+                                            class="btn-small waves-effect waves-light bg-color-green text-shadow">
+                                            Open <i class="fas fa-box-open"></i>
+                                        </a>
+                                    </div>
+                                    <div class="profile-delete-button alignR paddingR0 col s12 m5">
+                                        <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
+                                            class="btn-small waves-effect waves-light red text-shadow">
+                                            Delete <i class="fas fa-times-circle"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="profile-open-button alignR paddingR0 col s12 m5">
-                                    <a href="{{ url_for('quiz_admin', quiz_id=quiz._id) }}"
-                                        class="btn-small waves-effect waves-light bg-color-green text-shadow">
-                                        Open <i class="fas fa-box-open"></i>
-                                    </a>
+                                <div class="col s12">
+                                    <ul class="tabs">
+                                        <li class="tab col s3"><a class="overall-tab" href="#{{ quiz._id }}-overall">Overall</a></li>
+                                        <li class="tab col s3"><a class="round-tab" href="#{{ quiz._id }}-round-{{ loop.index }}">Round {{ loop.index }}</a></li>
+                                    </ul>
                                 </div>
-                                <div class="profile-delete-button alignR paddingR0 col s12 m5">
-                                    <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
-                                        class="btn-small waves-effect waves-light red text-shadow">
-                                        Delete <i class="fas fa-times-circle"></i>
-                                    </a>
-                                </div>
+                                <div id="{{ quiz._id }}-overall" class="col s12">Overall Scores per team here</div>
+                                <div id="{{ quiz._id }}-round-{{ loop.index }}" class="col s12">Round 1 scores for each team here</div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <ul class="tabs">
-                                    <li class="tab col s3"><a class="overall-tab" href="#{{ quiz._id }}-overall">Overall</a></li>
-                                    <li class="tab col s3"><a class="round-tab" href="#{{ quiz._id }}-round-{{ loop.index }}">Round {{ loop.index }}</a></li>
-                                </ul>
-                            </div>
-                            <div id="{{ quiz._id }}-overall" class="col s12">Overall Scores per team here</div>
-                            <div id="{{ quiz._id }}-round-{{ loop.index }}" class="col s12">Round 1 scores for each team here</div>
-                        </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

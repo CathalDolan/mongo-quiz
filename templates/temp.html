@@ -1,0 +1,97 @@
+document.getElementById("questions").addEventListener("keyup", getDataFn);
+
+function getDataFn() {
+    questionsPerRound = parseInt(document.getElementById('questions').value);
+    difficultyEasy = parseInt(document.getElementById('easy').value);
+    difficultyMedium = parseInt(document.getElementById('medium').value);
+    difficultyHard = parseInt(document.getElementById('hard').value);
+
+    questionsVSdifficultyFN(questionsPerRound, difficultyEasy, difficultyMedium, difficultyHard);
+};
+
+function questionsVSdifficultyFN(questionsPerRound, difficultyEasy, difficultyMedium, difficultyHard){
+    document.getElementById('easy').value = questionsPerRound;
+    
+    difficultyTotal = difficultyEasy + difficultyMedium + difficultyHard;
+    if (difficultyTotal == questionsPerRound) {
+        alert("This is fine")
+    }
+    else {
+        alert("These must match")
+    }
+};
+
+
+document.getElementById("questions").addEventListener("keyup", getDataFn);
+
+function getDataFn() {
+    questionsPerRound = parseInt(document.getElementById('questions').value);
+    questionsVSdifficultyFN(questionsPerRound);
+};
+
+function questionsVSdifficultyFN(questionsPerRound){
+    document.getElementById('easy').value = questionsPerRound;
+    document.getElementById('medium').value = 0;
+    document.getElementById('hard').value = 0;
+
+    console.log(questionsPerRound);
+};
+
+
+@app.route("/create", methods=["GET", "POST"])
+def create():
+    existing_user = mongo.db.users.find_one(
+        {"username": session["user"]})
+
+    # current date and time
+    dateTimeObj = datetime.now()
+    timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+
+    # Extracting the token from the DB
+    url = "https://opentdb.com/api_token.php?command=request"
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    quiz_token = json.loads(response.text.encode("utf8"))["token"]
+
+    # Extracting the catagories from the DB
+    url = "https://opentdb.com/api_category.php"
+    payload = {}
+    headers = {}
+    cat_response = requests.request("GET", url, headers=headers, data=payload)
+    categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
+    print("Categories", categories)
+
+    if request.method == "POST":
+
+        quiz_details = {
+            "token": quiz_token,
+            "user_id": existing_user["_id"],
+            "quiz_name": request.form.get("quiz_name"),
+            "rounds": request.form.get("rounds"),
+            "questions": request.form.get("questions"),
+            "category1": request.form.get("art"),
+            "type": "multiple",
+            "easy": request.form.get("easy"),
+            "medium": request.form.get("medium"),
+            "hard": request.form.get("hard"),
+            "invitees": request.form.get("invitees"),
+            "created": timestampStr
+        }
+        # Insert the dictionary into the database
+        mongo.db.quizzes.insert_one(quiz_details)
+
+        # Checks to see if the User is logged in or not
+        if "user" in session:
+            quiz_questions = getRequest(quiz_details)
+            print("token", quiz_details['token'])
+            print("questions qty", quiz_details['questions'], "easy qty", quiz_details['easy'])
+            flash(quiz_questions)
+            return render_template("quiz_admin.html", categories=categories)
+        else:
+            # Session added so as to correctly redirect User once registered
+            session["quiz_name"] = request.form.get("quiz_name")
+            flash("Please register or login to finish your quiz.")
+            return redirect(url_for("register"))
+
+    return render_template("create.html")

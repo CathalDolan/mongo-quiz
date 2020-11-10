@@ -11,3 +11,14 @@ $(document).ready(function(){
     
 });
 
+document.getElementById("questions").addEventListener("keyup", getDataFn);
+
+function getDataFn() {
+    questionsPerRound = parseInt(document.getElementById('questions').value);
+
+    questionsVSdifficultyFN(questionsPerRound);
+};
+
+function questionsVSdifficultyFN(questionsPerRound){
+    document.getElementById('easy').value = questionsPerRound;
+};

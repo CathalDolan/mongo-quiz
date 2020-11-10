@@ -23,7 +23,7 @@
                             data-tooltip="Add a name for your quiz. Max 20 Characters."></i>
                         <input id="quiz_name" name="quiz_name" type="text" minlength="5" 
                             maxlength="20" class="validate" required>
-                        <label for="quiz_name">Quiz Name</label>
+                        <label for="quiz_name">Quiz Name*</label>
                     </div>
                 </div>
 
@@ -34,16 +34,16 @@
                             data-tooltip="Select the number of rounds in your quiz"></i>
                         <input id="rounds" name="rounds" type="number" minlength="1" 
                             class="validate" required>
-                        <label for="rounds">Rounds</label>
+                        <label for="rounds">Rounds*</label>
                     </div>
                 
                 <!-- 3. Questions per Round-->
                     <div class="input-field col s12 m6">
                         <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of questions in each round"></i>
-                        <input id="questions" name="questions" type="number" minlength="1" 
+                        <input id="questions" name="questions" type="number" min="1" 
                             class="validate" required>
-                        <label for="questions">Questions</label>
+                        <label for="questions">Questions*</label>
                     </div>
                 </div>
 
@@ -53,32 +53,16 @@
                         <i class="fas fa-book prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Choose a category for each round. Selection total should 
                                 match number of rounds."></i>
-                        <label for="categories">Categories</label>
+                        <label for="categories">Categories*</label>
                     </div>
                 </div>
                 <br>
                 <div class="row ">
                     <div class="categories_row col s12">
-                        <label for="category1">
-                            <input id="category1" name="category1" value="category1" 
+                        <label for="art">
+                            <input id="art" name="art" value="art" 
                                 type="checkbox" class="checkbox validate" required />
-                            <span>Category 1</span>
-                        </label>
-                        <label>
-                            <input class="checkbox" type="checkbox" />
-                            <span>Category 2 is Longer</span>
-                        </label>
-                        <label>
-                            <input class="checkbox" type="checkbox" />
-                            <span>Category 3</span>
-                        </label>
-                        <label>
-                            <input class="checkbox" type="checkbox" />
-                            <span>Category 4</span>
-                        </label>
-                        <label>
-                            <input class="checkbox" type="checkbox" />
-                            <span>Category 5 is very long indeed</span>
+                            <span>Art</span>
                         </label>
                     </div>
                 </div>
@@ -89,19 +73,19 @@
                         <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Choose the difficulty of individual questions. The total for
                                 all three options should match the number of questions per round"></i>
-                        <input id="easy" name="easy" type="number" minlength="1"
+                        <input id="easy" name="easy" type="number" min="0"
                             class="validate" required>
-                        <label for="easy">Easy</label>
+                        <label for="easy">Easy*</label>
                     </div>
                     <div class="input-field col s4">
-                        <input id="medium" name="medium" type="number" minlength="1" 
+                        <input id="medium" name="medium" type="number" min="0"
                             class="validate" required>
-                        <label for="medium">Med</label>
+                        <label for="medium">Med*</label>
                     </div>
                     <div class="input-field col s4">
-                        <input id="hard" name="hard" type="number" minlength="1" 
+                        <input id="hard" name="hard" type="number" min="0" 
                             class="validate" required>
-                        <label for="hard">Hard</label>
+                        <label for="hard">Hard*</label>
                     </div>
                 </div>
 
@@ -118,8 +102,8 @@
 
                 <!-- Create & Cancel Buttons-->
                 <div class="flex">
-                    <div class="button-div">
-                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                    <div id="create-button-div" class="button-div">
+                        <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
                             Create <i class="fas fa-plus-circle"></i>
                         </button>
                     </div>

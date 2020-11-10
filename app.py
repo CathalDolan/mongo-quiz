@@ -1,4 +1,6 @@
 import os
+import requests
+import json
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -129,41 +131,71 @@ def logout():
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
-    existing_user = mongo.db.users.find_one()
+    existing_user = mongo.db.users.find_one(
+        {"username": session["user"]})
 
     # current date and time
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y")
-    print(timestampStr)
+
+    # Extracting the token from the DB
+    url = "https://opentdb.com/api_token.php?command=request"
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    quiz_token = json.loads(response.text.encode("utf8"))["token"]
+
+    # Extracting the catagories from the DB
+    url = "https://opentdb.com/api_category.php"
+    payload = {}
+    headers = {}
+    cat_response = requests.request("GET", url, headers=headers, data=payload)
+    categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
+    print("Categories", categories)
 
     if request.method == "POST":
 
         quiz_details = {
+            "token": quiz_token,
             "user_id": existing_user["_id"],
             "quiz_name": request.form.get("quiz_name"),
-            "rounds": request.form.get("rounds"),
-            "questions": request.form.get("rounds"),
-            "category1": request.form.get("category1"),
-            "easy": request.form.get("easy"),
-            "medium": request.form.get("medium"),
-            "hard": request.form.get("hard"),
+            "rounds": int(request.form.get("rounds")),
+            "questions": int(request.form.get("questions")),
+            "category1": request.form.get("art"),
+            "type": "multiple",
+            "easy": int(request.form.get("easy")),
+            "medium": int(request.form.get("medium")),
+            "hard": int(request.form.get("hard")),
             "invitees": request.form.get("invitees"),
             "created": timestampStr
         }
         # Insert the dictionary into the database
         mongo.db.quizzes.insert_one(quiz_details)
 
-        # Checks to see if the User is logged in or not
-        if "user" in session:
-            flash("Quiz Successfully Created!")
-            return render_template("quiz_admin.html")
+        difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
+
+        # Validate whether Difficulty totals match the number of Questions
+        if difficulty_total == quiz_details['questions']:
+            # Checks to see if the User is logged in or not
+            if "user" in session:
+                quiz_questions = getRequest(quiz_details)
+                print("token", quiz_details['token'])
+                flash(quiz_questions)
+                return render_template("quiz_admin.html", categories=categories)
+            else:
+                # Session added so as to correctly redirect User once registered
+                session["quiz_name"] = request.form.get("quiz_name")
+                flash("Please register or login to finish your quiz.")
+                return redirect(url_for("register"))
         else:
-            # Session added so as to correctly redirect User once registered
-            session["quiz_name"] = request.form.get("quiz_name")
-            flash("Please register or login to finish your quiz.")
-            return redirect(url_for("register"))
+            flash("The total for all 3 Difficulty levels must equal the number of questions.")
 
     return render_template("create.html")
+
+
+def getRequest(quiz_details):
+    print("token 2", quiz_details["token"])
+    print("user ID", quiz_details["user_id"])
 
 
 @app.route("/quiz_admin/<quiz_id>")
