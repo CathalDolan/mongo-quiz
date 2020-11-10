@@ -22,7 +22,7 @@
                         <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Add a name for your quiz. Max 20 Characters."></i>
                         <input id="quiz_name" name="quiz_name" type="text" minlength="5" 
-                            maxlength="20" class="validate" required>
+                            maxlength="20" class="validate" value="{{ quiz_details.quiz_name }}" required>
                         <label for="quiz_name">Quiz Name*</label>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                         <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of rounds in your quiz"></i>
                         <input id="rounds" name="rounds" type="number" minlength="1" 
-                            class="validate" required>
+                            class="validate" value="{{ quiz_details.rounds }}" required>
                         <label for="rounds">Rounds*</label>
                     </div>
                 
@@ -42,7 +42,7 @@
                         <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of questions in each round"></i>
                         <input id="questions" name="questions" type="number" min="1" 
-                            class="validate" required>
+                            class="validate" value="{{ quiz_details.questions }}" required>
                         <label for="questions">Questions*</label>
                     </div>
                 </div>
@@ -51,22 +51,22 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="fas fa-book prefix color-green tooltipped" data-position="bottom" 
-                            data-tooltip="Choose a category for each round. Selection total should 
-                                match number of rounds."></i>
+                            data-tooltip="Choose a category for each round."></i>
                         <label for="categories">Categories*</label>
                     </div>
                 </div>
                 <br>
-                <div class="row ">
-                    <div class="categories_row col s12">
-                        {% for categories in quiz_categories %}
-                            <label for="{{ categories.name }}">
-                                <input id="{{ categories.name }}" name="{{ categories.name }}" value="{{ categories.name }}" 
-                                    type="checkbox" class="checkbox validate" required />
-                                <span>{{ categories.name }}</span>
-                            </label>
-                        {% endfor %}
-                    </div>
+                <div class="row categories_row">
+                    {% for n in range(1, 8+1) %}
+                        <div class="input-field col s6 m4">
+                            <select>
+                                <option value="" disabled selected>Round {{ n }}</option>
+                                {% for categories in quiz_categories %}
+                                    <option id="round{{ n }}" value="{{ categories.name }}">{{ categories.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <!-- 5. Questions Difficulty -->
@@ -82,12 +82,12 @@
                     <div class="input-field col s4">
                         <input id="medium" name="medium" type="number" min="0"
                             class="validate" required>
-                        <label for="medium">Med*</label>
+                        <label id="label_medium" for="medium">Med*</label>
                     </div>
                     <div class="input-field col s4">
                         <input id="hard" name="hard" type="number" min="0" 
                             class="validate" required>
-                        <label for="hard">Hard*</label>
+                        <label id="label_hard" for="hard">Hard*</label>
                     </div>
                 </div>
 

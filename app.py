@@ -174,7 +174,9 @@ def create():
             "quiz_name": request.form.get("quiz_name"),
             "rounds": int(request.form.get("rounds")),
             "questions": int(request.form.get("questions")),
-            "category1": request.form.get("art"),
+            "round1": request.form.get("round1"),
+            "round2": request.form.get("round2"),
+            "round3": request.form.get("round3"),
             "type": "multiple",
             "easy": int(request.form.get("easy")),
             "medium": int(request.form.get("medium")),
@@ -203,8 +205,10 @@ def create():
                 return redirect(url_for("register"))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
+            return render_template("create.html", quiz_categories=quiz_categories, quiz_details=quiz_details)
 
-    return render_template("create.html", quiz_categories=quiz_categories)
+    return render_template("create.html",
+        quiz_categories=quiz_categories, quiz_details="")
 
 
 def getRequest(quiz_details):
@@ -224,8 +228,7 @@ def quiz_admin(quiz_id):
 
     quizzes = list(mongo.db.quizzes.find())
 
-    return render_template("quiz_admin.html",
-        quizzes=quizzes, url_quiz_id=url_quiz_id)
+    return render_template("quiz_admin.html", quizzes=quizzes, url_quiz_id=url_quiz_id)
 
 
 @app.route("/publish/<quiz_id>", methods=["GET", "POST"])

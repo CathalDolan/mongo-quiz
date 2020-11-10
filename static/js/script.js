@@ -18,10 +18,12 @@ document.getElementById("questions").addEventListener("keyup", getDataFn);
 function getDataFn() {
     questionsPerRound = parseInt(document.getElementById('questions').value);
 
-    questionsVSdifficultyFN(questionsPerRound);
-};
-
-function questionsVSdifficultyFN(questionsPerRound){
     document.getElementById('easy').value = questionsPerRound;
+    document.getElementById('medium').value = 0;
+    document.getElementById('hard').value = 0;
+
+    // Makes the label display above the input
     document.getElementById('label_easy').className = 'active';
+    document.getElementById('label_medium').className = 'active';
+    document.getElementById('label_hard').className = 'active';
 };

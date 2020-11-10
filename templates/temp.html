@@ -95,3 +95,16 @@ def create():
             return redirect(url_for("register"))
 
     return render_template("create.html")
+
+
+                <div class="row ">
+                    <div class="categories_row col s12">
+                        {% for categories in quiz_categories %}
+                            <label for="{{ categories.name }}">
+                                <input id="{{ categories.name }}" name="{{ categories.name }}" value="{{ categories.name }}" 
+                                    type="checkbox" class="checkbox validate"/>
+                                <span>{{ categories.name }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
