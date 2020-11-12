@@ -29,44 +29,26 @@
 
                 <!-- 2. Rounds -->
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12">
                         <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of rounds in your quiz"></i>
-                        <input id="rounds" name="rounds" type="number" minlength="1" 
+                        <input id="rounds" name="rounds" type="number" min="1" max="10"
                             class="validate" value="{{ quiz_details.rounds }}" required>
                         <label for="rounds">Rounds*</label>
                     </div>
-                
-                <!-- 3. Questions per Round-->
-                    <div class="input-field col s12 m6">
+
+                <!-- 3 Categories -->
+                <div id="categories_row" class="row categories_row">
+                </div>
+
+                <!-- 4. Questions per Round-->
+                    <div class="input-field col s12">
                         <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Select the number of questions in each round"></i>
-                        <input id="questions" name="questions" type="number" min="1" 
+                        <input id="questions" name="questions" type="number" min="1" max="10"
                             class="validate" value="{{ quiz_details.questions }}" required>
                         <label for="questions">Questions*</label>
                     </div>
-                </div>
-
-                <!-- 4 Categories -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="fas fa-book prefix color-green tooltipped" data-position="bottom" 
-                            data-tooltip="Choose a category for each round."></i>
-                        <label for="categories">Categories*</label>
-                    </div>
-                </div>
-                <br>
-                <div class="row categories_row">
-                    {% for n in range(1, 8+1) %}
-                        <div class="input-field col s6 m4">
-                            <select>
-                                <option value="" disabled selected>Round {{ n }}</option>
-                                {% for categories in quiz_categories %}
-                                    <option id="round{{ n }}" value="{{ categories.name }}">{{ categories.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    {% endfor %}
                 </div>
 
                 <!-- 5. Questions Difficulty -->

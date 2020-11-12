@@ -177,6 +177,13 @@ def create():
             "round1": request.form.get("round1"),
             "round2": request.form.get("round2"),
             "round3": request.form.get("round3"),
+            "round4": request.form.get("round4"),
+            "round5": request.form.get("round5"),
+            "round6": request.form.get("round6"),
+            "round7": request.form.get("round7"),
+            "round8": request.form.get("round8"),
+            "round9": request.form.get("round9"),
+            "round10": request.form.get("round10"),
             "type": "multiple",
             "easy": int(request.form.get("easy")),
             "medium": int(request.form.get("medium")),
@@ -187,15 +194,13 @@ def create():
         # Insert the dictionary into the database
         mongo.db.quizzes.insert_one(quiz_details)
 
-        # Get the total of the three Difficulty fields
+        # Get the total of the three Difficulty fields...
         difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
-
-        # Validate whether Difficulty totals match the number of Questions
+        # ...then validate whether Difficulty totals match the number of Questions
         if difficulty_total == quiz_details['questions']:
             # Checks to see if the User is logged in or not
             if "user" in session:
                 quiz_questions = getRequest(quiz_details)
-                print("token", quiz_details['token'])
                 flash(quiz_questions)
                 return render_template("quiz_admin.html")
             else:
@@ -221,11 +226,9 @@ def quiz_admin(quiz_id):
 
     # Extracts the quiz _id from the URL
     url = str(request.base_url)
-    print(url)
     url_quiz_id = url.split('/')[-1]
-    print(url_quiz_id)
-    print(quiz_id)
 
+    # Extracts quiz details from DB
     quizzes = list(mongo.db.quizzes.find())
 
     return render_template("quiz_admin.html", quizzes=quizzes, url_quiz_id=url_quiz_id)

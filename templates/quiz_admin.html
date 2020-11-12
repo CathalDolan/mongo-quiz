@@ -17,72 +17,82 @@
                 round update the scores so that everyone can see them. Create a bit of excitement 
                 by calling out the top three in advance!</p>
                 <br>
+
+                <!-- Publish Button -->
                 <div class="button-div">
-                    <a href="{{ url_for('publish', quiz_id=quiz._id) }}"
+                    <a href="{{ url_for('publish', quiz_id=quiz.name) }}"
                         class="btn-large waves-effect waves-light bg-color-green text-shadow">
                         Publish 
                         <i class="fas fa fa-upload"></i>
                     </a>
                 </div>
-            {% endif %}
-        {% endfor %}
-        <br>
-        <ul class="collapsible popout">
-            <li>
-                <div class="collapsible-header">Rounds</div>
-                <div class="row collapsible-body">
-                    <ul class="collapsible">
-                        <li>
-                            <div class="collapsible-header">
-                                <h6 class="inline-block">Round 1</h6>
-                                <div class="inline-block input-field col">
-                                    <select>
-                                        <option value="" disabled selected>Category</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                    </select>
-                                </div>
-                                <i class="inline-block fas fa-times"></i>
-                            </div>
-                            <div class="collapsible-body">
-                                <i class="inline-block fas fa-times col s1"></i>
-                                <p class="inline-block col s6">Questions and stuff in here!</p>
-                                <i class="inline-block fas fa-redo col s1"></i>
-                                <div class="inline-block input-field col s4">
-                                    <select>
-                                    <option value="" disabled selected>Difficulty</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header">Scores</div>
-                <div class="collapsible-body">
-                    <div class="row">
-                        <div class="col s12">
-                            <ul class="tabs">
-                                <li class="tab col s3"><a href="#overall">Overall</a></li>
-                                <li class="tab col s3"><a href="#round1">Round 1</a></li>
-                                <li class="tab col s3"><a href="#round2">Round 2</a></li>
+                <br>
+
+                <!-- Collapsibles Section -->
+                <ul class="collapsible popout">
+
+                    <!-- Rounds Questions Section -->
+                    <li>
+                        <div class="collapsible-header">
+                            rounds
+                        </div>
+                        <div class="row collapsible-body">
+                            <ul class="collapsible">
+                                {% for n in range(1, quiz.rounds|int +1) %}
+                                    <li>
+                                        <!-- Individual Rounds Header Section -->
+                                        <div class="collapsible-header">
+                                            <h6 class="inline-block"><strong>Round {{ n }}: </strong>{{ quiz.categories[0] }}</h6>
+                                            <i class="inline-block fas fa-times"></i>
+                                        </div>
+
+                                        <!-- Individual Rounds Body Section for Answers -->
+                                        <div class="collapsible-body">
+                                            <i class="inline-block fas fa-times col s1"></i>
+                                            <p class="inline-block col s6">Questions and stuff in here!</p>
+                                            <div class="inline-block input-field col s4">
+                                                <h6 class="inline-block">Difficulty Goes Here</h6>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
-                        <div id="overall" class="col s12">Overall Scores</div>
-                        <div id="round1" class="col s12">Round 1 Scores</div>
-                        <div id="round2" class="col s12">Round 2 Scores</div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header">Details</div>
-                <div class="collapsible-body"><span>Details</span></div>
-            </li>
-        </ul>
-        <br>
+                    </li>
+
+                    <!-- Rounds Scores Section -->
+                    <li>
+                        <div class="collapsible-header">
+                            Scores
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row">
+                                <div class="col s12">
+                                    <ul class="tabs">
+                                        <li class="tab col s3"><a href="#overall">Overall</a></li>
+                                        {% for n in range(1, quiz.rounds|int +1) %}
+                                            <li class="tab col s3"><a href="#round1">Round {{ n }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div id="overall" class="col s12">Overall Scores</div>
+                                <div id="round1" class="col s12">Round 1 Scores</div>
+
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Quiz Details Section -->
+                    <li>
+                        <div class="collapsible-header">
+                            Details
+                        </div>
+                        <div class="collapsible-body"><span>Details</span></div>
+                    </li>
+                </ul>
+                <br>
+            {% endif %}
+        {% endfor %}
 
         <!-- Publish & Delete Buttons-->
         

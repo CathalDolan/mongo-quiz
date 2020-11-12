@@ -38,65 +38,6 @@ function questionsVSdifficultyFN(questionsPerRound){
 };
 
 
-@app.route("/create", methods=["GET", "POST"])
-def create():
-    existing_user = mongo.db.users.find_one(
-        {"username": session["user"]})
-
-    # current date and time
-    dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime("%d-%b-%Y")
-
-    # Extracting the token from the DB
-    url = "https://opentdb.com/api_token.php?command=request"
-    payload = {}
-    headers = {}
-    response = requests.request("GET", url, headers=headers, data=payload)
-    quiz_token = json.loads(response.text.encode("utf8"))["token"]
-
-    # Extracting the catagories from the DB
-    url = "https://opentdb.com/api_category.php"
-    payload = {}
-    headers = {}
-    cat_response = requests.request("GET", url, headers=headers, data=payload)
-    categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
-    print("Categories", categories)
-
-    if request.method == "POST":
-
-        quiz_details = {
-            "token": quiz_token,
-            "user_id": existing_user["_id"],
-            "quiz_name": request.form.get("quiz_name"),
-            "rounds": request.form.get("rounds"),
-            "questions": request.form.get("questions"),
-            "category1": request.form.get("art"),
-            "type": "multiple",
-            "easy": request.form.get("easy"),
-            "medium": request.form.get("medium"),
-            "hard": request.form.get("hard"),
-            "invitees": request.form.get("invitees"),
-            "created": timestampStr
-        }
-        # Insert the dictionary into the database
-        mongo.db.quizzes.insert_one(quiz_details)
-
-        # Checks to see if the User is logged in or not
-        if "user" in session:
-            quiz_questions = getRequest(quiz_details)
-            print("token", quiz_details['token'])
-            print("questions qty", quiz_details['questions'], "easy qty", quiz_details['easy'])
-            flash(quiz_questions)
-            return render_template("quiz_admin.html", categories=categories)
-        else:
-            # Session added so as to correctly redirect User once registered
-            session["quiz_name"] = request.form.get("quiz_name")
-            flash("Please register or login to finish your quiz.")
-            return redirect(url_for("register"))
-
-    return render_template("create.html")
-
-
                 <div class="row ">
                     <div class="categories_row col s12">
                         {% for categories in quiz_categories %}
@@ -108,3 +49,53 @@ def create():
                         {% endfor %}
                     </div>
                 </div>
+
+
+
+let main = document.querySelector("div.categories-heading-row");
+    let categories_row = document.createElement("div");
+    categories_row.className = "categories-row";
+    document.getElementsByClassName("categories-row").innerHTML = `
+            <div class="dropdown-menu p-3 dropdown-menu-right">
+                <div class="form-group">
+                    <label for="email1">Logged in as:</label>
+                    <p>Stuff2</p>
+                </div>
+                <button onClick="getLogout()" ">Sign out</button>
+            </div>`;
+
+
+{% for n in range(1, quiz.rounds|int +1) %}
+                                    <li>
+                                        <!-- Individual Rounds Header Section -->
+                                        <div class="collapsible-header">
+                                            <h6 class="inline-block"><strong>Round {{ n }}:</strong>{{ quiz.quiz_name }}</h6>
+                                            <i class="inline-block fas fa-times"></i>
+                                        </div>
+
+                                        <!-- Individual Rounds Body Section for Answers -->
+                                        <div class="collapsible-body">
+                                            <i class="inline-block fas fa-times col s1"></i>
+                                            <p class="inline-block col s6">Questions and stuff in here!</p>
+                                            <div class="inline-block input-field col s4">
+                                                <h6 class="inline-block">Difficulty Goes Here</h6>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+
+                <!--<br>
+                <div class="row categories_row">
+                    {% for n in range(1, 8+1) %}
+                        <div class="input-field col s6 m4">
+                            <select id="round{{ n }}"  name="round{{ n }}">
+                                <option value="" disabled selected>Round {{ n }}</option>
+                                {% for categories in quiz_categories %}
+                                    <option value="{{ categories.name }}">{{ categories.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Category {{ n }}</label>
+                        </div>
+                    {% endfor %}
+                </div> -->
