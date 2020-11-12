@@ -143,6 +143,9 @@ def get_categories():
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
+
+    print(request.form)
+
     existing_user = mongo.db.users.find_one(
         {"username": session["user"]})
 
@@ -154,7 +157,6 @@ def create():
     url = "https://opentdb.com/api_category.php"
     payload = {}
     headers = {}
-
     cat_response = requests.request("GET", url, headers=headers, data=payload)
     quiz_categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
     print("Categories:", quiz_categories)
@@ -168,22 +170,23 @@ def create():
 
     if request.method == "POST":
 
+        # Allows the User's category choices to go into the DB as a list
+        categories =[]
+        num = 1
+        while True:
+            if 'round{}'.format(num) in request.form:
+                categories.append(request.form.get("round{}".format(num)))
+                num +=1
+            else:
+                break
+
         quiz_details = {
             "token": quiz_token,
             "user_id": existing_user["_id"],
             "quiz_name": request.form.get("quiz_name"),
             "rounds": int(request.form.get("rounds")),
             "questions": int(request.form.get("questions")),
-            "round1": request.form.get("round1"),
-            "round2": request.form.get("round2"),
-            "round3": request.form.get("round3"),
-            "round4": request.form.get("round4"),
-            "round5": request.form.get("round5"),
-            "round6": request.form.get("round6"),
-            "round7": request.form.get("round7"),
-            "round8": request.form.get("round8"),
-            "round9": request.form.get("round9"),
-            "round10": request.form.get("round10"),
+            "categories": categories,
             "type": "multiple",
             "easy": int(request.form.get("easy")),
             "medium": int(request.form.get("medium")),
@@ -200,8 +203,8 @@ def create():
         if difficulty_total == quiz_details['questions']:
             # Checks to see if the User is logged in or not
             if "user" in session:
-                quiz_questions = getRequest(quiz_details)
-                flash(quiz_questions)
+                print(request.form)
+                flash("What to flash here")
                 return render_template("quiz_admin.html")
             else:
                 # Session added so as to correctly redirect User once registered
@@ -216,22 +219,32 @@ def create():
         quiz_categories=quiz_categories, quiz_details="")
 
 
-def getRequest(quiz_details):
-    print("token 2", quiz_details["token"])
-    print("user ID", quiz_details["user_id"])
-
-
 @app.route("/quiz_admin/<quiz_id>")
 def quiz_admin(quiz_id):
+
+    # Extracts quiz details from DB
+    quizzes = list(mongo.db.quizzes.find())
+    print("quiz_details: ", quizzes)
+
+    # Extracting the Questions from the API
+    url = "https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple"
+    print(url)
+    payload = {}
+    headers = {}
+    q_response = requests.request("GET", url, headers=headers, data=payload)
+    quiz_questions = json.loads(q_response.text.encode("utf8"))
+    print("quiz_questions: ", quiz_questions)
+
+    # Trying to extract the individual question.
+    for questions in quiz_questions:
+        for questiony in questions:
+            print("Blah", questiony)
 
     # Extracts the quiz _id from the URL
     url = str(request.base_url)
     url_quiz_id = url.split('/')[-1]
 
-    # Extracts quiz details from DB
-    quizzes = list(mongo.db.quizzes.find())
-
-    return render_template("quiz_admin.html", quizzes=quizzes, url_quiz_id=url_quiz_id)
+    return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
 
 
 @app.route("/publish/<quiz_id>", methods=["GET", "POST"])

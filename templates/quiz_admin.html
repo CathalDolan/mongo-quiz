@@ -38,20 +38,33 @@
                         </div>
                         <div class="row collapsible-body">
                             <ul class="collapsible">
-                                {% for n in range(1, quiz.rounds|int +1) %}
+                                {% for n in quiz.categories %}
                                     <li>
                                         <!-- Individual Rounds Header Section -->
                                         <div class="collapsible-header">
-                                            <h6 class="inline-block"><strong>Round {{ n }}: </strong>{{ quiz.categories[0] }}</h6>
+                                            <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ n }}</h6>
                                             <i class="inline-block fas fa-times"></i>
                                         </div>
-
                                         <!-- Individual Rounds Body Section for Answers -->
                                         <div class="collapsible-body">
                                             <i class="inline-block fas fa-times col s1"></i>
-                                            <p class="inline-block col s6">Questions and stuff in here!</p>
+                                            <p class="inline-block col s6">{{ quiz_questions }}</p>
                                             <div class="inline-block input-field col s4">
                                                 <h6 class="inline-block">Difficulty Goes Here</h6>
+                                            </div>
+                                            <div class="row">
+                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                    Answer 1 <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                    Answer 2 <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                    Answer 3 <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                    Answer 4 <i class="fas fa-plus-circle"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </li>
@@ -91,26 +104,25 @@
                     </li>
                 </ul>
                 <br>
+            
+                <!-- Publish & Delete Buttons-->
+                <div class="flex">
+                    <div class="button-div">
+                        <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                            All Quizzes 
+                            <i class="fas fa-object-group"></i>
+                        </a>
+                    </div>
+                
+                    <div class="button-div">
+                        <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
+                            class="btn-large waves-effect waves-light red text-shadow">
+                            Delete <i class="fas fa-times-circle"></i>
+                        </a>
+                    </div>
+                </div>
             {% endif %}
-        {% endfor %}
-
-        <!-- Publish & Delete Buttons-->
-        
-        <div class="flex">
-            <div class="button-div">
-                <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
-                    All Quizzes 
-                    <i class="fas fa-object-group"></i>
-                </a>
-            </div>
-        
-            <div class="button-div">
-                <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
-                    Delete 
-                    <i class="fas fa-times-circle"></i>
-                </a>
-            </div>
-        </div>
+        {% endfor %} 
 
         <br>
     </div>

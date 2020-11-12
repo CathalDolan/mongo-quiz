@@ -51,6 +51,13 @@ async function getRoundsDataFn(category_names) {
     // Get the number of rounds entered by the User
     roundsPerGame = parseInt(document.getElementById('rounds').value);
 
+    var text2 = "";
+    for(let j = 0, len=category_names.length; j<len; j++ ){
+        text2 += `
+            <option value="${category_names[j]['name']}">${category_names[j]['name']}</option>
+        `
+    }
+
     var text = "";
     var i = 1;
     //For loop required below to populate each category name
@@ -58,9 +65,9 @@ async function getRoundsDataFn(category_names) {
         text += `
         <div class="input-field col xs12 s6 l4">
             <div class="select-wrapper">
-                <select id="round ${i}" name="round ${i}" style="display:block;">
+                <select id="round${i}" name="round${i}" style="display:block;" required>
                     <option class="cats_first" value="" disabled selected>Round ${i} Category</option>
-                    
+                    ${text2}
                 </select>
             </div>
         </div>`;
@@ -68,13 +75,4 @@ async function getRoundsDataFn(category_names) {
     }
     document.getElementById("categories_row").innerHTML = text;
 
-    var text2 = "";
-    for(let j = 0, len=category_names.length; j<len; j++ ){
-        text2 += `
-            <option value="${category_names[j]['name']}">${category_names[j]['name']}</option>
-        `
-    }
-    document.getElementsByClassName("cats_first").insertAdjacentHTML("afterend", text2);
-
-    console.log("text", text2);
 }
