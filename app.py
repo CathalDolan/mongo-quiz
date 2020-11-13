@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import html
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -116,7 +117,10 @@ def profile(username):
     username = mongo.db.users.find_one(
         {"username": session["user"]})
     print(f"USERNAME: {username}")
+
     quizzes = list(mongo.db.quizzes.find())
+    for quiz in quizzes:
+        print("INVITEES: ", quiz["invitees"])
     return render_template("profile.html",
         username=username, quizzes=quizzes)
 
@@ -143,7 +147,7 @@ def create():
 
     if request.method == "POST":
 
-        # Var so categories go into DB as a list from form
+        # Var so Categories go into DB as a list from form
         # Categories converted to JSON Objects
         categories =[]
         num = 1
@@ -154,12 +158,16 @@ def create():
             else:
                 break
 
-        # Var so difficulties go into DB as a list from form
+        # Var so Difficulties go into DB as a dict from form
         difficulty = {
             'easy': int(request.form.get('easy')),
             'medium': int(request.form.get('medium')),
             'hard': int(request.form.get('hard'))
             }
+
+        # Var so Invitees go into DB as a list from form
+        invitee_list = request.form.get("invitees")
+        invitees = invitee_list.replace(',', ' ').split()
 
         # Capture of all quiz details from form
         quiz_details = {
@@ -174,7 +182,7 @@ def create():
             "easy": int(request.form.get("easy")),
             "medium": int(request.form.get("medium")),
             "hard": int(request.form.get("hard")),
-            "invitees": request.form.get("invitees"),
+            "invitees": invitees,
             "created": timestampStr
         }
         # Insert the quiz_details dictionary into the database
@@ -243,6 +251,7 @@ def quiz_admin(quiz_id):
                 headers = {}
                 q_response = requests.request("GET", url, headers=headers, data=payload)
                 quiz_questions = json.loads(q_response.text.encode("utf8"))["results"]
+                print("QUIZ QUESTIONS: ", quiz_questions)
 
             return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
 

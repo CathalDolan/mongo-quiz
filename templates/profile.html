@@ -31,7 +31,7 @@
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                     {% for quiz in quizzes %}
-                        {% if quiz.user_id == username._id %}
+                        {% if quiz.user_id == username._id or quiz.invitees == username.email %}
                             <li class="tab"><a href="#{{ quiz._id }}">{{ quiz.quiz_name }}</a></li>
                         {% endif %}
                     {% endfor %}
