@@ -128,18 +128,6 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
-# Extracting the catagories from the DB
-# def get_categories():
-#     url = "https://opentdb.com/api_category.php"
-#     payload = {}
-#     headers = {}
-
-#     cat_response = requests.request("GET", url, headers=headers, data=payload)
-#     categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
-#     print("Categories:", categories)
-
-#     return render_template("create.html", categories=categories)
-
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
@@ -153,34 +141,30 @@ def create():
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y")
 
-    # Extracting the Categories from the API
-    url = "https://opentdb.com/api_category.php"
-    payload = {}
-    headers = {}
-    cat_response = requests.request("GET", url, headers=headers, data=payload)
-    quiz_categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
-    print("Categories:", quiz_categories)
-
     if request.method == "POST":
 
-        # Allows the User's category choices to go into the DB as a list
+        # Var so categories go into DB as a list from form
+        # Categories converted to JSON Objects
         categories =[]
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                categories.append(request.form.get("round{}".format(num)))
+                categories.append(json.loads(request.form.get("round{}".format(num))))
                 num +=1
             else:
                 break
 
+        # Var so difficulties go into DB as a list from form
         difficulty = {
             'easy': int(request.form.get('easy')),
             'medium': int(request.form.get('medium')),
             'hard': int(request.form.get('hard'))
             }
 
+        # Capture of all quiz details from form
         quiz_details = {
             "user_id": existing_user["_id"],
+            "quiz_master": existing_user["username"],
             "quiz_name": request.form.get("quiz_name"),
             "rounds": int(request.form.get("rounds")),
             "questions": int(request.form.get("questions")),
@@ -193,7 +177,7 @@ def create():
             "invitees": request.form.get("invitees"),
             "created": timestampStr
         }
-        # Insert the dictionary into the database
+        # Insert the quiz_details dictionary into the database
         mongo.db.quizzes.insert_one(quiz_details)
 
         # Get the total of the three Difficulty fields...
@@ -212,25 +196,26 @@ def create():
                 return redirect(url_for("register"))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
-            return render_template("create.html", quiz_categories=quiz_categories, quiz_details=quiz_details)
+            return render_template("create.html", quiz_details=quiz_details)
 
-    return render_template("create.html",
-        quiz_categories=quiz_categories, quiz_details="")
+    return render_template("create.html", quiz_details="")
 
 
 @app.route("/quiz_admin/<quiz_id>")
 def quiz_admin(quiz_id):
 
-    # Extracts quiz details from DB
+    # Extracts the quiz _id from the URL
+    # Allows the QUiz displayed to match the one opened from the Profile
+    url = str(request.base_url)
+    url_quiz_id = url.split('/')[-1]
+
+    # Extracts quiz details from DB and creates an ID var
     quizzes = list(mongo.db.quizzes.find())
     for quiz_data in quizzes:
         quiz_data_id = quiz_data["_id"]
         str_quiz_data_id = str(quiz_data_id)
 
-        # Extracts the Categories from the DB
-        for category in quiz_data['categories']:
-            print("CATEGORIES: ", category)
-
+        # Checks if ID passed into function matches that on the DB
         if quiz_id == str_quiz_data_id:
 
             # Extracting the token from the API
@@ -240,35 +225,24 @@ def quiz_admin(quiz_id):
             response = requests.request("GET", url, headers=headers, data=payload)
             quiz_token = json.loads(response.text.encode("utf8"))["token"]
 
-            quiz_questions = ""
+            print("QUIZ CATEGORIES: ", quiz_data["categories"])
 
-            if quiz_data["easy"] > 0:
+            # Extracts the Categories from the DB
+            for category in quiz_data['categories']:
+                print("CATEGORIES: ", category["name"])
+
+                # Extracted variables for insertion into API URL
+                category_id = str(category['id'])
                 amount = str(quiz_data["easy"])
                 difficulty = "easy"
 
                 # Extracting the Questions from the API
-                url = "https://opentdb.com/api.php?amount=" + amount + "&category=9&difficulty=" + difficulty + "&type=multiple&token=" + quiz_token
+                url = "https://opentdb.com/api.php?amount=" + amount + "&category=" + category_id + "&difficulty=" + difficulty + "&type=multiple&token=" + quiz_token
                 print("URL: ", url)
                 payload = {}
                 headers = {}
                 q_response = requests.request("GET", url, headers=headers, data=payload)
                 quiz_questions = json.loads(q_response.text.encode("utf8"))["results"]
-
-            elif quiz_data["medium"] > 0:
-                amount = str(quiz_data["medium"])
-                difficulty = "medium"
-
-                # Extracting the Questions from the API
-                url = "https://opentdb.com/api.php?amount=" + amount + "&category=9&difficulty=" + difficulty + "&type=multiple&token=" + quiz_token
-                print("URL: ", url)
-                payload = {}
-                headers = {}
-                q_response = requests.request("GET", url, headers=headers, data=payload)
-                quiz_questions = json.loads(q_response.text.encode("utf8"))["results"]
-
-            # Extracts the quiz _id from the URL
-            url = str(request.base_url)
-            url_quiz_id = url.split('/')[-1]
 
             return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
 
@@ -276,19 +250,20 @@ def quiz_admin(quiz_id):
 @app.route("/publish/<quiz_id>", methods=["GET", "POST"])
 def publish(quiz_id):
 
-    # current date and time
-    dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+    # Extracts the quiz _id from the URL
+    # Allows the QUiz displayed to match the one opened from the Profile
+    url = str(request.base_url)
+    url_quiz_id = url.split('/')[-1]
 
-    if request.method == "POST":
+    # Extracts quiz details from DB and creates an ID var
+    quizzes = list(mongo.db.quizzes.find())
+    for quiz_data in quizzes:
+        quiz_data_id = quiz_data["_id"]
+        str_quiz_data_id = str(quiz_data_id)
 
-        published_date = {
-            "played": timestampStr
-        }
-        # Insert the dictionary into the database
-        mongo.db.quizzes.insert_one(published_date)
-
-        return render_template("quiz_admin.html")
+        # Checks if ID passed into function matches that on the DB
+        if quiz_id == str_quiz_data_id:
+            return render_template("play.html", quizzes=quizzes, url_quiz_id=url_quiz_id)
 
 
 @app.route("/delete_quiz/<quiz_id>")

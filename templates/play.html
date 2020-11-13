@@ -11,92 +11,94 @@
 
                 <!-- Section that displays before the Quiz is published by the Quiz Master -->
                 <div id="not-started-content-div">
-                    <h3>Quiz hasn't started yet</h3>
-                    <div class="row">
-                        <div class="col s5 m2">
-                            <p><strong>Quiz Name:</strong></p>
+                    <h4>Quiz hasn't started yet</h4>
+                    <div id="quiz-info-row" class="row">
+                        <div id="quiz-info-col1" class="col s5 m4">
+                            <p><strong>Quiz Master:</strong></p>
                             <p><strong>Rounds:</strong></p>
                             <p><strong>Q's / Round:</strong></p>
                         </div>
-                        <div class="col s7 m5">
-                            <p>{{ quiz.quiz_name }}</p>
-                            <p>{{ username.username }}</p>
-                            <p>{{ quiz.created }}</p>
+                        <div class="col s7 m8">
+                            <p>{{ quiz.quiz_master }}</p>
+                            <p>{{ quiz.rounds }}</p>
+                            <p>{{ quiz.questions }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Section that displays when the game is in play -->
-                <div class="row">
-                    <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                        Answer 1 <i class="fas fa-plus-circle"></i>
-                    </button>
-                    <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                        Answer 2 <i class="fas fa-plus-circle"></i>
-                    </button>
-                    <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                        Answer 3 <i class="fas fa-plus-circle"></i>
-                    </button>
-                    <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                        Answer 4 <i class="fas fa-plus-circle"></i>
-                    </button>
-                </div>
+                <div id="inplay-content-div" style="display:none">
+                    <div class="row">
+                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                            Answer 1 <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                            Answer 2 <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                            Answer 3 <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                            Answer 4 <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
 
-                <!-- Collapsibles Section -->
-                <ul class="collapsible popout">
+                    <!-- Collapsibles Section -->
+                    <ul class="collapsible popout">
 
-                    <!-- Rounds Questions Section -->
-                    <li>
-                        <div class="collapsible-header">
-                            rounds
-                        </div>
-                        <div class="row collapsible-body">
-                            <ul class="collapsible">
-                                {% for n in range(1, quiz.rounds|int +1) %}
-                                    <li>
-                                        <!-- Individual Rounds Header Section -->
-                                        <div class="collapsible-header">
-                                            <h6 class="inline-block"><strong>Round {{ n }}: </strong>{{ quiz.categories }}</h6>
-                                            <i class="inline-block fas fa-times"></i>
-                                        </div>
-
-                                        <!-- Individual Rounds Body Section for Answers -->
-                                        <div class="collapsible-body">
-                                            <i class="inline-block fas fa-times col s1"></i>
-                                            <p class="inline-block col s6">Questions and stuff in here!</p>
-                                            <div class="inline-block input-field col s4">
-                                                <h6 class="inline-block">Difficulty Goes Here</h6>
-                                            </div>
-                                            
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </li>
-
-                    <!-- Rounds Scores Section -->
-                    <li>
-                        <div class="collapsible-header">
-                            Scores
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="col s12">
-                                    <ul class="tabs">
-                                        <li class="tab col s3"><a href="#overall">Overall</a></li>
-                                        {% for n in range(1, quiz.rounds|int +1) %}
-                                            <li class="tab col s3"><a href="#round1">Round {{ n }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div id="overall" class="col s12">Overall Scores</div>
-                                <div id="round1" class="col s12">Round 1 Scores</div>
-
+                        <!-- Rounds Questions Section -->
+                        <li>
+                            <div class="collapsible-header">
+                                rounds
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                            <div class="row collapsible-body">
+                                <ul class="collapsible">
+                                    {% for n in range(1, quiz.rounds|int +1) %}
+                                        <li>
+                                            <!-- Individual Rounds Header Section -->
+                                            <div class="collapsible-header">
+                                                <h6 class="inline-block"><strong>Round {{ n }}: </strong>{{ quiz.categories }}</h6>
+                                                <i class="inline-block fas fa-times"></i>
+                                            </div>
+
+                                            <!-- Individual Rounds Body Section for Answers -->
+                                            <div class="collapsible-body">
+                                                <i class="inline-block fas fa-times col s1"></i>
+                                                <p class="inline-block col s6">Questions and stuff in here!</p>
+                                                <div class="inline-block input-field col s4">
+                                                    <h6 class="inline-block">Difficulty Goes Here</h6>
+                                                </div>
+                                                
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!-- Rounds Scores Section -->
+                        <li>
+                            <div class="collapsible-header">
+                                Scores
+                            </div>
+                            <div class="collapsible-body">
+                                <div class="row">
+                                    <div class="col s12">
+                                        <ul class="tabs">
+                                            <li class="tab col s3"><a href="#overall">Overall</a></li>
+                                            {% for n in range(1, quiz.rounds|int +1) %}
+                                                <li class="tab col s3"><a href="#round1">Round {{ n }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div id="overall" class="col s12">Overall Scores</div>
+                                    <div id="round1" class="col s12">Round 1 Scores</div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
             {% endif %}
         {% endfor %}
@@ -104,9 +106,9 @@
         <!-- Back tpo Profile Button -->
         <div class="flex">
             <div class="button-div">
-                <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
-                    Profile 
-                    <i class="fas fa-times-circle"></i>
+                <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                    All Quizzes 
+                    <i class="fas fa-object-group"></i>
                 </a>
             </div>
         </div>

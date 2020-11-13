@@ -298,3 +298,57 @@ div.categories_row.col.s12 {
     background-color: var(--pink1);
     width: 175px;
 }
+
+/* Quiz Admin Page - Details Section Start */
+/* Centre aligns and sizes the form within the card */
+#details-form-row{
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding:0;
+    margin: 0;
+}
+#details-form {
+    display: inline-block;
+    width: 100%;
+    margin-left: 0;
+    margin-right: auto;
+    text-align: center;
+    padding: 0;
+}
+#details-card-panel {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+@media (max-width: 576px) {  
+    #details-card-panel {
+    width: 98%;
+    }
+}
+
+/* Removes white space between Rounds row and the dropdowns */
+#rounds-row {
+    margin-bottom: 0;
+}
+/* Quiz Admin Page - Details Section Finish */
+
+/* Play Page - Details Section Start */
+#not-started-content-div {
+    text-align: center;
+}
+#quiz-info-row {
+    width: 50%;
+    margin-left: 25%;
+    text-align: left;
+}
+@media (max-width: 576px) {  
+    #quiz-info-row {
+    width: 90%;
+    margin-left: 5%;
+    }
+}
+#quiz-info-col1 {
+    padding-right: 0;
+}

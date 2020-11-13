@@ -42,6 +42,7 @@ async function getCategoriesFn() {
     response = await fetch(url),
     json_categories = await response.json();
     let category_names = json_categories.trivia_categories;
+    console.log(category_names)
 
     getRoundsDataFn(category_names);
 }
@@ -54,7 +55,7 @@ async function getRoundsDataFn(category_names) {
     var text2 = "";
     for(let j = 0, len=category_names.length; j<len; j++ ){
         text2 += `
-            <option value="${category_names[j]['name']}">${category_names[j]['name']}</option>
+            <option value='${JSON.stringify(category_names[j])}'>${category_names[j]['name']}</option>
         `
     }
 
