@@ -120,7 +120,8 @@ def profile(username):
 
     quizzes = list(mongo.db.quizzes.find())
     for quiz in quizzes:
-        print("INVITEES: ", quiz["invitees"])
+        for invitees in quiz["invitees"]:
+            print("INVITEES: ", invitees)
     return render_template("profile.html",
         username=username, quizzes=quizzes)
 
@@ -168,6 +169,7 @@ def create():
         # Var so Invitees go into DB as a list from form
         invitee_list = request.form.get("invitees")
         invitees = invitee_list.replace(',', ' ').split()
+        invitees.append(existing_user["email"])
 
         # Capture of all quiz details from form
         quiz_details = {
