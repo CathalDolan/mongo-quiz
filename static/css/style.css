@@ -267,3 +267,34 @@ div.categories_row.col.s12 {
         text-align: center;
     }
 }
+
+/* ---------------- Quiz Admin Page -------------------- */
+/* Better space the individual rounds within the main Rounds collapsible */
+.collapsible-body {
+    padding: 15px;
+}
+.collapsible {
+    margin: 0;
+}
+
+/* Position the 3 elements in the questions row */
+.questions-row {
+    margin: 0;
+}
+.questions-row-icon {
+    margin-top: 5px;
+}
+@media (max-width: 576px) {  
+    .difficulty {
+        text-align: center;
+        margin-top: 10px;
+    }
+}
+
+.answer_button_row {
+   position: relative;
+}
+.answer_button {
+    background-color: var(--pink1);
+    width: 175px;
+}

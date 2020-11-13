@@ -34,38 +34,41 @@
                     <!-- Rounds Questions Section -->
                     <li>
                         <div class="collapsible-header">
-                            rounds
+                            ROUNDS
                         </div>
                         <div class="row collapsible-body">
                             <ul class="collapsible">
+
+                                <!-- Extract the individual categories -->
                                 {% for n in quiz.categories %}
                                     <li>
                                         <!-- Individual Rounds Header Section -->
                                         <div class="collapsible-header">
                                             <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ n }}</h6>
-                                            <i class="inline-block fas fa-times"></i>
                                         </div>
                                         <!-- Individual Rounds Body Section for Answers -->
                                         <div class="collapsible-body">
-                                            <i class="inline-block fas fa-times col s1"></i>
-                                            <p class="inline-block col s6">{{ quiz_questions }}</p>
-                                            <div class="inline-block input-field col s4">
-                                                <h6 class="inline-block">Difficulty Goes Here</h6>
-                                            </div>
-                                            <div class="row">
-                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                    Answer 1 <i class="fas fa-plus-circle"></i>
-                                                </button>
-                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                    Answer 2 <i class="fas fa-plus-circle"></i>
-                                                </button>
-                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                    Answer 3 <i class="fas fa-plus-circle"></i>
-                                                </button>
-                                                <button type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                    Answer 4 <i class="fas fa-plus-circle"></i>
-                                                </button>
-                                            </div>
+                                            {% for question in quiz_questions %}
+                                                <div class="questions-row-div row">
+                                                    <i class="questions-row-icon inline-block fas fa-times col s2 m1"></i>
+                                                    <p class="questions-row inline-block col s10 m9">{{ question.question }}</p>
+                                                    <p class="questions-row difficulty inline-block col s12 m2"><strong>Difficulty: </strong>TBC</p>
+                                                </div>
+                                                <div class="answer_button_row row">
+                                                    <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                        {{ question.correct_answer }}
+                                                    </button>
+                                                    <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                        Answer 2
+                                                    </button>
+                                                    <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                        Answer 3
+                                                    </button>
+                                                    <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                        Answer 4
+                                                    </button>
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </li>
                                 {% endfor %}
@@ -76,7 +79,7 @@
                     <!-- Rounds Scores Section -->
                     <li>
                         <div class="collapsible-header">
-                            Scores
+                            SCORES
                         </div>
                         <div class="collapsible-body">
                             <div class="row">
@@ -97,10 +100,101 @@
 
                     <!-- Quiz Details Section -->
                     <li>
-                        <div class="collapsible-header">
-                            Details
+                        <div class="collapsible-header" onclick="getQuestionsDataFn(), getCategoriesFn()">
+                            DETAILS
                         </div>
-                        <div class="collapsible-body"><span>Details</span></div>
+                        <div class="collapsible-body"><span>
+                            <div class="row">
+                                <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('create') }}">
+                                    <div class="card-panel">
+
+                                        <!-- 1. Quiz Name-->
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
+                                                    data-tooltip="Add a name for your quiz. Max 20 Characters."></i>
+                                                <input id="quiz_name" name="quiz_name" type="text" minlength="5" 
+                                                    maxlength="20" class="validate" value="{{ quiz.quiz_name }}" required>
+                                                <label for="quiz_name">Quiz Name*</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- 2. Rounds -->
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
+                                                    data-tooltip="Select the number of rounds in your quiz"></i>
+                                                <input id="rounds" name="rounds" type="number" min="1" max="10"
+                                                    class="validate" value="{{ quiz.rounds }}" required>
+                                                <label for="rounds">Rounds*</label>
+                                            </div>
+
+                                        <!-- 3 Categories -->
+                                        <div id="categories_row" class="row categories_row">
+                                        </div>
+
+                                        <!-- 4. Questions per Round-->
+                                            <div class="input-field col s12">
+                                                <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
+                                                    data-tooltip="Select the number of questions in each round"></i>
+                                                <input id="questions" name="questions" type="number" min="1" max="10"
+                                                    class="validate" value="{{ quiz.questions }}" required>
+                                                <label for="questions">Questions*</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- 5. Questions Difficulty -->
+                                        <div class="row">
+                                            <div class="input-field col s4">
+                                                <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
+                                                    data-tooltip="Choose the difficulty of individual questions. The total for
+                                                        all three options should match the number of questions per round"></i>
+                                                <input id="easy" name="easy" type="number" min="0"
+                                                    class="validate" required>
+                                                <label id="label_easy" for="easy">Easy*</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input id="medium" name="medium" type="number" min="0"
+                                                    class="validate" required>
+                                                <label id="label_medium" for="medium">Med*</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input id="hard" name="hard" type="number" min="0" 
+                                                    class="validate" required>
+                                                <label id="label_hard" for="hard">Hard*</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- 6. Invitees -->
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
+                                                    data-tooltip="Add individual email addresses for those you want to take part.
+                                                        Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
+                                                <textarea id="invitees" name="invitees" text="text" class="materialize-textarea"></textarea>
+                                                <label for="invitees">Invitees (comma separate emails)</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Create & Cancel Buttons-->
+                                        <div class="flex">
+                                            <div id="create-button-div" class="button-div">
+                                                <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                                                    Update <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                            </div>
+                                            <div class="button-div">
+                                                <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
+                                                    Cancel
+                                                    <i class="fas fa-times-circle"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </span></div>
                     </li>
                 </ul>
                 <br>

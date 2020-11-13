@@ -1,101 +1,33 @@
-document.getElementById("questions").addEventListener("keyup", getDataFn);
+@app.route("/quiz_admin/<quiz_id>")
+def quiz_admin(quiz_id):
 
-function getDataFn() {
-    questionsPerRound = parseInt(document.getElementById('questions').value);
-    difficultyEasy = parseInt(document.getElementById('easy').value);
-    difficultyMedium = parseInt(document.getElementById('medium').value);
-    difficultyHard = parseInt(document.getElementById('hard').value);
+    # Extracts quiz details from DB
+    quizzes = list(mongo.db.quizzes.find())
+    for data in quizzes:
+        easy = str(data["easy"])
+        #categories = data["categories"]
+        dataQuiz = data["_id"]
+        dataQuizID = str(dataQuiz)
 
-    questionsVSdifficultyFN(questionsPerRound, difficultyEasy, difficultyMedium, difficultyHard);
-};
+        if quiz_id == dataQuizID:
 
-function questionsVSdifficultyFN(questionsPerRound, difficultyEasy, difficultyMedium, difficultyHard){
-    document.getElementById('easy').value = questionsPerRound;
-    
-    difficultyTotal = difficultyEasy + difficultyMedium + difficultyHard;
-    if (difficultyTotal == questionsPerRound) {
-        alert("This is fine")
-    }
-    else {
-        alert("These must match")
-    }
-};
+            # Extracting the token from the API
+            url = "https://opentdb.com/api_token.php?command=request"
+            payload = {}
+            headers = {}
+            response = requests.request("GET", url, headers=headers, data=payload)
+            quiz_token = json.loads(response.text.encode("utf8"))["token"]
 
+            # Extracting the Questions from the API
+            url = "https://opentdb.com/api.php?amount=" + easy + "&category=9&difficulty=easy&type=multiple&token=" + quiz_token
+            print("URL: ", url)
+            payload = {}
+            headers = {}
+            q_response = requests.request("GET", url, headers=headers, data=payload)
+            quiz_questions = json.loads(q_response.text.encode("utf8"))["results"]
 
-document.getElementById("questions").addEventListener("keyup", getDataFn);
+            # Extracts the quiz _id from the URL
+            url = str(request.base_url)
+            url_quiz_id = url.split('/')[-1]
 
-function getDataFn() {
-    questionsPerRound = parseInt(document.getElementById('questions').value);
-    questionsVSdifficultyFN(questionsPerRound);
-};
-
-function questionsVSdifficultyFN(questionsPerRound){
-    document.getElementById('easy').value = questionsPerRound;
-    document.getElementById('medium').value = 0;
-    document.getElementById('hard').value = 0;
-
-    console.log(questionsPerRound);
-};
-
-
-                <div class="row ">
-                    <div class="categories_row col s12">
-                        {% for categories in quiz_categories %}
-                            <label for="{{ categories.name }}">
-                                <input id="{{ categories.name }}" name="{{ categories.name }}" value="{{ categories.name }}" 
-                                    type="checkbox" class="checkbox validate"/>
-                                <span>{{ categories.name }}</span>
-                            </label>
-                        {% endfor %}
-                    </div>
-                </div>
-
-
-
-let main = document.querySelector("div.categories-heading-row");
-    let categories_row = document.createElement("div");
-    categories_row.className = "categories-row";
-    document.getElementsByClassName("categories-row").innerHTML = `
-            <div class="dropdown-menu p-3 dropdown-menu-right">
-                <div class="form-group">
-                    <label for="email1">Logged in as:</label>
-                    <p>Stuff2</p>
-                </div>
-                <button onClick="getLogout()" ">Sign out</button>
-            </div>`;
-
-
-{% for n in range(1, quiz.rounds|int +1) %}
-                                    <li>
-                                        <!-- Individual Rounds Header Section -->
-                                        <div class="collapsible-header">
-                                            <h6 class="inline-block"><strong>Round {{ n }}:</strong>{{ quiz.quiz_name }}</h6>
-                                            <i class="inline-block fas fa-times"></i>
-                                        </div>
-
-                                        <!-- Individual Rounds Body Section for Answers -->
-                                        <div class="collapsible-body">
-                                            <i class="inline-block fas fa-times col s1"></i>
-                                            <p class="inline-block col s6">Questions and stuff in here!</p>
-                                            <div class="inline-block input-field col s4">
-                                                <h6 class="inline-block">Difficulty Goes Here</h6>
-                                            </div>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-
-
-                <!--<br>
-                <div class="row categories_row">
-                    {% for n in range(1, 8+1) %}
-                        <div class="input-field col s6 m4">
-                            <select id="round{{ n }}"  name="round{{ n }}">
-                                <option value="" disabled selected>Round {{ n }}</option>
-                                {% for categories in quiz_categories %}
-                                    <option value="{{ categories.name }}">{{ categories.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label>Category {{ n }}</label>
-                        </div>
-                    {% endfor %}
-                </div> -->
+            return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)

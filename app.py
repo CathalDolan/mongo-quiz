@@ -129,16 +129,16 @@ def logout():
     return redirect(url_for("login"))
 
 # Extracting the catagories from the DB
-def get_categories():
-    url = "https://opentdb.com/api_category.php"
-    payload = {}
-    headers = {}
+# def get_categories():
+#     url = "https://opentdb.com/api_category.php"
+#     payload = {}
+#     headers = {}
 
-    cat_response = requests.request("GET", url, headers=headers, data=payload)
-    categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
-    print("Categories:", categories)
+#     cat_response = requests.request("GET", url, headers=headers, data=payload)
+#     categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
+#     print("Categories:", categories)
 
-    return render_template("create.html", categories=categories)
+#     return render_template("create.html", categories=categories)
 
 
 @app.route("/create", methods=["GET", "POST"])
@@ -161,13 +161,6 @@ def create():
     quiz_categories = json.loads(cat_response.text.encode("utf8"))["trivia_categories"]
     print("Categories:", quiz_categories)
 
-    # Extracting the token from the API
-    url = "https://opentdb.com/api_token.php?command=request"
-    payload = {}
-    headers = {}
-    response = requests.request("GET", url, headers=headers, data=payload)
-    quiz_token = json.loads(response.text.encode("utf8"))["token"]
-
     if request.method == "POST":
 
         # Allows the User's category choices to go into the DB as a list
@@ -180,13 +173,19 @@ def create():
             else:
                 break
 
+        difficulty = {
+            'easy': int(request.form.get('easy')),
+            'medium': int(request.form.get('medium')),
+            'hard': int(request.form.get('hard'))
+            }
+
         quiz_details = {
-            "token": quiz_token,
             "user_id": existing_user["_id"],
             "quiz_name": request.form.get("quiz_name"),
             "rounds": int(request.form.get("rounds")),
             "questions": int(request.form.get("questions")),
             "categories": categories,
+            "difficulty": difficulty,
             "type": "multiple",
             "easy": int(request.form.get("easy")),
             "medium": int(request.form.get("medium")),
@@ -203,7 +202,7 @@ def create():
         if difficulty_total == quiz_details['questions']:
             # Checks to see if the User is logged in or not
             if "user" in session:
-                print(request.form)
+                # print(request.form)
                 flash("What to flash here")
                 return render_template("quiz_admin.html")
             else:
@@ -224,27 +223,54 @@ def quiz_admin(quiz_id):
 
     # Extracts quiz details from DB
     quizzes = list(mongo.db.quizzes.find())
-    print("quiz_details: ", quizzes)
+    for quiz_data in quizzes:
+        quiz_data_id = quiz_data["_id"]
+        str_quiz_data_id = str(quiz_data_id)
 
-    # Extracting the Questions from the API
-    url = "https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple"
-    print(url)
-    payload = {}
-    headers = {}
-    q_response = requests.request("GET", url, headers=headers, data=payload)
-    quiz_questions = json.loads(q_response.text.encode("utf8"))
-    print("quiz_questions: ", quiz_questions)
+        # Extracts the Categories from the DB
+        for category in quiz_data['categories']:
+            print("CATEGORIES: ", category)
 
-    # Trying to extract the individual question.
-    for questions in quiz_questions:
-        for questiony in questions:
-            print("Blah", questiony)
+        if quiz_id == str_quiz_data_id:
 
-    # Extracts the quiz _id from the URL
-    url = str(request.base_url)
-    url_quiz_id = url.split('/')[-1]
+            # Extracting the token from the API
+            url = "https://opentdb.com/api_token.php?command=request"
+            payload = {}
+            headers = {}
+            response = requests.request("GET", url, headers=headers, data=payload)
+            quiz_token = json.loads(response.text.encode("utf8"))["token"]
 
-    return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
+            quiz_questions = ""
+
+            if quiz_data["easy"] > 0:
+                amount = str(quiz_data["easy"])
+                difficulty = "easy"
+
+                # Extracting the Questions from the API
+                url = "https://opentdb.com/api.php?amount=" + amount + "&category=9&difficulty=" + difficulty + "&type=multiple&token=" + quiz_token
+                print("URL: ", url)
+                payload = {}
+                headers = {}
+                q_response = requests.request("GET", url, headers=headers, data=payload)
+                quiz_questions = json.loads(q_response.text.encode("utf8"))["results"]
+
+            elif quiz_data["medium"] > 0:
+                amount = str(quiz_data["medium"])
+                difficulty = "medium"
+
+                # Extracting the Questions from the API
+                url = "https://opentdb.com/api.php?amount=" + amount + "&category=9&difficulty=" + difficulty + "&type=multiple&token=" + quiz_token
+                print("URL: ", url)
+                payload = {}
+                headers = {}
+                q_response = requests.request("GET", url, headers=headers, data=payload)
+                quiz_questions = json.loads(q_response.text.encode("utf8"))["results"]
+
+            # Extracts the quiz _id from the URL
+            url = str(request.base_url)
+            url_quiz_id = url.split('/')[-1]
+
+            return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
 
 
 @app.route("/publish/<quiz_id>", methods=["GET", "POST"])
