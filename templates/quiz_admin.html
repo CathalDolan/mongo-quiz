@@ -20,7 +20,7 @@
 
                 <!-- Publish Button -->
                 <div class="button-div">
-                    <a href="{{ url_for('publish', quiz_id=quiz._id) }}"
+                    <a href="{{ url_for('play', quiz_id=quiz._id) }}"
                         class="btn-large waves-effect waves-light bg-color-green text-shadow">
                         Publish 
                         <i class="fas fa fa-upload"></i>
@@ -51,12 +51,13 @@
                                             {% for question in quiz_questions %}
                                                 <div class="questions-row-div row">
                                                     <i class="questions-row-icon inline-block fas fa-times col s2 m1"></i>
-                                                    <p class="questions-row inline-block col s10 m9">{{ question.question }}</p>
+                                                    <!-- Safe filter escapes unicode charactyers as delivered by the API call-->
+                                                    <p class="questions-row inline-block col s10 m9">{{ question.question|safe }}</p>
                                                     <p class="questions-row difficulty inline-block col s12 m2"><strong>Difficulty: </strong>TBC</p>
                                                 </div>
                                                 <div class="answer_button_row row">
                                                     <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                        {{ question.correct_answer }}
+                                                        {{ question.correct_answer|safe }}
                                                     </button>
                                                     <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
                                                         Answer 2
@@ -225,10 +226,14 @@
                         </a>
                     </div>
                 </div>
+                <br>
+                <div class="row alignC">
+                    <h5>Player link to access the quiz</h5>
+                    <p>https://8080-ba9fe4fb-5fe7-4a7b-8e55-99e82b8a73e7.ws-eu01.gitpod.io/play/{{ quiz._id }}</p>
+                </div>
             {% endif %}
         {% endfor %} 
 
-        <br>
     </div>
 
 {% endblock %}
