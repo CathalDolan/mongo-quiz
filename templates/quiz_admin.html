@@ -51,7 +51,7 @@
                                             {% for question in quiz_questions %}
                                                 <div class="questions-row-div row">
                                                     <i class="questions-row-icon inline-block fas fa-times col s2 m1"></i>
-                                                    <!-- Safe filter escapes unicode charactyers as delivered by the API call-->
+                                                    <!-- Safe filter escapes unicode characters as delivered by the API call-->
                                                     <p class="questions-row inline-block col s10 m9">{{ question.question|safe }}</p>
                                                     <p class="questions-row difficulty inline-block col s12 m2"><strong>Difficulty: </strong>TBC</p>
                                                 </div>
@@ -76,6 +76,11 @@
                             </ul>
                         </div>
                     </li>
+
+                    <!-- Span is here so as to dynamically create unique ID's that can be accessed in JS -->
+                    {% for cat_name in quiz.categories %}
+                        <span style="display: none" id="cat-{{loop.index}}">{{ cat_name }}</span>
+                    {% endfor %}
 
                     <!-- Rounds Scores Section -->
                     <li>
@@ -190,7 +195,7 @@
                                         <!-- Create & Cancel Buttons-->
                                         <div class="row">
                                             <div id="create-button-div" class="button-div col s12 m6">
-                                                <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                                                <button action="{{ url_for('update_quiz', quiz_id=quiz._id) }}" id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
                                                     Update <i class="fas fa-plus-circle"></i>
                                                 </button>
                                             </div>

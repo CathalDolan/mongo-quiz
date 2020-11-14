@@ -188,7 +188,8 @@ def create():
             "created": timestampStr
         }
         # Insert the quiz_details dictionary into the database
-        mongo.db.quizzes.insert_one(quiz_details)
+        # Creating a var allows the data to be returned. Needed so as to get _id
+        result = mongo.db.quizzes.insert_one(quiz_details)
 
         # Get the total of the three Difficulty fields...
         difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
@@ -196,11 +197,11 @@ def create():
         if difficulty_total == quiz_details['questions']:
             # Checks to see if the User is logged in or not
             if "user" in session:
-                # print(request.form)
-                flash("What to flash here")
-                return render_template("quiz_admin.html")
+                flash("Your quiz has been created!")
+                return redirect(url_for("quiz_admin", quiz_id=result.inserted_id))
             else:
                 # Session added so as to correctly redirect User once registered
+                # Required if User creates a quiz without being signed in
                 session["quiz_name"] = request.form.get("quiz_name")
                 flash("Please register or login to finish your quiz.")
                 return redirect(url_for("register"))
@@ -209,6 +210,66 @@ def create():
             return render_template("create.html", quiz_details=quiz_details)
 
     return render_template("create.html", quiz_details="")
+
+
+@app.route("/update_quiz/<quiz_id>", methods=["GET", "POST"])
+def update_quiz(quiz_id):
+
+    existing_user = mongo.db.users.find_one(
+        {"username": session["user"]})
+
+    # current date and time
+    dateTimeObj = datetime.now()
+    timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+
+    if request.method == "POST":
+
+        categories =[]
+        num = 1
+        while True:
+            if 'round{}'.format(num) in request.form:
+                categories.append(json.loads(request.form.get("round{}".format(num))))
+                num +=1
+            else:
+                break
+
+        difficulty = {
+            'easy': int(request.form.get('easy')),
+            'medium': int(request.form.get('medium')),
+            'hard': int(request.form.get('hard'))
+            }
+
+        invitee_list = request.form.get("invitees")
+        invitees = invitee_list.replace(',', ' ').split()
+        invitees.append(existing_user["email"])
+
+        quiz_details = {
+            "user_id": existing_user["_id"],
+            "quiz_master": existing_user["username"],
+            "quiz_name": request.form.get("quiz_name"),
+            "rounds": int(request.form.get("rounds")),
+            "questions": int(request.form.get("questions")),
+            "categories": categories,
+            "difficulty": difficulty,
+            "type": "multiple",
+            "easy": int(request.form.get("easy")),
+            "medium": int(request.form.get("medium")),
+            "hard": int(request.form.get("hard")),
+            "invitees": invitees,
+            "created": timestampStr
+        }
+
+        # Validate whether Difficulty totals match the number of Questions
+        difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
+        if difficulty_total == quiz_details['questions']:
+            mongo.db.quizzes.update({"_id":ObjectId(quiz_id)}, quiz_details)
+            flash("Quiz details updated")
+            return redirect(url_for("quiz_admin"))
+        else:
+            flash("The total for all 3 Difficulty levels must equal the number of questions.")
+            return render_template("quiz_admin.html")
+
+    return render_template("quiz_admin.html")
 
 
 @app.route("/quiz_admin/<quiz_id>")

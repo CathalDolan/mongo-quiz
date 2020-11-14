@@ -52,24 +52,25 @@ async function getRoundsDataFn(category_names) {
     // Get the number of rounds entered by the User
     roundsPerGame = parseInt(document.getElementById('rounds').value);
 
-    var text2 = "";
-    for(let j = 0, len=category_names.length; j<len; j++ ){
-        text2 += `
-            <option value='${JSON.stringify(category_names[j])}'>${category_names[j]['name']}</option>
-        `
-    }
-
     var text = "";
     var i = 1;
-    //For loop required below to populate each category name
+    
     while (i <= roundsPerGame) {
+        let categoryName = null;
+        if(document.getElementById(`cat-${i}`)) {
+            categoryName = document.getElementById(`cat-${i}`).textContent;
+        }
         text += `
         <div class="input-field col xs12 s6 l4">
             <div class="select-wrapper">
                 <select id="round${i}" name="round${i}" style="display:block;" required>
-                    <option class="cats_first" value="" disabled selected>Round ${i} Category</option>
-                    ${text2}
-                </select>
+                    <option class="cats_first" value="" disabled ${!categoryName && 'selected'}>Round ${i} Category</option>`
+                    // For loop required below to extract each category name
+                    for(let j = 0, len=category_names.length; j<len; j++ ){
+                        // If category name in DB, it becomes "selected" and displays in Quiz Admin details
+                        text += `<option value="${category_names[j]['name']}" ${category_names[j]['name'] === categoryName && 'selected'}>${category_names[j]['name']}</option>`
+                    }
+        text += `</select>
             </div>
         </div>`;
         i++;
