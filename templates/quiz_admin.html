@@ -46,34 +46,35 @@
                                     <li>
                                         <!-- Individual Rounds Header Section -->
                                         <div class="collapsible-header">
-                                            <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ category.name }}</h6>
+                                            <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ category }}</h6>
                                         </div>
                                         <!-- Individual Rounds Body Section for Answers -->
                                         <div class="collapsible-body">
                                             {% for question in quiz_questions %}
                                                 {% for questions in question %}
-                                                    {% if questions.category == category.name %}
+                                                    {% if questions.category == category %}
                                                         <div class="questions-row-div row">
-                                                            <i class="questions-row-icon-play fas fa-play-circle col s2 m1" style="display:block"></i>
-                                                            <i class="questions-row-icon-pause fas fa-pause-circle col s2 m1" style="display:block"></i>
-                                                            <i class="questions-row-icon-stop fas fa-stop-circle col s2 m1" style="display:block"></i>
+                                                            <button id="play" class="icon-button btn col s12 m1" style="display:block">
+                                                                <i class="quiz fas fa-play-circle"></i>
+                                                            </button>
+                                                            <button id="pause" class="icon-button btn col s12 m1" style="display:none">
+                                                                <i class="quiz fas fa-pause-circle"></i>
+                                                            </button>
+                                                            <button id="stop" class="icon-button btn col s12 m1" style="display:none">
+                                                                <i class="quiz fas fa-stop-circle"></i>
+                                                            </button>
                                                             <!-- Safe filter escapes unicode characters as delivered by the API call-->
-                                                            <p class="questions-row inline-block col s10 m8">{{ questions.question|safe }}</p>
-                                                            <p class="questions-row difficulty inline-block col s12 m3"><strong>Difficulty: </strong>{{ questions.difficulty }}</p>
+                                                            <p class="questions-row inline-block col s12 m8 floatR">Q{{ loop.index }} - {{ questions.question|safe }}</p>
+                                                            <p class="questions-row difficulty inline-block col s12 m3 floatR"><strong>Difficulty: </strong>{{ questions.difficulty }}</p>
                                                         </div>
                                                         <div class="answer_button_row row">
-                                                            <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                                {{ questions.correct_answer|safe }}
-                                                            </button>
-                                                            <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                                Answer 2
-                                                            </button>
-                                                            <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                                Answer 3
-                                                            </button>
-                                                            <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
-                                                                Answer 4
-                                                            </button>
+                                                            {% set answers = questions.correct_answer %}}
+                                                            {% for answers2 in questions.incorrect_answer %}
+                                                                {% set answers = answers + answers2 %}
+                                                                <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                                    {{ answers|safe }}
+                                                                </button>
+                                                            {% endfor %}
                                                         </div>
                                                     {% endif %}
                                                 {% endfor %}
@@ -114,7 +115,7 @@
 
                     <!-- Quiz Details Section -->
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" onclick="getCategoriesFn()">
                             DETAILS
                         </div>
                         <div class="collapsible-body">
@@ -124,7 +125,7 @@
                             </div>
                             <span>
                                 <div id="details-form-row" class="row">
-                                    <form  id="details-form" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('create') }}">
+                                    <form  id="details-form" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('update_quiz', quiz_id=quiz._id) }}" >
                                         <div id="details-card-panel" class="card-panel">
 
                                             <!-- 1. Quiz Name-->
@@ -208,7 +209,7 @@
                                             <!-- Create & Cancel Buttons-->
                                             <div class="row">
                                                 <div id="create-button-div" class="button-div col s12 m6">
-                                                    <button action="{{ url_for('update_quiz', quiz_id=quiz._id) }}" id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                                                    <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
                                                         Update <i class="fas fa-plus-circle"></i>
                                                     </button>
                                                 </div>

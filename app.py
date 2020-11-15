@@ -153,7 +153,7 @@ def create():
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                categories.append(json.loads(request.form.get("round{}".format(num))))
+                categories.append(request.form.get("round{}".format(num)))
                 num +=1
             else:
                 break
@@ -228,7 +228,7 @@ def update_quiz(quiz_id):
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                categories.append(json.loads(request.form.get("round{}".format(num))))
+                categories.append(request.form.get("round{}".format(num)))
                 num +=1
             else:
                 break
@@ -264,7 +264,7 @@ def update_quiz(quiz_id):
         if difficulty_total == quiz_details['questions']:
             mongo.db.quizzes.update({"_id":ObjectId(quiz_id)}, quiz_details)
             flash("Quiz details updated")
-            return redirect(url_for("quiz_admin"))
+            return redirect(url_for("quiz_admin", quiz_id=quiz_id))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
             return render_template("quiz_admin.html")
@@ -272,31 +272,30 @@ def update_quiz(quiz_id):
     return render_template("quiz_admin.html")
 
 
-
-
-# Function needed for "Publish" button to call the questions
-# When User clicks the button, API calls are made to retrieve the questions
-# Rounds Section and each collapsible is populated with relevant questions
-# "play/ask" and related buttons and functionality included for each question
-# Players page auto refreshes so that they are "in the game"
-# Prevent editing of "Details" section on Admin page once quiz is published
 @app.route("/quiz_admin/<quiz_id>")
 def quiz_admin(quiz_id):
 
     # Extracts the quiz _id from the URL
-    # Allows the QUiz displayed to match the one opened from the Profile
+    # Allows the Quiz displayed to match the one opened from the Profile
     url = str(request.base_url)
     url_quiz_id = url.split('/')[-1]
 
     # Extracts quiz details from DB
-    quizzes = list(mongo.db.quizzes.find())
+    quizes = list(mongo.db.quizzes.find())
+    quizzes = json.loads(quizes)
+    print("QUIZZZEEESSSS: ", quizzes)
+
+    quiz_questions = []
 
     for quiz_data in quizzes:
+        print("QWERTY: ", quiz_data)
         quiz_data_id = str(quiz_data["_id"])
+
+        print("ID'S", quiz_data_id)
 
         # Checks if ID passed into function matches that on the DB
         if quiz_id == quiz_data_id:
-            print(quiz_data['quiz_name'])
+            print("QUIZ NAME: ", quiz_data['quiz_name'])
 
             # Extract the token from the API
             url = "https://opentdb.com/api_token.php?command=request"
@@ -304,8 +303,6 @@ def quiz_admin(quiz_id):
             headers = {}
             response = requests.request("GET", url, headers=headers, data=payload)
             quiz_token = json.loads(response.text.encode("utf8"))["token"]
-
-            quiz_questions = []
 
             # Extracts the Categories from the DB
             # Enumerate produces a loop count/index
@@ -349,10 +346,14 @@ def quiz_admin(quiz_id):
                         # and embed each list in a dict appended to the quiz_questions var
                         quiz_answers = []
                         for questions in quiz_questions:
+                            print("QUESTIONS: ", questions)
                             for questions2 in questions:
                                 quiz_answers.append(questions2['correct_answer'])
+                                print("QUESTIONS2: ", questions2)
+                                print("QUESTIONS2 CORRECT: ", questions2['correct_answer'])
                                 for answers in questions2['incorrect_answers']:
                                     quiz_answers.append(answers)
+                                    print("QUESTIONS2 INCORRECT: ", questions2['incorrect_answers'])
                                     for q in quiz_answers:
                                         print("Q1: ", q)
 

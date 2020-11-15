@@ -333,17 +333,22 @@ div.categories_row.col.s12 {
     margin-bottom: 0;
 }
 
-.questions-row-icon-play.fa-play-circle:before {
-    color: green;
-    font-size: 2em;
+.icon-button {
+    color: white;
+    width: 50px;
+    text-align: center;
 }
-.questions-row-icon-pause.fa-pause-circle:before {
-    color: orange;
-    font-size: 2em;
+#play.icon-button {
+    background-color: green;
 }
-.questions-row-icon-stop.fa-stop-circle:before {
-    color: red;
-    font-size: 2em;
+#pause.icon-button {
+    background-color: orange;
+}
+#stop.icon-button {
+    background-color: red;
+}
+i.quiz.fas {
+    padding: 0;
 }
 
 /* Quiz Admin Page - Details Section Finish */

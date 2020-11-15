@@ -41,3 +41,13 @@ def quiz_admin(quiz_id):
                 # print("QUIZ QUESTIONS: ", quiz_questions)
 
             return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
+
+
+
+{% set answers = questions.correct_answer %}
+{% for answers2 in questions.incorrect_answer %}
+    {% set answers = answers + answers2 %}
+        <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+            {{ answers|safe|random() }}
+        </button>
+{% endfor %}
