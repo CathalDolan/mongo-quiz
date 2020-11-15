@@ -314,7 +314,7 @@ def quiz_admin(quiz_id):
                 print("ENUMERATE: ", count, category['name'])
 
                 for difficulty in quiz_data['difficulty']:
-                    
+
                     # Extract the Easy Questions from the API
                     if int(difficulty['easy']) > 0:
                         easy_amount = str(difficulty['easy'])
@@ -345,11 +345,18 @@ def quiz_admin(quiz_id):
                         hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
                         quiz_questions.append(hard_questions)
 
-        return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
+                        # Extracts the individual answers. How to assign each question set to it's own list
+                        # and embed each list in a dict appended to the quiz_questions var
+                        quiz_answers = []
+                        for questions in quiz_questions:
+                            for questions2 in questions:
+                                quiz_answers.append(questions2['correct_answer'])
+                                for answers in questions2['incorrect_answers']:
+                                    quiz_answers.append(answers)
+                                    for q in quiz_answers:
+                                        print("Q1: ", q)
 
-            # for questions in quiz_questions:
-            #     for questions2 in questions:
-            #         print("FOR LOOP: ", questions2)
+        return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
 
     return render_template("quiz_admin.html")
 

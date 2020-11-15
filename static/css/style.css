@@ -332,6 +332,20 @@ div.categories_row.col.s12 {
 #rounds-row {
     margin-bottom: 0;
 }
+
+.questions-row-icon-play.fa-play-circle:before {
+    color: green;
+    font-size: 2em;
+}
+.questions-row-icon-pause.fa-pause-circle:before {
+    color: orange;
+    font-size: 2em;
+}
+.questions-row-icon-stop.fa-stop-circle:before {
+    color: red;
+    font-size: 2em;
+}
+
 /* Quiz Admin Page - Details Section Finish */
 
 /* Play Page - Details Section Start */
