@@ -1,7 +1,6 @@
 import os
 import requests
 import json
-import html
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -57,15 +56,9 @@ def register():
         # ...and put the new User into "session" via a session cookie
         session["user"] = request.form.get("username")
 
-        # Checks if there is a Quiz session in place
-        if "quiz_name" in session:
-            session.pop("quiz_name")
-            flash("Quiz Creation and Registration Successful!")
-            return render_template("quiz_admin.html")
-        else:
-            flash("Registration Successful!")
-            # Username needs to be from Session so as to match Profile page
-            return redirect(url_for("profile", username=session["user"]))
+        flash("Registration Successful!")
+        # Username needs to be from Session so as to match Profile page
+        return redirect(url_for("profile", username=session["user"]))
 
     return render_template("register.html")
 
@@ -137,9 +130,6 @@ def logout():
 @app.route("/create", methods=["GET", "POST"])
 def create():
 
-    existing_user = mongo.db.users.find_one(
-        {"username": session["user"]})
-
     # current date and time
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y")
@@ -153,17 +143,22 @@ def create():
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                categories.append(request.form.get("round{}".format(num)))
+                print("\n\nCategory: ", request.form.get("round{}".format(num)), "\n\n")
+                # categories.append(json.loads(request.form.get("round{}".format(num))))
+                categories.append(json.loads(request.form.get("round{}".format(num))))
                 num +=1
             else:
                 break
 
-        # Var so Difficulties go into DB as a dict from form
-        difficulty = {
+        # Var so Difficulties go into DB as a dict in a lis from form
+        difficulty = [{
             'easy': int(request.form.get('easy')),
             'medium': int(request.form.get('medium')),
             'hard': int(request.form.get('hard'))
-            }
+            }]
+
+        existing_user = mongo.db.users.find_one(
+        {"username": session["user"]})
 
         # Var so Invitees go into DB as a list from form
         invitee_list = request.form.get("invitees")
@@ -194,16 +189,8 @@ def create():
         difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
         # ...then validate whether Difficulty totals match the number of Questions
         if difficulty_total == quiz_details['questions']:
-            # Checks to see if the User is logged in or not
-            if "user" in session:
-                flash("Your quiz has been created!")
-                return redirect(url_for("quiz_admin", quiz_id=result.inserted_id))
-            else:
-                # Session added so as to correctly redirect User once registered
-                # Required if User creates a quiz without being signed in
-                session["quiz_name"] = request.form.get("quiz_name")
-                flash("Please register or login to finish your quiz.")
-                return redirect(url_for("register"))
+            flash("Your quiz has been created!")
+            return redirect(url_for("quiz_admin", quiz_id=result.inserted_id))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
             return render_template("create.html", quiz_details=quiz_details)
@@ -228,20 +215,19 @@ def update_quiz(quiz_id):
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                categories.append(request.form.get("round{}".format(num)))
+                categories.append(json.loads(request.form.get("round{}".format(num))))
                 num +=1
             else:
                 break
 
-        difficulty = {
+        difficulty = [{
             'easy': int(request.form.get('easy')),
             'medium': int(request.form.get('medium')),
             'hard': int(request.form.get('hard'))
-            }
+            }]
 
         invitee_list = request.form.get("invitees")
         invitees = invitee_list.replace(',', ' ').split()
-        invitees.append(existing_user["email"])
 
         quiz_details = {
             "user_id": existing_user["_id"],
@@ -276,89 +262,75 @@ def update_quiz(quiz_id):
 def quiz_admin(quiz_id):
 
     # Extracts the quiz _id from the URL
-    # Allows the Quiz displayed to match the one opened from the Profile
+    # Allows the QUiz displayed to match the one opened from the Profile
     url = str(request.base_url)
     url_quiz_id = url.split('/')[-1]
 
     # Extracts quiz details from DB
-    quizes = list(mongo.db.quizzes.find())
-    quizzes = json.loads(quizes)
-    print("QUIZZZEEESSSS: ", quizzes)
-
+    quiz = mongo.db.quizzes.find_one({"_id": ObjectId(url_quiz_id)})
     quiz_questions = []
 
-    for quiz_data in quizzes:
-        print("QWERTY: ", quiz_data)
-        quiz_data_id = str(quiz_data["_id"])
+    # Checks if ID passed into function matches that on the DB
+    if quiz is not None:
+        print("\n\nQuiz Name: ", quiz['quiz_name'], "\n\n")
 
-        print("ID'S", quiz_data_id)
+        # Extract the token from the API
+        url = "https://opentdb.com/api_token.php?command=request"
+        payload = {}
+        headers = {}
+        response = requests.request("GET", url, headers=headers, data=payload)
+        quiz_token = json.loads(response.text.encode("utf8"))["token"]
 
-        # Checks if ID passed into function matches that on the DB
-        if quiz_id == quiz_data_id:
-            print("QUIZ NAME: ", quiz_data['quiz_name'])
+        # Extracts the Categories from the DB
+        # Enumerate produces a loop count/index
+        for count, category in enumerate(quiz['categories'], start=1):
+            category_id = str(category['id'])
+            # category_id = str(count+9)
+            print("ENUMERATE: ", count, category['name'])
 
-            # Extract the token from the API
-            url = "https://opentdb.com/api_token.php?command=request"
-            payload = {}
-            headers = {}
-            response = requests.request("GET", url, headers=headers, data=payload)
-            quiz_token = json.loads(response.text.encode("utf8"))["token"]
+            for difficulty in quiz['difficulty']:
 
-            # Extracts the Categories from the DB
-            # Enumerate produces a loop count/index
-            for count, category in enumerate(quiz_data['categories'], start=1):
-                category_id = str(category['id'])
-                print("ENUMERATE: ", count, category['name'])
+                # Extract the Easy Questions from the API
+                if int(difficulty['easy']) > 0:
+                    easy_amount = str(difficulty['easy'])
+                    url = "https://opentdb.com/api.php?amount=" + easy_amount + "&category=" + category_id + "&difficulty=easy&type=multiple&token=" + quiz_token
+                    payload = {}
+                    headers = {}
+                    q_response1 = requests.request("GET", url, headers=headers, data=payload)
+                    easy_questions = json.loads(q_response1.text.encode("utf8"))["results"]
+                    quiz_questions.append(easy_questions)
 
-                for difficulty in quiz_data['difficulty']:
+                # Extract the Medium Questions from the API
+                if int(difficulty['medium']) > 0:
+                    medium_amount = str(difficulty['medium'])
+                    url = "https://opentdb.com/api.php?amount=" + medium_amount + "&category=" + category_id + "&difficulty=medium&type=multiple&token=" + quiz_token
+                    payload = {}
+                    headers = {}
+                    q_response2 = requests.request("GET", url, headers=headers, data=payload)
+                    medium_questions = json.loads(q_response2.text.encode("utf8"))["results"]
+                    quiz_questions.append(medium_questions)
 
-                    # Extract the Easy Questions from the API
-                    if int(difficulty['easy']) > 0:
-                        easy_amount = str(difficulty['easy'])
-                        url = "https://opentdb.com/api.php?amount=" + easy_amount + "&category=" + category_id + "&difficulty=easy&type=multiple&token=" + quiz_token
-                        payload = {}
-                        headers = {}
-                        q_response1 = requests.request("GET", url, headers=headers, data=payload)
-                        easy_questions = json.loads(q_response1.text.encode("utf8"))["results"]
-                        quiz_questions.append(easy_questions)
+                # Extract the Hard Questions from the API
+                if int(difficulty['hard']) > 0:
+                    hard_amount = str(difficulty['hard'])
+                    url = "https://opentdb.com/api.php?amount=" + hard_amount + "&category=" + category_id + "&difficulty=hard&type=multiple&token=" + quiz_token
+                    payload = {}
+                    headers = {}
+                    q_response3 = requests.request("GET", url, headers=headers, data=payload)
+                    hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
+                    quiz_questions.append(hard_questions)
 
-                    # Extract the Medium Questions from the API
-                    if int(difficulty['medium']) > 0:
-                        medium_amount = str(difficulty['medium'])
-                        url = "https://opentdb.com/api.php?amount=" + medium_amount + "&category=" + category_id + "&difficulty=medium&type=multiple&token=" + quiz_token
-                        payload = {}
-                        headers = {}
-                        q_response2 = requests.request("GET", url, headers=headers, data=payload)
-                        medium_questions = json.loads(q_response2.text.encode("utf8"))["results"]
-                        quiz_questions.append(medium_questions)
-
-                    # Extract the Hard Questions from the API
-                    if int(difficulty['hard']) > 0:
-                        hard_amount = str(difficulty['hard'])
-                        url = "https://opentdb.com/api.php?amount=" + hard_amount + "&category=" + category_id + "&difficulty=hard&type=multiple&token=" + quiz_token
-                        payload = {}
-                        headers = {}
-                        q_response3 = requests.request("GET", url, headers=headers, data=payload)
-                        hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
-                        quiz_questions.append(hard_questions)
-
-                        # Extracts the individual answers. How to assign each question set to it's own list
-                        # and embed each list in a dict appended to the quiz_questions var
-                        quiz_answers = []
-                        for questions in quiz_questions:
-                            print("QUESTIONS: ", questions)
-                            for questions2 in questions:
-                                quiz_answers.append(questions2['correct_answer'])
-                                print("QUESTIONS2: ", questions2)
-                                print("QUESTIONS2 CORRECT: ", questions2['correct_answer'])
-                                for answers in questions2['incorrect_answers']:
-                                    quiz_answers.append(answers)
-                                    print("QUESTIONS2 INCORRECT: ", questions2['incorrect_answers'])
-                                    for q in quiz_answers:
-                                        print("Q1: ", q)
-
-        return render_template("quiz_admin.html", quizzes=quizzes, quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
-
+                    # Extracts the individual answers. How to assign each question set to it's own list
+                    # and embed each list in a dict appended to the quiz_questions var
+                    quiz_answers = []
+                    for questions in quiz_questions:
+                        for questions2 in questions:
+                            quiz_answers.append(questions2['correct_answer'])
+                            for answers in questions2['incorrect_answers']:
+                                quiz_answers.append(answers)
+                                for q in quiz_answers:
+                                    print("Q1: ", q)
+        return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
     return render_template("quiz_admin.html")
 
 @app.route("/play/<quiz_id>", methods=["GET", "POST"])
@@ -388,7 +360,7 @@ def delete_quiz(quiz_id):
 
     username = mongo.db.users.find_one(
         {"username": session["user"]})
-        
+
     mongo.db.quizzes.remove({"_id": ObjectId(quiz_id)})
     flash("Quiz successfully deleted")
     return redirect(url_for("profile", username=session["user"]))

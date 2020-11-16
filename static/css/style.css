@@ -246,10 +246,10 @@ div.categories_row.col.s12 {
     font-weight: 600;
 }
 
-/* Profile Page: Remove padding on Create button */
+/* Profile Page: Remove padding on Create button except for top which aligns it with the text on larger screens */
 .profile-create-button.paddingR0 {
     padding-right: 0;
-    padding-top: 30px;
+    padding-top: 20px;
 }
 @media (max-width: 576px) {  
     .profile-create-button.paddingR0 {

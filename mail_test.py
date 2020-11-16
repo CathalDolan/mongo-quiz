@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 app.config["EMAIL_ADDRESS"] = os.environ.get("EMAIL_ADDRESS")
 app.config["PASSWORD"] = os.environ.get("PASSWORD")
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
+PASSWORD = os.environ.get("PASSWORD")
 
 with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
     smtp.ehlo()

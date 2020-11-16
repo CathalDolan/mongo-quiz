@@ -68,7 +68,7 @@ async function getRoundsDataFn(category_names) {
                     // For loop required below to extract each category name
                     for(let j = 0, len=category_names.length; j<len; j++ ){
                         // If category name in DB, it becomes "selected" and displays in Quiz Admin details
-                        text += `<option value="${category_names[j]['name']}" ${category_names[j]['name'] === categoryName && 'selected'}>${category_names[j]['name']}</option>`
+                        text += `<option value='${JSON.stringify(category_names[j])}' ${category_names[j]['name'] === categoryName && 'selected'}>${category_names[j]['name']}</option>`
                     }
         text += `</select>
             </div>
