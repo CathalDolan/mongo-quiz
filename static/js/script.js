@@ -42,7 +42,7 @@ async function getCategoriesFn() {
     response = await fetch(url),
     json_categories = await response.json();
     let category_names = json_categories.trivia_categories;
-    console.log(category_names)
+    console.log(category_names);
 
     getRoundsDataFn(category_names);
 }
@@ -76,5 +76,4 @@ async function getRoundsDataFn(category_names) {
         i++;
     }
     document.getElementById("categories_row").innerHTML = text;
-
 }

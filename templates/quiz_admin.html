@@ -46,13 +46,13 @@
                                     <li>
                                         <!-- Individual Rounds Header Section -->
                                         <div class="collapsible-header">
-                                            <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ category }}</h6>
+                                            <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ category.name }}</h6>
                                         </div>
                                         <!-- Individual Rounds Body Section for Answers -->
                                         <div class="collapsible-body">
                                             {% for question in quiz_questions %}
                                                 {% for questions in question %}
-                                                    {% if questions.category == category %}
+                                                    {% if questions.category == category.name %}
                                                         <div class="questions-row-div row">
                                                             <button id="play" class="icon-button btn col s12 m1" style="display:block">
                                                                 <i class="quiz fas fa-play-circle"></i>
@@ -91,7 +91,7 @@
                         <span style="display: none" id="cat-{{loop.index}}">{{ cat_name }}</span>
                     {% endfor %}
 
-                    <!-- Rounds Scores Section -->
+                    <!-- Scores Section -->
                     <li>
                         <div class="collapsible-header">
                             SCORES
@@ -150,16 +150,8 @@
                                                 </div>
                                             </div>
 
-                                            <!-- 3 Categories -->
+                                            <!-- 3 Categories - Details and HTML populated from script.js -->
                                             <div id="categories_row" class="row categories_row">
-                                                    <div class="input-field col xs12 s6 l4">
-                                                        <div class="select-wrapper">
-                                                            <select id="round" name="round" style="display:block;" required>
-                                                                <option class="cats_first" value="" disabled selected>Round{{ quiz.categories }}</option>
-                                                                <option value="">xyz</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
                                             </div>
 
                                             <!-- 4. Questions per Round-->
