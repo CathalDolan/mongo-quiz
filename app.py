@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import itertools
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -262,76 +263,68 @@ def update_quiz(quiz_id):
 def quiz_admin(quiz_id):
 
     # Extracts the quiz _id from the URL
-    # Allows the QUiz displayed to match the one opened from the Profile
+    # Allows the Quiz displayed to match the one opened from the Profile
     url = str(request.base_url)
     url_quiz_id = url.split('/')[-1]
 
     # Extracts quiz details from DB
     quiz = mongo.db.quizzes.find_one({"_id": ObjectId(url_quiz_id)})
+
+    # Extract the token from the API
+    url = "https://opentdb.com/api_token.php?command=request"
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    quiz_token = json.loads(response.text.encode("utf8"))["token"]
+
     quiz_questions = []
 
-    # Checks if ID passed into function matches that on the DB
-    if quiz is not None:
-        print("\n\nQuiz Name: ", quiz['quiz_name'], "\n\n")
+    # Extracts the Categories from the DB
+    # Enumerate produces a loop count/index
+    for count, category in enumerate(quiz['categories'], start=1):
+        category_id = str(category['id'])
+        # category_id = str(count+9)
 
-        # Extract the token from the API
-        url = "https://opentdb.com/api_token.php?command=request"
-        payload = {}
-        headers = {}
-        response = requests.request("GET", url, headers=headers, data=payload)
-        quiz_token = json.loads(response.text.encode("utf8"))["token"]
+        for difficulty in quiz['difficulty']:
 
-        # Extracts the Categories from the DB
-        # Enumerate produces a loop count/index
-        for count, category in enumerate(quiz['categories'], start=1):
-            category_id = str(category['id'])
-            # category_id = str(count+9)
-            print("ENUMERATE: ", count, category['name'])
+            # Extract the Easy Questions from the API
+            if int(difficulty['easy']) > 0:
+                easy_amount = str(difficulty['easy'])
+                url = "https://opentdb.com/api.php?amount=" + easy_amount + "&category=" + category_id + "&difficulty=easy&type=multiple&token=" + quiz_token
+                payload = {}
+                headers = {}
+                q_response1 = requests.request("GET", url, headers=headers, data=payload)
+                easy_questions = json.loads(q_response1.text.encode("utf8"))["results"]
+                quiz_questions.append(easy_questions)
 
-            for difficulty in quiz['difficulty']:
+                for all_details in easy_questions:
+                    print("CORRECT ANSWER: ", all_details['correct_answer'])
+                    print("INCORRECT ANSWER List: ", all_details['incorrect_answers'])
+                    for incorrect_answers in all_details['incorrect_answers']:
+                        print("INCORRECT ANSWER: ", incorrect_answers)
 
-                # Extract the Easy Questions from the API
-                if int(difficulty['easy']) > 0:
-                    easy_amount = str(difficulty['easy'])
-                    url = "https://opentdb.com/api.php?amount=" + easy_amount + "&category=" + category_id + "&difficulty=easy&type=multiple&token=" + quiz_token
-                    payload = {}
-                    headers = {}
-                    q_response1 = requests.request("GET", url, headers=headers, data=payload)
-                    easy_questions = json.loads(q_response1.text.encode("utf8"))["results"]
-                    quiz_questions.append(easy_questions)
+            # Extract the Medium Questions from the API
+            if int(difficulty['medium']) > 0:
+                medium_amount = str(difficulty['medium'])
+                url = "https://opentdb.com/api.php?amount=" + medium_amount + "&category=" + category_id + "&difficulty=medium&type=multiple&token=" + quiz_token
+                payload = {}
+                headers = {}
+                q_response2 = requests.request("GET", url, headers=headers, data=payload)
+                medium_questions = json.loads(q_response2.text.encode("utf8"))["results"]
+                quiz_questions.append(medium_questions)
 
-                # Extract the Medium Questions from the API
-                if int(difficulty['medium']) > 0:
-                    medium_amount = str(difficulty['medium'])
-                    url = "https://opentdb.com/api.php?amount=" + medium_amount + "&category=" + category_id + "&difficulty=medium&type=multiple&token=" + quiz_token
-                    payload = {}
-                    headers = {}
-                    q_response2 = requests.request("GET", url, headers=headers, data=payload)
-                    medium_questions = json.loads(q_response2.text.encode("utf8"))["results"]
-                    quiz_questions.append(medium_questions)
+            # Extract the Hard Questions from the API
+            if int(difficulty['hard']) > 0:
+                hard_amount = str(difficulty['hard'])
+                url = "https://opentdb.com/api.php?amount=" + hard_amount + "&category=" + category_id + "&difficulty=hard&type=multiple&token=" + quiz_token
+                payload = {}
+                headers = {}
+                q_response3 = requests.request("GET", url, headers=headers, data=payload)
+                hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
+                quiz_questions.append(hard_questions)
 
-                # Extract the Hard Questions from the API
-                if int(difficulty['hard']) > 0:
-                    hard_amount = str(difficulty['hard'])
-                    url = "https://opentdb.com/api.php?amount=" + hard_amount + "&category=" + category_id + "&difficulty=hard&type=multiple&token=" + quiz_token
-                    payload = {}
-                    headers = {}
-                    q_response3 = requests.request("GET", url, headers=headers, data=payload)
-                    hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
-                    quiz_questions.append(hard_questions)
+    return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
 
-                    # Extracts the individual answers. How to assign each question set to it's own list
-                    # and embed each list in a dict appended to the quiz_questions var
-                    quiz_answers = []
-                    for questions in quiz_questions:
-                        for questions2 in questions:
-                            quiz_answers.append(questions2['correct_answer'])
-                            for answers in questions2['incorrect_answers']:
-                                quiz_answers.append(answers)
-                                for q in quiz_answers:
-                                    print("Q1: ", q)
-        return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
-    return render_template("quiz_admin.html")
 
 @app.route("/play/<quiz_id>", methods=["GET", "POST"])
 def play(quiz_id):

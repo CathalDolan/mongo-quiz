@@ -5,6 +5,9 @@ lightbulbs - https://blog.woobox.com/wp-content/uploads/8-Best-Quiz-Ideas-to-Ent
 Outside
 - Navbar on Image: https://codepen.io/j_holtslander/pen/RVXzqm?html-preprocessor=pug
 - Navbar Active: https://stackoverflow.com/questions/18600031/changing-the-active-class-of-a-link-with-the-twitter-bootstrap-css-in-python-fla
+// Quiz_Admin Details - Autoadjust height of invitees textarea
+// Source: https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
+-Email: https://youtu.be/JRCJ6RtE3xU
 
 Testing
 

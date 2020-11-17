@@ -327,6 +327,7 @@ div.categories_row.col.s12 {
     width: 98%;
     }
 }
+/* Used in conjunction with JS to resize the text area in invitees */
 textarea {
     resize: none;
     overflow: hidden;

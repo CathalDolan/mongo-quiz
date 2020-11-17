@@ -79,11 +79,8 @@ async function getRoundsDataFn(category_names) {
 }
 
 
-// function auto_grow(element) {
-//     element.style.height = "5px";
-//     element.style.height = (element.scrollHeight)+"px";
-// }
-
+// Quiz_Admin Details - Autoadjust height of invitees textarea
+// Source: https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
 function textAreaAdjust(element) {
   element.style.height = "1px";
   element.style.height = (25+element.scrollHeight)+"px";
