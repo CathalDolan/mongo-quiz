@@ -115,7 +115,7 @@
 
                     <!-- Quiz Details Section -->
                     <li>
-                        <div class="collapsible-header" onclick="getCategoriesFn()">
+                        <div class="collapsible-header" onclick="getCategoriesFn(); textAreaAdjust(#invitees)" >
                             DETAILS
                         </div>
                         <div class="collapsible-body">
@@ -193,7 +193,7 @@
                                                     <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
                                                         data-tooltip="Add individual email addresses for those you want to take part.
                                                             Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
-                                                    <textarea id="invitees" name="invitees" text="text" class="materialize-textarea" value="{{ quiz.invitees }}">{{ quiz.invitees }}</textarea>
+                                                    <textarea onclick="textAreaAdjust(this)" id="invitees" name="invitees" text="text" class="materialize-textarea" value="{{ quiz.invitees }}" active>{{ quiz.invitees|join(', ') }}</textarea>
                                                     <label for="invitees">Invitees (comma separate emails)</label>
                                                 </div>
                                             </div>

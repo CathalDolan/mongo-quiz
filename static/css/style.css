@@ -327,6 +327,12 @@ div.categories_row.col.s12 {
     width: 98%;
     }
 }
+textarea {
+    resize: none;
+    overflow: hidden;
+    min-height: 50px;
+    max-height: 100px;
+}
 
 /* Removes white space between Rounds row and the dropdowns */
 #rounds-row {
