@@ -262,6 +262,10 @@ def update_quiz(quiz_id):
 @app.route("/quiz_admin/<quiz_id>")
 def quiz_admin(quiz_id):
 
+    # Username data required fpor passing into the page
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})
+
     # Extracts the quiz _id from the URL
     # Allows the Quiz displayed to match the one opened from the Profile
     url = str(request.base_url)
@@ -323,7 +327,7 @@ def quiz_admin(quiz_id):
                 hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
                 quiz_questions.append(hard_questions)
 
-    return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id)
+    return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id, username=username)
 
 
 @app.route("/play/<quiz_id>", methods=["GET", "POST"])
@@ -346,6 +350,19 @@ def play(quiz_id):
                 return render_template("play.html", quizzes=quizzes, url_quiz_id=url_quiz_id)
     else:
         return render_template("register.html")
+
+
+@app.route("/remove_quiz/<quiz_id>")
+def remove_quiz(quiz_id):
+
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})
+    quiz = mongo.db.quizzes.find_one({"_id": ObjectId(quiz_id)})
+
+    if quiz['_id'] == quiz_id:
+        mongo.db.quizzes.remove({"invitees": username['email']})
+        flash("Quiz successfully removed")
+    return redirect(url_for("profile", username=session["user"]))
 
 
 @app.route("/delete_quiz/<quiz_id>")

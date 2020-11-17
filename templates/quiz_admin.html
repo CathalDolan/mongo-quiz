@@ -20,22 +20,12 @@
                 <p><strong>Note:</strong> Questions will display once the quiz has been published.</p>
                 <br>
 
-                <!-- Publish Button -->
-                <div class="button-div">
-                    <a href="{{ url_for('quiz_admin', quiz_id=quiz._id) }}"
-                        class="btn-large waves-effect waves-light bg-color-green text-shadow">
-                        Publish 
-                        <i class="fas fa fa-upload"></i>
-                    </a>
-                </div>
-                <br>
-
                 <!-- Collapsibles Section -->
                 <ul class="collapsible popout">
 
                     <!-- ROUNDS & QUESTIONS SECTION -->
                     <li>
-                        <div class="collapsible-header" >
+                        <div class="collapsible-header" onclick="random_answersFn()">
                             ROUNDS
                         </div>
                         <div class="row collapsible-body">
@@ -56,28 +46,21 @@
                                                     <!-- <p>questions: {{ questions }}</p> -->
                                                     {% if questions.category == category.name %}
                                                         <div class="questions-row-div row">
-                                                            <button id="play" class="icon-button btn col s12 m1" style="display:block">
-                                                                <i class="quiz fas fa-play-circle"></i>
-                                                            </button>
-                                                            <button id="pause" class="icon-button btn col s12 m1" style="display:none">
-                                                                <i class="quiz fas fa-pause-circle"></i>
-                                                            </button>
-                                                            <button id="stop" class="icon-button btn col s12 m1" style="display:none">
-                                                                <i class="quiz fas fa-stop-circle"></i>
-                                                            </button>
                                                             <!-- Safe filter escapes unicode characters as delivered by the API call-->
-                                                            <p class="questions-row inline-block col s12 m8 floatR">Q{{ loop.index }} - {{ questions.question|safe }}</p>
+                                                            <p class="questions-row inline-block col s12 m9 floatR">Q{{ loop.index }} - {{ questions.question|safe }}</p>
                                                             <p class="questions-row difficulty inline-block col s12 m3 floatR"><strong>Difficulty: </strong>{{ questions.difficulty }}</p>
                                                         </div>
                                                         <div class="answer_button_row row">
-                                                            <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                            <button type="button" class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6" value="{{ questions.correct_answer }}">
                                                                 {{ questions.correct_answer }}
                                                             </button>
                                                             {% for answer in questions.incorrect_answers %}
-                                                                <button type="submit" class="answer_button btn-small submit waves-effect waves-light bg-color-green text-shadow col s12 m6">
+                                                                <button type="button" class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6" value="{{ answer }}">
                                                                     {{ answer }}
                                                                 </button>
                                                             {% endfor %}
+                                                        </div>
+                                                        <div id="answer_button_row2 row">
                                                         </div>
                                                     {% endif %}
                                                 {% endfor %}
@@ -117,111 +100,113 @@
                     </li>
 
                     <!-- QUIZ DETAILS SECTION -->
-                    <li>
-                        <div class="collapsible-header" onclick="getCategoriesFn()" >
-                            DETAILS
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <p>Edit any of the fields or add and click the "Update" button to change your quiz. Update your list of invitees
-                                    by adding or removing email addresses. <strong>NOTE:</strong> Quiz cannot be edited once it has been published.</p>
+                    {% if quiz.user_id == username._id %}
+                        <li>
+                            <div class="collapsible-header" onclick="getCategoriesFn()" >
+                                DETAILS
                             </div>
-                            <span>
-                                <div id="details-form-row" class="row">
-                                    <form  id="details-form" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('update_quiz', quiz_id=quiz._id) }}" >
-                                        <div id="details-card-panel" class="card-panel">
-
-                                            <!-- 1. Quiz Name-->
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
-                                                        data-tooltip="Add a name for your quiz. Max 20 Characters."></i>
-                                                    <input id="quiz_name" name="quiz_name" type="text" minlength="5" 
-                                                        maxlength="20" class="validate" value="{{ quiz.quiz_name }}" required>
-                                                    <label for="quiz_name">Quiz Name*</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- 2. Rounds -->
-                                            <div id="rounds-row" class="row">
-                                                <div class="input-field col s12">
-                                                    <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
-                                                        data-tooltip="Select the number of rounds in your quiz"></i>
-                                                    <input id="rounds" name="rounds" type="number" min="1" max="10"
-                                                        class="validate" value="{{ quiz.rounds }}" required>
-                                                    <label for="rounds">Rounds*</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- 3 Categories - Details and HTML populated from script.js -->
-                                            <div id="categories_row" class="row categories_row">
-                                            </div>
-
-                                            <!-- 4. Questions per Round-->
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
-                                                        data-tooltip="Select the number of questions in each round"></i>
-                                                    <input id="questions" name="questions" type="number" min="1" max="10"
-                                                        class="validate" value="{{ quiz.questions }}" required>
-                                                    <label for="questions">Questions*</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- 5. Questions Difficulty -->
-                                            <div class="row">
-                                                <div class="input-field col s4">
-                                                    <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
-                                                        data-tooltip="Choose the difficulty of individual questions. The total for
-                                                            all three options should match the number of questions per round"></i>
-                                                    <input id="easy" name="easy" type="number" min="0"
-                                                        class="validate" value="{{ quiz.easy }}" required>
-                                                    <label id="label_easy" for="easy">Easy*</label>
-                                                </div>
-                                                <div class="input-field col s4">
-                                                    <input id="medium" name="medium" type="number" min="0"
-                                                        class="validate" value="{{ quiz.medium }}" required>
-                                                    <label id="label_medium" for="medium">Med*</label>
-                                                </div>
-                                                <div class="input-field col s4">
-                                                    <input id="hard" name="hard" type="number" min="0" 
-                                                        class="validate" value="{{ quiz.hard }}" required>
-                                                    <label id="label_hard" for="hard">Hard*</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- 6. Invitees -->
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
-                                                        data-tooltip="Add individual email addresses for those you want to take part.
-                                                            Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
-                                                    <textarea onclick="textAreaAdjust(this)" id="invitees" name="invitees" text="text" class="materialize-textarea" value="{{ quiz.invitees }}" active>{{ quiz.invitees|join(', ') }}</textarea>
-                                                    <label for="invitees">Invitees (comma separate emails)</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- Update & Cancel Buttons-->
-                                            <div class="row">
-                                                <div id="create-button-div" class="button-div col s12 m6">
-                                                    <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
-                                                        Update <i class="fas fa-plus-circle"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="button-div col s12 m6">
-                                                    <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
-                                                        Cancel
-                                                        <i class="fas fa-times-circle"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </form>
+                            <div class="collapsible-body">
+                                <div class="row">
+                                    <p>Edit any of the fields or add and click the "Update" button to change your quiz. Update your list of invitees
+                                        by adding or removing email addresses. <strong>NOTE:</strong> Quiz cannot be edited once it has been published.</p>
                                 </div>
-                            </span>
-                        </div>
-                    </li>
+                                <span>
+                                    <div id="details-form-row" class="row">
+                                        <form  id="details-form" class="col s12 m8 offset-m2" method="POST" action="{{ url_for('update_quiz', quiz_id=quiz._id) }}" >
+                                            <div id="details-card-panel" class="card-panel">
+
+                                                <!-- 1. Quiz Name-->
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
+                                                            data-tooltip="Add a name for your quiz. Max 20 Characters."></i>
+                                                        <input id="quiz_name" name="quiz_name" type="text" minlength="5" 
+                                                            maxlength="20" class="validate" value="{{ quiz.quiz_name }}" required>
+                                                        <label for="quiz_name">Quiz Name*</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 2. Rounds -->
+                                                <div id="rounds-row" class="row">
+                                                    <div class="input-field col s12">
+                                                        <i class="fas fa-arrows-alt prefix color-green tooltipped" data-position="bottom" 
+                                                            data-tooltip="Select the number of rounds in your quiz"></i>
+                                                        <input id="rounds" name="rounds" type="number" min="1" max="10"
+                                                            class="validate" value="{{ quiz.rounds }}" required>
+                                                        <label for="rounds">Rounds*</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 3 Categories - Details and HTML populated from script.js -->
+                                                <div id="categories_row" class="row categories_row">
+                                                </div>
+
+                                                <!-- 4. Questions per Round-->
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <i class="fas fa-question-circle prefix color-green tooltipped" data-position="bottom" 
+                                                            data-tooltip="Select the number of questions in each round"></i>
+                                                        <input id="questions" name="questions" type="number" min="1" max="10"
+                                                            class="validate" value="{{ quiz.questions }}" required>
+                                                        <label for="questions">Questions*</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 5. Questions Difficulty -->
+                                                <div class="row">
+                                                    <div class="input-field col s4">
+                                                        <i class="fas fa-dumbbell prefix color-green tooltipped" data-position="bottom" 
+                                                            data-tooltip="Choose the difficulty of individual questions. The total for
+                                                                all three options should match the number of questions per round"></i>
+                                                        <input id="easy" name="easy" type="number" min="0"
+                                                            class="validate" value="{{ quiz.easy }}" required>
+                                                        <label id="label_easy" for="easy">Easy*</label>
+                                                    </div>
+                                                    <div class="input-field col s4">
+                                                        <input id="medium" name="medium" type="number" min="0"
+                                                            class="validate" value="{{ quiz.medium }}" required>
+                                                        <label id="label_medium" for="medium">Med*</label>
+                                                    </div>
+                                                    <div class="input-field col s4">
+                                                        <input id="hard" name="hard" type="number" min="0" 
+                                                            class="validate" value="{{ quiz.hard }}" required>
+                                                        <label id="label_hard" for="hard">Hard*</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 6. Invitees -->
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
+                                                            data-tooltip="Add individual email addresses for those you want to take part.
+                                                                Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
+                                                        <textarea onclick="textAreaAdjust(this)" id="invitees" name="invitees" text="text" class="materialize-textarea" value="{{ quiz.invitees }}" active>{{ quiz.invitees|join(', ') }}</textarea>
+                                                        <label for="invitees">Invitees (comma separate emails)</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Update & Cancel Buttons-->
+                                                <div class="row">
+                                                    <div id="create-button-div" class="button-div col s12 m6">
+                                                        <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                                                            Update <i class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="button-div col s12 m6">
+                                                        <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
+                                                            Cancel
+                                                            <i class="fas fa-times-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </span>
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
                 <br>
             
