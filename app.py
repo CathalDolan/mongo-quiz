@@ -359,9 +359,13 @@ def remove_quiz(quiz_id):
         {"username": session["user"]})
     quiz = mongo.db.quizzes.find_one({"_id": ObjectId(quiz_id)})
 
-    if quiz['_id'] == quiz_id:
-        mongo.db.quizzes.remove({"invitees": username['email']})
-        flash("Quiz successfully removed")
+    # Advanced MongoDb provided by tutor support with reference to:
+    # https://docs.mongodb.com/manual/reference/operator/update/pull/
+    mongo.db.quizzes.update(
+        {"_id": ObjectId(quiz_id)},
+        {"$pull": { "invitees": str(username['email'])}}
+    )
+    flash("Quiz successfully removed")
     return redirect(url_for("profile", username=session["user"]))
 
 

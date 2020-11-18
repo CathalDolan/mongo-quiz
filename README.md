@@ -8,6 +8,8 @@ Outside
 // Quiz_Admin Details - Autoadjust height of invitees textarea
 // Source: https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
 -Email: https://youtu.be/JRCJ6RtE3xU
+- Sorting quiz tabs in profile https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2
+- Remove tutopr support
 
 Testing
 
