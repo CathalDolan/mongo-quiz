@@ -79,9 +79,34 @@ async function getRoundsDataFn(category_names) {
 }
 
 
-// Quiz_Admin Details - Autoadjust height of invitees textarea
+// Quiz_Admin Details - Auto-adjust height of invitees textarea
 // Source: https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
 function textAreaAdjust(element) {
   element.style.height = "1px";
   element.style.height = (25+element.scrollHeight)+"px";
 }
+
+
+// Function to allow Users to select an answer and deactivate the question block once a choice has been made
+$(".answer_button").on("click", function(event) {
+    // console.log("EVENT", event);
+    // if ($(this).hasClass("correct-answer")) {
+    //     $(this).addClass("green");
+    // } else {
+    //     $(this).addClass("red");
+    // };
+    // // $(".answer_button_row").on("click", function() {
+    //     $(this).css("pointer-events", "none");
+    //     if ($(event, ".correct-answer")) {
+    //         $(".correct-answer").addClass("green");
+    //     };
+    // });
+    let child = event.target.parentNode.children;
+        for (item in child) {
+            if ($(child[item]).hasClass("correct-answer")) {
+                $(child[item]).addClass("green");
+            } else {
+                $(child[item]).addClass("red");
+            };
+        }
+});

@@ -25,7 +25,7 @@
 
                     <!-- ROUNDS & QUESTIONS SECTION -->
                     <li>
-                        <div class="collapsible-header" onclick="random_answersFn()">
+                        <div class="collapsible-header">
                             ROUNDS
                         </div>
                         <div class="row collapsible-body">
@@ -52,7 +52,9 @@
                                                         </div>
                                                         <div class="answer_button_row row">
                                                             {% for answer in questions.all_answers %}
-                                                                <button type="button" class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6" value="{{ answer }}">
+                                                                <button type="button"
+                                                                    class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6 {% if answer|safe == questions.correct_answer|safe %}correct-answer{% endif %}"
+                                                                    value="{{ answer }}">
                                                                     {{ answer|safe }}
                                                                 </button>
                                                             {% endfor %}

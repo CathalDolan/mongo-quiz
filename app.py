@@ -4,7 +4,7 @@ import json
 import random
 from flask import (
     Flask, flash, render_template,
-    redirect, request, session, url_for)
+    redirect, request, session, url_for, jsonify)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
