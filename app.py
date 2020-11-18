@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-import itertools
+import random
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -304,7 +304,7 @@ def quiz_admin(quiz_id):
                 for all_details in easy_questions:
                     all_details['all_answers'] = all_details['incorrect_answers']
                     all_details['all_answers'].append(all_details['correct_answer'])
-
+                    random.shuffle(all_details['all_answers'])
 
             # Extract the Medium Questions from the API
             if int(difficulty['medium']) > 0:
@@ -319,6 +319,8 @@ def quiz_admin(quiz_id):
                 for all_details in medium_questions:
                     all_details['all_answers'] = all_details['incorrect_answers']
                     all_details['all_answers'].append(all_details['correct_answer'])
+                    # Shuffle documentation from https://note.nkmk.me/en/python-random-shuffle/
+                    random.shuffle(all_details['all_answers'])
 
             # Extract the Hard Questions from the API
             if int(difficulty['hard']) > 0:
@@ -333,6 +335,7 @@ def quiz_admin(quiz_id):
                 for all_details in hard_questions:
                     all_details['all_answers'] = all_details['incorrect_answers']
                     all_details['all_answers'].append(all_details['correct_answer'])
+                    random.shuffle(all_details['all_answers'])
 
     return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id, username=username)
 
