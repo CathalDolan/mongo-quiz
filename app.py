@@ -302,10 +302,9 @@ def quiz_admin(quiz_id):
                 quiz_questions.append(easy_questions)
 
                 for all_details in easy_questions:
-                    print("CORRECT ANSWER: ", all_details['correct_answer'])
-                    print("INCORRECT ANSWER List: ", all_details['incorrect_answers'])
-                    for incorrect_answers in all_details['incorrect_answers']:
-                        print("INCORRECT ANSWER: ", incorrect_answers)
+                    all_details['all_answers'] = all_details['incorrect_answers']
+                    all_details['all_answers'].append(all_details['correct_answer'])
+
 
             # Extract the Medium Questions from the API
             if int(difficulty['medium']) > 0:
@@ -317,6 +316,10 @@ def quiz_admin(quiz_id):
                 medium_questions = json.loads(q_response2.text.encode("utf8"))["results"]
                 quiz_questions.append(medium_questions)
 
+                for all_details in medium_questions:
+                    all_details['all_answers'] = all_details['incorrect_answers']
+                    all_details['all_answers'].append(all_details['correct_answer'])
+
             # Extract the Hard Questions from the API
             if int(difficulty['hard']) > 0:
                 hard_amount = str(difficulty['hard'])
@@ -326,6 +329,10 @@ def quiz_admin(quiz_id):
                 q_response3 = requests.request("GET", url, headers=headers, data=payload)
                 hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
                 quiz_questions.append(hard_questions)
+
+                for all_details in hard_questions:
+                    all_details['all_answers'] = all_details['incorrect_answers']
+                    all_details['all_answers'].append(all_details['correct_answer'])
 
     return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id, username=username)
 

@@ -51,12 +51,9 @@
                                                             <p class="questions-row difficulty inline-block col s12 m3 floatR"><strong>Difficulty: </strong>{{ questions.difficulty }}</p>
                                                         </div>
                                                         <div class="answer_button_row row">
-                                                            <button type="button" class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6" value="{{ questions.correct_answer }}">
-                                                                {{ questions.correct_answer }}
-                                                            </button>
-                                                            {% for answer in questions.incorrect_answers %}
+                                                            {% for answer in questions.all_answers|sort(case_sensitive=False) %}
                                                                 <button type="button" class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6" value="{{ answer }}">
-                                                                    {{ answer }}
+                                                                    {{ answer|safe }}
                                                                 </button>
                                                             {% endfor %}
                                                         </div>

@@ -85,21 +85,3 @@ function textAreaAdjust(element) {
   element.style.height = "1px";
   element.style.height = (25+element.scrollHeight)+"px";
 }
-
-
-// Function to extract the answer values from the initial iteration...
-//...then populate a second set of identical buttons.
-function random_answersFn() {
-
-    var answers = "";
-    var k = 0;
-    while (k <= 3){
-        let answer = document.getElementsByClassName('answer_button')[k].value;
-        answers += `<button type="button" class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6">
-            ${answer}
-        </button>`
-        console.log("answer", answer);
-    k++
-    }
-    document.getElementById("answer_button_row2").innerHTML = "answers";
-}
