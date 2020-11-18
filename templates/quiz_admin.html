@@ -218,19 +218,22 @@
                             <i class="fas fa-object-group"></i>
                         </a>
                     </div>
-                
-                    <div class="button-div">
-                        <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
-                            class="btn-large waves-effect waves-light red text-shadow">
-                            Delete <i class="fas fa-times-circle"></i>
-                        </a>
-                    </div>
+                    {% if quiz.user_id == username._id %}
+                        <div class="button-div">
+                            <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
+                                class="btn-large waves-effect waves-light red text-shadow">
+                                Delete <i class="fas fa-times-circle"></i>
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
                 <br>
-                <div class="row alignC">
-                    <h5>Player link to access the quiz</h5>
-                    <p>https://8080-ba9fe4fb-5fe7-4a7b-8e55-99e82b8a73e7.ws-eu01.gitpod.io/play/{{ quiz._id }}</p>
-                </div>
+                {% if quiz.user_id == username._id %}
+                    <div class="row alignC">
+                        <h5>Player link to access the quiz</h5>
+                        <p>https://8080-c43429e7-0065-43a9-9c1e-d722ff4db75e.ws-eu01.gitpod.io/quiz_admin/{{ quiz._id }}</p>
+                    </div>
+                {% endif %}
             {% endif %}
         {% endfor %} 
 
