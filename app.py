@@ -285,9 +285,8 @@ def quiz_admin(quiz_id):
 
     # Extracts the Categories from the DB
     # Enumerate produces a loop count/index
-    for count, category in enumerate(quiz['categories'], start=1):
+    for category in quiz['categories']:
         category_id = str(category['id'])
-        # category_id = str(count+9)
 
         for difficulty in quiz['difficulty']:
 

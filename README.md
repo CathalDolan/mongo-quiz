@@ -13,7 +13,7 @@ Outside
 - Shuffle in Quiz Admin - https://note.nkmk.me/en/python-random-shuffle/
 - Adding Scores Function - https://stackoverflow.com/questions/20956138/how-to-add-1-to-a-javascript-variable-by-clicking-a-button
 - Email input pattern - https://stackoverflow.com/questions/5601647/html5-email-input-pattern-attribute/36379040 (2nd answer)
-- Password Pattern - 
+- Quiz Admin - Scores Modal
 
 Testing
 

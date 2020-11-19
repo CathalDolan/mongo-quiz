@@ -360,26 +360,6 @@ i.quiz.fas {
 
 /* Quiz Admin Page - Details Section Finish */
 
-/* Play Page - Details Section Start */
-#not-started-content-div {
-    text-align: center;
-}
-#quiz-info-row {
-    width: 50%;
-    margin-left: 25%;
-    text-align: left;
-}
-@media (max-width: 576px) {  
-    #quiz-info-row {
-    width: 90%;
-    margin-left: 5%;
-    }
-}
-#quiz-info-col1 {
-    padding-right: 0;
-}
-
-
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
