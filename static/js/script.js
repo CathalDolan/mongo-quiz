@@ -11,8 +11,9 @@ $(document).ready(function(){
     
 });
 
+
 // Functions below are used to validate Difficulty qty matches Questions qty
-// They couples with "if difficulty_total == quiz_details['questions']:" in def(create) in app.py
+// They couple with "if difficulty_total == quiz_details['questions']:" in def(create) in app.py
 document.getElementById("questions").addEventListener("keyup", getQuestionsDataFn);
 
 function getQuestionsDataFn() {
@@ -35,7 +36,6 @@ function getQuestionsDataFn() {
 document.getElementById("rounds").addEventListener("keyup", getCategoriesFn);
 
 async function getCategoriesFn() {
-
     // Extracting the Categories from the API
     let url = `https://opentdb.com/api_category.php`;
 
@@ -48,7 +48,6 @@ async function getCategoriesFn() {
 }
 
 async function getRoundsDataFn(category_names) {
-
     // Get the number of rounds entered by the User
     roundsPerGame = parseInt(document.getElementById('rounds').value);
 
@@ -120,24 +119,20 @@ function addScoreFn() {
 }
 
 
-// Get the modal
+// Functions to display a modal with the total quiz scores
+// From: https://www.w3schools.com/howto/howto_css_modals.asp
 var modal = document.getElementById("myModal");
-
-// Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal
 function openModalFn() {
   modal.style.display = "block";
   document.getElementById('count2').innerHTML = clicks;
 }
 
-// When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
