@@ -37,13 +37,12 @@
                                         <!-- Individual Rounds Header Section -->
                                         <div class="collapsible-header">
                                             <h6 class="inline-block"><strong>Round {{ loop.index }} - </strong>{{ category.name }}</h6>
+                                            <!-- <h6 id="loop_index" class="inline-block">{{ loop.index|int }}</h6> -->
                                         </div>
                                         <!-- Individual Rounds Body Section for Answers -->
                                         <div class="collapsible-body">
                                             {% for question in quiz_questions %}
-                                                <!-- <p>question: {{ question}}</p> -->
                                                 {% for questions in question %}
-                                                    <!-- <p>questions: {{ questions }}</p> -->
                                                     {% if questions.category == category.name %}
                                                         <div class="questions-row-div row">
                                                             <!-- Safe filter escapes unicode characters as delivered by the API call-->
@@ -52,7 +51,7 @@
                                                         </div>
                                                         <div class="answer_button_row row">
                                                             {% for answer in questions.all_answers %}
-                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %}clicks++;addScoreFn();{% endif %}"
+                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %} addScoreFn(); {% endif %}"
                                                                     class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6 {% if answer|safe == questions.correct_answer|safe %}correct-answer{% endif %}"
                                                                     value="{{ answer }}">
                                                                     {{ answer|safe }}
@@ -65,44 +64,32 @@
                                                 {% endfor %}
                                             {% endfor %}
                                         </div>
-                                        <div>
-                                            <center>
-                                                <strong>Round - {{ loop.index }} Score: </strong>
-                                                <span id="count">0</span>
-                                            </center>
-                                        </div>
                                     </li>
                                 {% endfor %}
                             </ul>
                         </div>
                     </li>
 
+                    <div>
+                        <center>
+                            <h6><strong>Total Quiz Score: </strong>
+                            <span id="count">Game not played yet</span></h6>
+                        </center>
+                    </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p>Correct & Right! Your Total Quiz Score is: <span id="count2">0</span></p>
+                        </div>
+                    </div>
+
                     <!-- Span is here so as to dynamically create unique ID's that can be accessed in JS -->
                     {% for category in quiz.categories %}
                         <span style="display: none" id="cat-{{loop.index}}">{{ category.name }}</span>
                     {% endfor %}
-
-                    <!-- SCORES SECTION -->
-                    <li>
-                        <div class="collapsible-header">
-                            SCORES
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="col s12">
-                                    <ul class="tabs">
-                                        <li class="tab col s3"><a href="#overall">Overall</a></li>
-                                        {% for n in range(1, quiz.rounds|int +1) %}
-                                            <li class="tab col s3"><a href="#round1">Round {{ n }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div id="overall" class="col s12">Overall Scores</div>
-                                <div id="round1" class="col s12">Round 1 Scores</div>
-
-                            </div>
-                        </div>
-                    </li>
 
                     <!-- QUIZ DETAILS SECTION -->
                     {% if quiz.user_id == username._id %}

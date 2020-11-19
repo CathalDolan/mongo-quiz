@@ -11,6 +11,9 @@ Outside
 - Sorting quiz tabs in profile https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2
 - Remove tutor support
 - Shuffle in Quiz Admin - https://note.nkmk.me/en/python-random-shuffle/
+- Adding Scores Function - https://stackoverflow.com/questions/20956138/how-to-add-1-to-a-javascript-variable-by-clicking-a-button
+- Email input pattern - https://stackoverflow.com/questions/5601647/html5-email-input-pattern-attribute/36379040 (2nd answer)
+- Password Pattern - 
 
 Testing
 

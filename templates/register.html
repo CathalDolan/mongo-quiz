@@ -18,10 +18,10 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="fas fa-user-plus prefix color-green tooltipped" data-position="bottom" 
-                            data-tooltip="Add a Username"></i>
+                            data-tooltip="Add your player or team name"></i>
                         <input id="username" name="username" type="text" minlength="5" 
                             maxlength="25" class="validate" required>
-                        <label for="username">Username</label>
+                        <label for="username">Player/Team Name</label>
                     </div>
                 </div>
 
@@ -30,7 +30,7 @@
                     <div class="input-field col s12">
                         <i class="fas fa-at prefix color-green tooltipped" data-position="bottom" 
                             data-tooltip="Add your email address"></i>
-                        <input id="email" name="email" type="email" class="validate" required>
+                        <input id="email" name="email" type="email" minlength="8" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="validate" required>
                         <label for="email">Email</label>
                     </div>
                 </div>
@@ -39,10 +39,10 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="fas fa-user-lock prefix color-green tooltipped" data-position="bottom" 
-                            data-tooltip="6 characters minimum, plus at least one Uppercase, 
-                            Number and Special Character"></i>
+                            data-tooltip="8 characters minimum, plus at least one Uppercase 
+                            and one lowercase latter"></i>
                         <input id="password" name="password" type="password" minlength="5" 
-                            maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="validate" required>
                         <label for="password">Password</label>
                     </div>
                 </div>

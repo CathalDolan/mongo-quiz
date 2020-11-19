@@ -97,21 +97,49 @@ $(".answer_button").on("click", function(event) {
         if ($(child[item]).hasClass("correct-answer")) {
             $(child[item]).addClass("green");
         } 
-    }
+    };
     // If user's answer was incorrect, turns it red
     if (!$(this).hasClass("correct-answer")) {
        $(this).addClass("red");
     };
     // Prevents an answered question from being clicked again
+    // Prevents quiz from being edited once it has started
     $(".answer_button_row").on("click", function() {
         $(this).css("pointer-events", "none");
-        });
+        document.getElementById("details-form").style.pointerEvents = "none";
+    });
 });
 
 
-// Function to count the scores by recording a value of 1 for each correct answer
-// Function called 
-var clicks = 0;
+// Function to count the scores by recording a value of 1 for each correct answer in Quiz Admin
+let clicks = 0;
 function addScoreFn() {
-    document.getElementById("count").innerHTML = clicks;
+    clicks++;
+    document.getElementById('count').innerHTML = clicks;
+    openModalFn(clicks); 
+}
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+function openModalFn() {
+  modal.style.display = "block";
+  document.getElementById('count2').innerHTML = clicks;
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
