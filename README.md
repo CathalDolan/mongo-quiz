@@ -9,7 +9,7 @@ Outside
 // Source: https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
 -Email: https://youtu.be/JRCJ6RtE3xU
 - Sorting quiz tabs in profile https://stackoverflow.com/questions/1959386/how-do-you-sort-a-list-in-jinja2
-- Remove tutopr support
+- Remove tutor support
 - Shuffle in Quiz Admin - https://note.nkmk.me/en/python-random-shuffle/
 
 Testing

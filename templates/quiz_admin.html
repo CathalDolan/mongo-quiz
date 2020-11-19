@@ -52,7 +52,7 @@
                                                         </div>
                                                         <div class="answer_button_row row">
                                                             {% for answer in questions.all_answers %}
-                                                                <button type="button"
+                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %}clicks++;addScoreFn();{% endif %}"
                                                                     class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6 {% if answer|safe == questions.correct_answer|safe %}correct-answer{% endif %}"
                                                                     value="{{ answer }}">
                                                                     {{ answer|safe }}
@@ -64,6 +64,12 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}
+                                        </div>
+                                        <div>
+                                            <center>
+                                                <strong>Round - {{ loop.index }} Score: </strong>
+                                                <span id="count">0</span>
+                                            </center>
                                         </div>
                                     </li>
                                 {% endfor %}

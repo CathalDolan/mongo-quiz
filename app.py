@@ -340,28 +340,6 @@ def quiz_admin(quiz_id):
     return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id, username=username)
 
 
-@app.route("/play/<quiz_id>", methods=["GET", "POST"])
-def play(quiz_id):
-
-    if session.get("user"):
-        # Extracts the quiz _id from the URL
-        # Allows the QUiz displayed to match the one opened from the Profile
-        url = str(request.base_url)
-        url_quiz_id = url.split('/')[-1]
-
-        # Extracts quiz details from DB and creates an ID var
-        quizzes = list(mongo.db.quizzes.find())
-        for quiz_data in quizzes:
-            quiz_data_id = quiz_data["_id"]
-            str_quiz_data_id = str(quiz_data_id)
-
-            # Checks if ID passed into function matches that on the DB
-            if quiz_id == str_quiz_data_id:
-                return render_template("play.html", quizzes=quizzes, url_quiz_id=url_quiz_id)
-    else:
-        return render_template("register.html")
-
-
 @app.route("/remove_quiz/<quiz_id>")
 def remove_quiz(quiz_id):
 

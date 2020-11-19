@@ -87,26 +87,31 @@ function textAreaAdjust(element) {
 }
 
 
-// Function to allow Users to select an answer and deactivate the question block once a choice has been made
+// Function to allow Users to select an answer, deactivate the question block once a choice has...
+//...been made, and highlight the correct answer. 
+// Initial coding provided by Tutor/Mentor support to only make correct green and all incorrect red.
 $(".answer_button").on("click", function(event) {
-    // console.log("EVENT", event);
-    // if ($(this).hasClass("correct-answer")) {
-    //     $(this).addClass("green");
-    // } else {
-    //     $(this).addClass("red");
-    // };
-    // // $(".answer_button_row").on("click", function() {
-    //     $(this).css("pointer-events", "none");
-    //     if ($(event, ".correct-answer")) {
-    //         $(".correct-answer").addClass("green");
-    //     };
-    // });
+    // Turns correct answer green
     let child = event.target.parentNode.children;
-        for (item in child) {
-            if ($(child[item]).hasClass("correct-answer")) {
-                $(child[item]).addClass("green");
-            } else {
-                $(child[item]).addClass("red");
-            };
-        }
+    for (item in child) {
+        if ($(child[item]).hasClass("correct-answer")) {
+            $(child[item]).addClass("green");
+        } 
+    }
+    // If user's answer was incorrect, turns it red
+    if (!$(this).hasClass("correct-answer")) {
+       $(this).addClass("red");
+    };
+    // Prevents an answered question from being clicked again
+    $(".answer_button_row").on("click", function() {
+        $(this).css("pointer-events", "none");
+        });
 });
+
+
+// Function to count the scores by recording a value of 1 for each correct answer
+// Function called 
+var clicks = 0;
+function addScoreFn() {
+    document.getElementById("count").innerHTML = clicks;
+}
