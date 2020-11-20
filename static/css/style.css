@@ -397,3 +397,10 @@ i.quiz.fas {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Preloader */
+#preloader {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+}

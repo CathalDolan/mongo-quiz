@@ -168,10 +168,23 @@
                                                     </div>
                                                 </div>
 
+                                                <!-- Preloader code from https://materializecss.com/preloader.html -->
+                                                <div id="preloader" class="preloader-wrapper big active" style="display:none">
+                                                    <div class="spinner-layer spinner-green-only">
+                                                        <div class="circle-clipper left">
+                                                            <div class="circle"></div>
+                                                        </div><div class="gap-patch">
+                                                            <div class="circle"></div>
+                                                        </div><div class="circle-clipper right">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <!-- Update & Cancel Buttons-->
                                                 <div class="row">
                                                     <div id="create-button-div" class="button-div col s12 m6">
-                                                        <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow">
+                                                        <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow" onclick="preLoaderFn()">
                                                             Update <i class="fas fa-plus-circle"></i>
                                                         </button>
                                                     </div>
@@ -214,7 +227,7 @@
                 {% if quiz.user_id == username._id %}
                     <div class="row alignC">
                         <h5>Player link to access the quiz</h5>
-                        <p>{{ quiz._id }}</p>
+                        <p>https://mongo-quiz.herokuapp.com/quiz_admin/{{ quiz._id }}</p>
                     </div>
                 {% endif %}
             {% endif %}

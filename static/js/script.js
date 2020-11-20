@@ -116,7 +116,7 @@ function addScoreFn() {
     clicks++;
     document.getElementById('count').innerHTML = clicks;
     openModalFn(clicks); 
-}
+};
 
 
 // Functions to display a modal with the total quiz scores
@@ -127,14 +127,20 @@ var span = document.getElementsByClassName("close")[0];
 function openModalFn() {
   modal.style.display = "block";
   document.getElementById('count2').innerHTML = clicks;
-}
+};
 
 span.onclick = function() {
   modal.style.display = "none";
-}
+};
 
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+};
+
+
+// Function to display the waiting preloader
+function preLoaderFn() {
+    document.getElementById('preloader').style.display = "block";
+};
