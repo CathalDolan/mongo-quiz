@@ -21,16 +21,16 @@
         <!-- Desktop/Tablet Navbar -->
         <div class="nav-div">
             <div class="brand-logo vertical-center">
-                <a href="{{ url_for('home') }}">
+                <a href="{{ url_for('index') }}">
                     <img src="{{ url_for('static', filename='images/mongo_quiz_logo.png') }}" 
                         class="nav-logo" alt="Mongo Quiz Logo"/>
                 </a>
             </div>
             <nav class="navbar no-shadows transparent z-depth-0">
                 <div class="nav-wrapper container">
-                    <a href="{{ url_for('home') }}" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+                    <a href="{{ url_for('index') }}" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li class="{{ 'active' if active_page == 'home' else '' }}"><a href="{{ url_for('home') }}">Home</a></li>
+                        <li class="{{ 'active' if active_page == 'index' else '' }}"><a href="{{ url_for('index') }}">Home</a></li>
                         <li class="{{ 'active' if active_page == 'about' else '' }}"><a href="{{ url_for('about') }}">About</a></li>
                         {% if session.user %}
                             <li class="{{ 'active' if active_page == 'create' else '' }}"><a href="{{ url_for('create') }}">Create a Quiz</a></li>
@@ -47,7 +47,7 @@
         
         <!-- Mobile Side Navbar -->
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
             {% if session.user %}
                 <li><a href="{{ url_for('create') }}">Create a Quiz</a></li>

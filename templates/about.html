@@ -21,12 +21,14 @@
         able to see where they rank in each round and overall, as well as seeing everyone’s
         scores.</p>
         <br>
-        <div class="button-div">
-            <a href="{{ url_for('create') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
-                Create 
-                <i class="fas fa-plus-circle"></i>
-            </a>
-        </div>
+        {% if session.user %}
+            <div class="button-div">
+                <a href="{{ url_for('create') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
+                    Create 
+                    <i class="fas fa-plus-circle"></i>
+                </a>
+            </div>
+        {% endif %}
         <br>
         <p>*Please note, Mongo quiz does not incorporate any communication platforms and can
             be played just as well without. However, it's much more fun is you can see each 
