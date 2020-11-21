@@ -14,7 +14,9 @@ $(document).ready(function(){
 
 // Functions below are used to validate Difficulty qty matches Questions qty
 // They couple with "if difficulty_total == quiz_details['questions']:" in def(create) in app.py
-document.getElementById("questions").addEventListener("keyup", getQuestionsDataFn);
+if(document.getElementById("questions")) {
+    document.getElementById("questions").addEventListener("keyup", getQuestionsDataFn);
+}
 
 function getQuestionsDataFn() {
     questionsPerRound = parseInt(document.getElementById('questions').value);
@@ -33,7 +35,9 @@ function getQuestionsDataFn() {
 // Functions below are used to inject the Category choice dropdowns based on number of rounds selected
 // The first extracts the data from the API
 // The second injects the API dat and the code into html to dynamically create the dropsdowns
-document.getElementById("rounds").addEventListener("keyup", getCategoriesFn);
+if(document.getElementById("rounds")) {
+    document.getElementById("rounds").addEventListener("keyup", getCategoriesFn);
+}
 
 async function getCategoriesFn() {
     // Extracting the Categories from the API

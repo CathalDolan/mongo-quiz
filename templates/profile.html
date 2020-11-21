@@ -60,18 +60,18 @@
                         {% if username.email == invitee %}
                             <div id="{{ quiz._id }}" class="col s12 active">
                                 <div class="row">
-                                    <div class="col s5 m2">
+                                    <div class="col s6 m3">
                                         <p><strong>Quiz Name:</strong></p>
                                         <p><strong>Quiz Master:</strong></p>
                                         <p><strong>Created:</strong></p>
                                     </div>
-                                    <div class="col s7 m5">
+                                    <div class="col s6 m5">
                                         <p>{{ quiz.quiz_name }}</p>
                                         <p>{{ quiz.quiz_master }}</p>
                                         <p>{{ quiz.created }}</p>
                                     </div>
                                     <div class="row">
-                                        <div class="profile-open-button alignR paddingR0 col s12 m5">
+                                        <div class="profile-open-button alignR paddingR0 col s12 m4">
                                             <a href="{{ url_for('quiz_admin', quiz_id=quiz._id) }}"
                                                 class="btn-small waves-effect waves-light bg-color-green text-shadow" onclick="preLoaderFn()">
                                                 Open <i class="fas fa-box-open"></i>
@@ -79,14 +79,14 @@
                                         </div>
                                         <!-- Delete button only shown to the Quiz Owner -->
                                         {% if quiz.user_id == username._id %}
-                                            <div class="profile-delete-button alignR paddingR0 col s12 m5">
+                                            <div class="profile-delete-button alignR paddingR0 col s12 m4">
                                                 <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
                                                     class="btn-small waves-effect waves-light red text-shadow">
                                                     Delete <i class="fas fa-times-circle"></i>
                                                 </a>
                                             </div>
                                         {% else %}
-                                            <div class="profile-delete-button alignR paddingR0 col s12 m5">
+                                            <div class="profile-delete-button alignR paddingR0 col s12 m4">
                                                 <a href="{{ url_for('remove_quiz', quiz_id=quiz._id) }}"
                                                     class="btn-small waves-effect waves-light red text-shadow">
                                                     Remove <i class="fas fa-times-circle"></i>

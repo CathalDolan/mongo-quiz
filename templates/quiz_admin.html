@@ -207,15 +207,15 @@
                 <br>
             
                 <!-- Publish & Delete Buttons-->
-                <div class="flex">
-                    <div class="button-div">
+                <div class="row">
+                    <div class="button-div col s12 m6">
                         <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
                             All Quizzes 
                             <i class="fas fa-object-group"></i>
                         </a>
                     </div>
                     {% if quiz.user_id == username._id %}
-                        <div class="button-div">
+                        <div class="button-div col s12 m6">
                             <a href="{{ url_for('delete_quiz', quiz_id=quiz._id) }}"
                                 class="btn-large waves-effect waves-light red text-shadow">
                                 Delete <i class="fas fa-times-circle"></i>
@@ -226,8 +226,9 @@
                 <br>
                 {% if quiz.user_id == username._id %}
                     <div class="row alignC">
-                        <h5>Player link to access the quiz</h5>
-                        <p>https://mongo-quiz.herokuapp.com/quiz_admin/{{ quiz._id }}</p>
+                        <h3>Quiz Link</h3>
+                        <p>Copy the link below and send it to your friends. But remember, in order for them to participate, you must include the email address in the "Players" section in <strong>DETAILS</strong>.</p>
+                        <p id="game-link" >https://mongo-quiz.herokuapp.com/quiz_admin/{{ quiz._id }}</p>
                     </div>
                 {% endif %}
             {% endif %}

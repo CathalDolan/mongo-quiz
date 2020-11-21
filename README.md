@@ -16,8 +16,11 @@ Outside
 - Quiz Admin - Scores Modal https://www.w3schools.com/howto/howto_css_modals.asp
 - Faviucon - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 - Preloader - https://materializecss.com/preloader.html
+- Game Link: https://stackoverflow.com/questions/18225302/how-can-i-wrap-or-break-long-text-word-in-a-fixed-width-span
 
-Testing
+Font choice based on needing a clear but light combo: https://inkbotdesign.com/google-font-combinations-mixing-typefaces/
+Amatic for headings: https://fonts.google.com/specimen/Amatic+SC?query=amatic+sc&sidebar.open=true&selection.family=Amatic+SC:wght@700|Josefin+Sans:ital@0;1
+Josefin for body: https://fonts.google.com/specimen/Josefin+Sans?query=Josefin+Sans&sidebar.open=true&selection.family=Josefin+Sans:ital@0;1#standard-styles
 
 Registration
 1 - Are Username, Password and Email being added to database? - Yes
@@ -26,3 +29,6 @@ Registration
 4 - Is Username Pattern working?
 5 - Is Email validation/pattern in place? Expand
 6 - Does Password have minlength?
+
+Bugs
+- Invitee quizes not working. Fixed with the if statements.
