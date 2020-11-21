@@ -249,12 +249,12 @@ def update_quiz(quiz_id):
         # Validate whether Difficulty totals match the number of Questions
         difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
         if difficulty_total == quiz_details['questions']:
-            mongo.db.quizzes.update({"_id":ObjectId(quiz_id)}, quiz_details)
+            mongo.db.quizzes.update({"_id": ObjectId(quiz_id)}, quiz_details)
             flash("Quiz details updated")
             return redirect(url_for("quiz_admin", quiz_id=quiz_id))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
-            return render_template("quiz_admin.html")
+            return render_template("create.html", quiz_details=quiz_details)
 
     return render_template("quiz_admin.html")
 

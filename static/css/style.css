@@ -91,25 +91,19 @@ p, .answer_button.btn-small {
     }
 }
 
-.btn-large {
-    font-size: 30px;
-}
-@media (max-width: 576px) {  
-    .btn-large {
-    font-size: 25px;
-    }
-}
-
 .button-div {
     width: 100%;
     text-align: center;
 }
 .btn-large {
+    font-size: 30px;
     width: 225px;
 }
 @media (max-width: 769px) {  
     .btn-large {
+    font-size: 25px;
     width: 150px;
+    margin-top: 5px;
     }
 }
 
@@ -121,6 +115,7 @@ p, .answer_button.btn-small {
     .btn-small {
     font-size: 20px;
     width: 100px;
+    margin-top: 5px;
     }
 }
 
@@ -218,6 +213,10 @@ h1 {
 
 .navbar {
     position: absolute;
+    z-index:999999999;
+}
+
+.sidenav {
     z-index:999999999;
 }
 
@@ -486,3 +485,26 @@ i.quiz.fas {
     margin-bottom: 25px;
 }
 
+/*----- {Profile Page Start ------ */
+/* Remove unwanted white spases */
+#quiz-details-row {
+    margin-bottom: 0;
+}
+#quiz-details-card {
+    padding-bottom: 0;
+}
+@media (max-width: 576px) {  
+    #quiz-details-card {
+    padding-left: 12px;
+    padding-right: 12px;
+    }
+}
+#rounds-questions-card {
+    margin: 0;
+}
+#quiz-admin-opening-content {
+    margin-bottom: 0;
+}
+#quiz-link-h3 {
+    margin-top: 0;
+}

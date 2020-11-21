@@ -8,14 +8,14 @@
         {% for quiz in quizzes %}
             {% if quiz._id|string == url_quiz_id|string %}
                 <h1 class="center-align">{{ quiz.quiz_name }}</h1>
-                <p>Click on <strong>Round 1</strong> to begin playing. To make changes to your quiz go to the <strong>"Details"</strong> section.</p> 
+                <p id="quiz-admin-opening-content">Click on <strong>Round 1</strong> to begin playing. To make changes to your quiz go to the <strong>"Details"</strong> section.</p> 
                 <br>
 
                 <!-- Collapsibles Section -->
                 <ul class="collapsible popout">
 
                     <!-- ROUNDS & QUESTIONS SECTION -->
-                    <li class="active">
+                    <li id="rounds-questions-card" class="active">
                         <div class="collapsible-header">
                             ROUNDS
                         </div>
@@ -32,12 +32,15 @@
                                         </div>
                                         <!-- Individual Rounds Body Section for Answers -->
                                         <div class="collapsible-body">
+                                            <!-- Jinja Variables from https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments tutor support assisted implementation -->
+                                            {% set ns = namespace(q_no=0) %}
                                             {% for question in quiz_questions %}
                                                 {% for questions in question %}
                                                     {% if questions.category == category.name %}
+                                                        {% set ns.q_no = ns.q_no+1 %}
                                                         <div class="questions-row-div row">
                                                             <!-- Safe filter escapes unicode characters as delivered by the API call-->
-                                                            <p class="questions-row inline-block col s12 m9 floatR">{{ questions.difficulty }} Q{{ loop.index }} - {{ questions.question|safe }}</p>
+                                                            <p class="questions-row inline-block col s12 m9 floatR">Q{{ ns.q_no }} - {{ questions.question|safe }}</p>
                                                             <p class="questions-row difficulty inline-block col s12 m3 floatR"><strong>Difficulty: </strong>{{ questions.difficulty }}</p>
                                                         </div>
                                                         <div class="answer_button_row row">
@@ -208,7 +211,11 @@
             
                 <!-- Publish & Delete Buttons-->
                 <div class="row">
+                {% if quiz.user_id == username._id %}
                     <div class="button-div col s12 m6">
+                {% else %}
+                    <div class="button-div col s12 m6 offset-m3">
+                {% endif %}
                         <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
                             All Quizzes 
                             <i class="fas fa-object-group"></i>
@@ -226,7 +233,7 @@
                 <br>
                 {% if quiz.user_id == username._id %}
                     <div class="row alignC">
-                        <h3>Quiz Link</h3>
+                        <h3 id="quiz-link-h3">Quiz Link</h3>
                         <p>Copy the link below and send it to your friends. But remember, in order for them to participate, you must include the email address in the "Players" section in <strong>DETAILS</strong>.</p>
                         <p id="game-link" >https://mongo-quiz.herokuapp.com/quiz_admin/{{ quiz._id }}</p>
                     </div>

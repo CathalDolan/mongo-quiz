@@ -54,12 +54,12 @@
                     {% endif %}
                 </ul>
             </div>
-            <div class="card-content">
+            <div id="quiz-details-card" class="card-content">
                 {% for quiz in quizzes %}
                     {% for invitee in quiz.invitees %}
                         {% if username.email == invitee %}
                             <div id="{{ quiz._id }}" class="col s12 active">
-                                <div class="row">
+                                <div id="quiz-details-row" class="row">
                                     <div class="col s6 m3">
                                         <p><strong>Quiz Name:</strong></p>
                                         <p><strong>Quiz Master:</strong></p>

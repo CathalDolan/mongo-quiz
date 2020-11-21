@@ -17,6 +17,7 @@ Outside
 - Faviucon - https://www.digitalocean.com/community/tutorials/how-to-add-a-favicon-to-your-website-with-html
 - Preloader - https://materializecss.com/preloader.html
 - Game Link: https://stackoverflow.com/questions/18225302/how-can-i-wrap-or-break-long-text-word-in-a-fixed-width-span
+- Jinja Variables: https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments
 
 Font choice based on needing a clear but light combo: https://inkbotdesign.com/google-font-combinations-mixing-typefaces/
 Amatic for headings: https://fonts.google.com/specimen/Amatic+SC?query=amatic+sc&sidebar.open=true&selection.family=Amatic+SC:wght@700|Josefin+Sans:ital@0;1
@@ -32,3 +33,5 @@ Registration
 
 Bugs
 - Invitee quizes not working. Fixed with the if statements.
+- Home not working on mobile link - fixed with higher Z index
+- Question numbers - Fixed with materialize stuff.
