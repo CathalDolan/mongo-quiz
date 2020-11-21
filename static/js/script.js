@@ -116,9 +116,10 @@ $(".answer_button").on("click", function(event) {
 
 // Function to count the scores by recording a value of 1 for each correct answer in Quiz Admin
 let clicks = 0;
-function addScoreFn() {
+function addScoreFn(round) {
+    console.log(round);
     clicks++;
-    document.getElementById('count').innerHTML = clicks;
+    document.getElementById('count').innerHTML = clicks; // 'count${round}'
     openModalFn(clicks); 
 };
 

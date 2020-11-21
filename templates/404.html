@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container alignC">
+        <h1>Page Not Found</h1>
+        <p>This is not the page you're looking for.
+            <a href="{{ url_for('index') }}">Go Home</a>
+        </p>
+    </div>
+{% endblock %}
+
+<!-- Code from https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/ -->
