@@ -36,3 +36,9 @@ Bugs
 - Invitee quizes not working. Fixed with the if statements.
 - Home not working on mobile link - fixed with higher Z index
 - Question numbers - Fixed with materialize stuff.
+
+Linting
+- HTML https://validator.w3.org/nu/#textarea  Ignored Jinja errors. And code placement for scores in Admin.
+- CSS https://jigsaw.w3.org/css-validator/validator No Errors Found
+- JS https://jslint.com/ Doiuble instead of single quotes ignored along with lines greater than 80chars
+- Python http://pep8online.com/

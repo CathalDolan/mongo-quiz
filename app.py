@@ -77,20 +77,21 @@ def login():
         if existing_user:
             # Compares registered password to that entered by the User
             if check_password_hash(
-                existing_user["password"], request.form.get("password")):
+                    existing_user["password"], request.form.get("password")):
 
-                    # If password match, a session cookie is added
-                    session["user"] = existing_user["username"]
+                # If password match, a session cookie is added
+                session["user"] = existing_user["username"]
 
-                    # Checks if there is a Quiz session in place
-                    if "quiz_name" in session:
-                        session.pop("quiz_name")
-                        flash("Quiz Creation and Login Successful!")
-                        return render_template("quiz_admin.html")
-                    else:
-                        flash("Welcome, {}".format(existing_user["username"]))
-                        # Username needs to be from Session so as to match Profile page
-                        return redirect(url_for("profile", username=session["user"]))
+                # Checks if there is a Quiz session in place
+                if "quiz_name" in session:
+                    session.pop("quiz_name")
+                    flash("Quiz Creation and Login Successful!")
+                    return render_template("quiz_admin.html")
+                else:
+                    flash("Welcome, {}".format(existing_user["username"]))
+                    # Username needs to be from Session so as to match Profile page
+                    return redirect(url_for("profile",
+                            username=session["user"]))
 
             # If password doesn't match
             else:
@@ -117,7 +118,7 @@ def profile(username):
         for invitees in quiz["invitees"]:
             print("INVITEES: ", invitees)
     return render_template("profile.html",
-        username=username, quizzes=quizzes)
+            username=username, quizzes=quizzes)
 
 
 @app.route("/logout")
@@ -140,14 +141,15 @@ def create():
         # Categories API call is done in getCategoriesFn() in script.js
         # Var so Categories go into DB as a list from form
         # Categories converted to JSON Objects
-        categories =[]
+        categories = []
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
                 print("\n\nCategory: ", request.form.get("round{}".format(num)), "\n\n")
                 # categories.append(json.loads(request.form.get("round{}".format(num))))
-                categories.append(json.loads(request.form.get("round{}".format(num))))
-                num +=1
+                categories.append(json.loads(request.
+                        form.get("round{}".format(num))))
+                num += 1
             else:
                 break
 
@@ -187,14 +189,17 @@ def create():
         result = mongo.db.quizzes.insert_one(quiz_details)
 
         # Get the total of the three Difficulty fields...
-        difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
+        difficulty_total = (quiz_details['easy'] +
+                quiz_details['medium'] + quiz_details['hard'])
         # ...then validate whether Difficulty totals match the number of Questions
         if difficulty_total == quiz_details['questions']:
             flash("Your quiz has been created!")
-            return redirect(url_for("quiz_admin", quiz_id=result.inserted_id))
+            return redirect(url_for("quiz_admin",
+                    quiz_id=result.inserted_id))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
-            return render_template("create.html", quiz_details=quiz_details)
+            return render_template("create.html",
+                    quiz_details=quiz_details)
 
     # quiz_details being empty is to do with redirection after register/login if Quiz create beforehand
     return render_template("create.html", quiz_details="")
@@ -212,12 +217,12 @@ def update_quiz(quiz_id):
 
     if request.method == "POST":
 
-        categories =[]
+        categories = []
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
                 categories.append(json.loads(request.form.get("round{}".format(num))))
-                num +=1
+                num += 1
             else:
                 break
 
@@ -251,7 +256,8 @@ def update_quiz(quiz_id):
         if difficulty_total == quiz_details['questions']:
             mongo.db.quizzes.update({"_id": ObjectId(quiz_id)}, quiz_details)
             flash("Quiz details updated")
-            return redirect(url_for("quiz_admin", quiz_id=quiz_id))
+            return redirect(url_for("quiz_admin",
+                    quiz_id=quiz_id))
         else:
             flash("The total for all 3 Difficulty levels must equal the number of questions.")
             return render_template("create.html", quiz_details=quiz_details)
@@ -296,8 +302,10 @@ def quiz_admin(quiz_id):
                 url = "https://opentdb.com/api.php?amount=" + easy_amount + "&category=" + category_id + "&difficulty=easy&type=multiple&token=" + quiz_token
                 payload = {}
                 headers = {}
-                q_response1 = requests.request("GET", url, headers=headers, data=payload)
-                easy_questions = json.loads(q_response1.text.encode("utf8"))["results"]
+                q_response1 = requests.request(
+                        "GET", url, headers=headers, data=payload)
+                easy_questions = json.loads(
+                        q_response1.text.encode("utf8"))["results"]
                 quiz_questions.append(easy_questions)
 
                 for all_details in easy_questions:
@@ -311,8 +319,10 @@ def quiz_admin(quiz_id):
                 url = "https://opentdb.com/api.php?amount=" + medium_amount + "&category=" + category_id + "&difficulty=medium&type=multiple&token=" + quiz_token
                 payload = {}
                 headers = {}
-                q_response2 = requests.request("GET", url, headers=headers, data=payload)
-                medium_questions = json.loads(q_response2.text.encode("utf8"))["results"]
+                q_response2 = requests.request(
+                        "GET", url, headers=headers, data=payload)
+                medium_questions = json.loads(
+                        q_response2.text.encode("utf8"))["results"]
                 quiz_questions.append(medium_questions)
 
                 for all_details in medium_questions:
@@ -327,8 +337,10 @@ def quiz_admin(quiz_id):
                 url = "https://opentdb.com/api.php?amount=" + hard_amount + "&category=" + category_id + "&difficulty=hard&type=multiple&token=" + quiz_token
                 payload = {}
                 headers = {}
-                q_response3 = requests.request("GET", url, headers=headers, data=payload)
-                hard_questions = json.loads(q_response3.text.encode("utf8"))["results"]
+                q_response3 = requests.request(
+                        "GET", url, headers=headers, data=payload)
+                hard_questions = json.loads(
+                        q_response3.text.encode("utf8"))["results"]
                 quiz_questions.append(hard_questions)
 
                 for all_details in hard_questions:
@@ -336,7 +348,9 @@ def quiz_admin(quiz_id):
                     all_details['all_answers'].append(all_details['correct_answer'])
                     random.shuffle(all_details['all_answers'])
 
-    return render_template("quiz_admin.html", quizzes=[quiz], quiz_questions=quiz_questions, url_quiz_id=url_quiz_id, username=username)
+    return render_template("quiz_admin.html",
+            quizzes=[quiz], quiz_questions=quiz_questions,
+            url_quiz_id=url_quiz_id, username=username)
 
 
 @app.route("/remove_quiz/<quiz_id>")
@@ -350,7 +364,7 @@ def remove_quiz(quiz_id):
     # https://docs.mongodb.com/manual/reference/operator/update/pull/
     mongo.db.quizzes.update(
         {"_id": ObjectId(quiz_id)},
-        {"$pull": { "invitees": str(username['email'])}}
+        {"$pull": {"invitees": str(username['email'])}}
     )
     flash("Quiz successfully removed")
     return redirect(url_for("profile", username=session["user"]))

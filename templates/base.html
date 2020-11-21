@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Josefin+Sans:ital@0;1&display=swap" rel="stylesheet">
-    {% block styles %}
-    {% endblock %}
 
     <title>Mongo Quiz Test</title>
     <link rel="icon" type="image/png" href="images/favicon.png/">
@@ -59,8 +57,8 @@
             {% endif %}
         </ul>
     </header>
-
    
+    <!-- Background Image at top of the page -->
     <div class="parallax-container">
         <div class="parallax">
             <img src="{{ url_for('static', filename='images/pink_Q_mark.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
@@ -89,16 +87,19 @@
         {% endblock %}
     </main>
 
-    {% block parallax2 %}
-
-    {% endblock %}
+     <!-- Background Image at bottom of the page -->
+    <div class="parallax-container">
+        <div class="parallax">
+            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
+        </div>
+    </div>
 
     <footer class="page-footer">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
                     <h5>Mongo Quiz</h5>
-                    <p>The BIG fun quiz game to play alone or with families and friends.</p>
+                    <p>The BIG fun quiz game to play alone or with family and friends.</p>
                     <p>© 2020 Copyright Cathal Dolan</p>
                 </div>
                 <div class="col l4 offset-l2 s12">

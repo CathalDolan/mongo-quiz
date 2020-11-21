@@ -4,7 +4,7 @@
 
     <div class="container">
         <h1 class="center-align">Mongo Quiz</h1>
-        <h3 class="center-align">The BIG fun quiz game to play alone or with families and friends.</h3>
+        <h3 class="center-align">The BIG fun quiz game to play alone or with family and friends.</h3>
         <p>Fed up wasting hours trying to find quiz questions? With Mongo Quiz becoming 
         the ultimate quiz master has never been easier. Tell us how many questions you 
         want to ask, the difficulty of each, and we'll create the quiz for you.</p>
@@ -19,7 +19,7 @@
                     More 
                     <i class="fas fa-info-circle"></i>
                 </a>
-            </div>
+                </div>
             {% if session.user %}
                 <div class="button-div col s12 m6">
                     <a href="{{ url_for('create') }}" class="btn-large waves-effect waves-light bg-color-green text-shadow">
@@ -30,16 +30,6 @@
             {% endif %}
         </div>
         <br>
-    </div>
-
-{% endblock %}
-
-{% block parallax2 %}
-
-    <div class="parallax-container">
-        <div class="parallax">
-            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
-        </div>
     </div>
 
 {% endblock %}

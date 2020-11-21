@@ -83,7 +83,7 @@
                             data-tooltip="Allow others to see your quiz and take part by adding their email address.
                                         Once they register and login they will see the quiz. Separate individual 
                                         addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
-                        <textarea id="invitees" name="invitees" text="text" class="materialize-textarea"></textarea>
+                        <textarea id="invitees" name="invitees" type="text" class="materialize-textarea"></textarea>
                         <label for="invitees">Invitees (comma separate emails)</label>
                     </div>
                 </div>
@@ -119,15 +119,5 @@
         </form>
     </div>
 
-
-{% endblock %}
-
-{% block parallax2 %}
-
-    <div class="parallax-container">
-        <div class="parallax">
-            <img src="{{ url_for('static', filename='images/three_lightbulbs.png') }}" alt="Quiz Light Bulbs" class="responsive-img">
-        </div>
-    </div>
 
 {% endblock %}

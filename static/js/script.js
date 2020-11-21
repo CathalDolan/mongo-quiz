@@ -5,15 +5,12 @@ $(document).ready(function(){
     $('select').formSelect();
     $('.tooltipped').tooltip();
     $('.collapsible').collapsible();
-    
     $('#textarea1').val('');
     M.textareaAutoResize($('#textarea1'));
-    
 });
 
-
 // Functions below are used to validate Difficulty qty matches Questions qty
-// They couple with "if difficulty_total == quiz_details['questions']:" in def(create) in app.py
+// Couple with "if difficulty_total == quiz_details['questions']:" in def(create) in app.py
 if(document.getElementById("questions")) {
     document.getElementById("questions").addEventListener("keyup", getQuestionsDataFn);
 }
@@ -28,9 +25,8 @@ function getQuestionsDataFn() {
     // Makes the label display above the input
     document.getElementById('label_easy').className = 'active';
     document.getElementById('label_medium').className = 'active';
-    document.getElementById('label_hard').className = 'active';
-};
-
+    document.getElementById('label_hard').className = 'active'
+}
 
 // Functions below are used to inject the Category choice dropdowns based on number of rounds selected
 // The first extracts the data from the API
@@ -81,14 +77,12 @@ async function getRoundsDataFn(category_names) {
     document.getElementById("categories_row").innerHTML = text;
 }
 
-
 // Quiz_Admin Details - Auto-adjust height of invitees textarea
 // Source: https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
 function textAreaAdjust(element) {
   element.style.height = "1px";
   element.style.height = (25+element.scrollHeight)+"px";
 }
-
 
 // Function to allow Users to select an answer, deactivate the question block once a choice has...
 //...been made, and highlight the correct answer. 
@@ -99,7 +93,7 @@ $(".answer_button").on("click", function(event) {
     for (item in child) {
         if ($(child[item]).hasClass("correct-answer")) {
             $(child[item]).addClass("green");
-        } 
+        }
     };
     // If user's answer was incorrect, turns it red
     if (!$(this).hasClass("correct-answer")) {
@@ -113,16 +107,14 @@ $(".answer_button").on("click", function(event) {
     });
 });
 
-
 // Function to count the scores by recording a value of 1 for each correct answer in Quiz Admin
 let clicks = 0;
 function addScoreFn(round) {
     console.log(round);
     clicks++;
-    document.getElementById('count').innerHTML = clicks; // 'count${round}'
+    document.getElementById('count').innerHTML = clicks;// 'count${round}'
     openModalFn(clicks); 
 };
-
 
 // Functions to display a modal with the total quiz scores
 // From: https://www.w3schools.com/howto/howto_css_modals.asp
@@ -143,7 +135,6 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
-
 
 // Function to display the waiting preloader
 function preLoaderFn() {
