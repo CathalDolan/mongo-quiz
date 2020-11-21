@@ -8,7 +8,9 @@
         {% for quiz in quizzes %}
             {% if quiz._id|string == url_quiz_id|string %}
                 <h1 class="center-align">{{ quiz.quiz_name }}</h1>
-                <p id="quiz-admin-opening-content">Click on <strong>Round 1</strong> to begin playing. To make changes to your quiz go to the <strong>"Details"</strong> section.</p> 
+                <p id="quiz-admin-opening-content">Click on <strong>Round 1</strong> to begin playing.
+                For the best fun, players should answer questions at the same time, so no skipping on &#128512! 
+                If it's your quiz, make changes in the <strong>"Details"</strong> section.</p> 
                 <br>
 
                 <!-- Collapsibles Section -->
