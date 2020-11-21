@@ -7,9 +7,12 @@
         <h1 class="center-align">Create a Quiz</h1>
         <p>Complete all of the fields below (click the icons for tips), 
             click the “Create” button and we will automatically compile the 
-            questions for you. If you need to make any changes or invite 
-            more players, you can do so later by accessing the quiz on your 
-            profile page.</p>
+            questions for you.
+        </p>
+        <p> In order for other players to see your quiz and take part, you must add 
+            their email address. Ask them to register so that it will appear in 
+            their profile.
+        </p>
     </div>
 
     <div class="row">
@@ -73,12 +76,13 @@
                     </div>
                 </div>
 
-                <!-- 6. Invitees -->
+                <!-- 6. Players -->
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="fas fa-door-open prefix color-green tooltipped" data-position="bottom" 
-                            data-tooltip="Add individual email addresses for those you want to take part.
-                                Separate individual addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
+                            data-tooltip="Allow others to see your quiz and take part by adding their email address.
+                                        Once they register and login they will see the quiz. Separate individual 
+                                        addresses with a comma and a space. E.G. - name1@quiz.com, name2@quiz.com"></i>
                         <textarea id="invitees" name="invitees" text="text" class="materialize-textarea"></textarea>
                         <label for="invitees">Invitees (comma separate emails)</label>
                     </div>
@@ -98,13 +102,13 @@
                 </div>
 
                 <!-- Create & Cancel Buttons-->
-                <div class="flex">
-                    <div id="create-button-div" class="button-div">
+                <div class="row">
+                    <div id="create-button-div" class="button-div col s12 m6">
                         <button id="create-button" type="submit" class="btn-large submit waves-effect waves-light bg-color-green text-shadow" onclick="preLoaderFn()">
                             Create <i class="fas fa-plus-circle"></i>
                         </button>
                     </div>
-                    <div class="button-div">
+                    <div class="button-div col s12 m6">
                         <a href="{{ url_for('profile', username=session['user']) }}" class="btn-large waves-effect waves-light red text-shadow">
                             Cancel
                             <i class="fas fa-times-circle"></i>
