@@ -5,8 +5,8 @@ $(document).ready(function(){
     $('select').formSelect();
     $('.tooltipped').tooltip();
     $('.collapsible').collapsible();
-    $('#textarea1').val('');
-    M.textareaAutoResize($('#textarea1'));
+    $('#invitees').val('');
+    M.textareaAutoResize($('#invitees'));
 });
 
 // Functions below are used to validate Difficulty qty matches Questions qty
@@ -87,21 +87,37 @@ function textAreaAdjust(element) {
 // Function to allow Users to select an answer, deactivate the question block once a choice has...
 //...been made, and highlight the correct answer. 
 // Initial coding provided by Tutor/Mentor support to only make correct green and all incorrect red.
-$(".answer_button").on("click", function(event) {
-    // Turns correct answer green
-    let child = event.target.parentNode.children;
-    for (item in child) {
-        if ($(child[item]).hasClass("correct-answer")) {
-            $(child[item]).addClass("green");
+let roundScore;
+let roundScoreInt;
+$(".answer_button").on("click", function (event) {
+    // only target $(this) specific round's score element/span
+    roundScore = $(this).parent().parent(".collapsible-body").siblings(".center-align").children("h6").children("span[id^='correct-in-round-']")[0];
+    // convert round's score (as integer)
+    roundScoreInt = parseInt($(roundScore).text());
+    if ($(this).hasClass("correct-answer")) {
+        // Turns correct answer green
+        $(this).addClass("green");
+        if (isNaN(roundScoreInt)) {
+            // change "Game not played yet" to integer 1 (first correct answer!)
+            $(roundScore).text("1");
+        } else {
+            // otherwise, has previously had a correct answer, so already an integer
+            roundScoreInt += 1;
+            $(roundScore).text(roundScoreInt);
         }
-    };
-    // If user's answer was incorrect, turns it red
-    if (!$(this).hasClass("correct-answer")) {
-       $(this).addClass("red");
-    };
+    } else {
+        // If user's answer was incorrect, turns it red
+        $(this).addClass("red");
+        // Highlight the actual correct on with green
+        $(this).siblings(".correct-answer").addClass("green");
+        // change "Game not played yet" to integer 0 (first click was incorrect!)
+        if (isNaN(roundScoreInt)) {
+            $(roundScore).text("0");
+        }
+    }
     // Prevents an answered question from being clicked again
     // Prevents quiz from being edited once it has started
-    $(".answer_button_row").on("click", function() {
+    $(".answer_button_row").on("click", function () {
         $(this).css("pointer-events", "none");
         document.getElementById("details-form").style.pointerEvents = "none";
     });
@@ -110,19 +126,13 @@ $(".answer_button").on("click", function(event) {
 // Function to count the scores by recording a value of 1 for each correct answer in Quiz Admin
 let clicks = 0;
 function addScoreFn(round) {
-    console.log(round);
-    clicks++;
-    document.getElementById(`count${round}`).innerHTML = clicks;
-    openModalFn(clicks); 
+    // console.log(round);
+    // clicks++;
+    // document.getElementById(`count${round}`).innerHTML = clicks;
+    // openModalFn(clicks); 
 }
 
 
-// Tim testing calculate correct answers in each round:
-const correctBtns = document.querySelectorAll("[class^='correct-answer-']");
-console.log(correctBtns)
-correctBtns.forEach((btn) => {
-    console.log(btn);
-});
 
 
 
@@ -131,9 +141,10 @@ correctBtns.forEach((btn) => {
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 
-function openModalFn() {
+function openModalFn(clicks) {
   modal.style.display = "block";
   document.getElementById('count2').innerHTML = clicks;
+  console.log("Clicks: ")
 };
 
 span.onclick = function() {

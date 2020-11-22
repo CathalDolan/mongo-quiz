@@ -19,14 +19,16 @@
 - 3.7 - [Quiz Admin - Player](#3.7-create-a-quiz) 
 
 # **Writers Note** 
-I recognize that in a real world situation, a testing suite is required for all device types.
-However, as the nuances between each are so slight, for the purposes of avoiding unneccessary
-repetition, the testing instructions to follow are taken from the point of view of a desktop. 
+I recognize that in a real world situation, a testing suite is required for all device types and sizes.
+However, as the nuances between each are relatively small, for the purpose of avoiding extensive
+repetition, the testing instructions that follow, are taken from the point of view of desktop testing.
+The exception to this being the inital "Universal" section. 
 
 # **1 Universal**  
 [Back to Contents](#contents)
 
-Universal elements affect all pages of the website and apply regardless of whether is logged in or not.
+Universal elements affect all pages of the website and apply regardless of whether the User is logged
+in or not.
 
 ## **1.1 Navbar**  
 * 1 - On PC is the navbar shown as a series of links?  
@@ -173,9 +175,11 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** Yes  
 * 2 - Does clicking the "Login" button bring the User to their Profile page if the correct email and password have been entered?  
 **Desired Result:** Yes  
-* 3 - If the User enters an incorrect password, does a "wrong password or email" notification display?  
+* 3 - Does clicking the "Login" button add a Session Cookie if the correct email and password have been entered?  
 **Desired Result:** Yes  
-* 3 - If the User enters an incorrect email, does a "wrong password or email" notification display?  
+* 4 - If the User enters an incorrect password, does a "wrong password or email" notification display?  
+**Desired Result:** Yes  
+* 5 - If the User enters an incorrect email, does a "wrong password or email" notification display?  
 **Desired Result:** Yes  
 
 ### **2.4.5 - Cancel Button** (Login Page)
@@ -322,11 +326,11 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** Yes  
 * 3 - If the Rounds field is left blank, does a notification display when the "Create" button is clicked?  
 **Desired Result:** Yes  
-* 4 - Does the field accept numerical characters only?
+* 4 - Does the field accept numerical characters only?  
 **Desired Result:** Yes  
-* 5 - If a number greater than 10 is entered, does a notification displaye when the "Create" button is clicked?
+* 5 - If a number greater than 10 is entered, does a notification displaye when the "Create" button is clicked?  
 **Desired Result:** Yes  
-* 6 - When a number is entered, do a corresponding number of Category fields display beneath, left to right?
+* 6 - When a number is entered, do a corresponding number of Category fields display beneath, left to right?  
 **Desired Result:** Yes  
 
 ### **3.5.3 - Category Field(s)** (Create a Quiz Page)   
@@ -403,7 +407,7 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** Yes  
 * 2 - Does clicking the "Create" button bring the User to the Quiz Admin page (if all fields correctly completed)?  
 **Desired Result:** Yes  
-* 3 - Does clicking the "Create" button display a waitying spinner?
+* 3 - Does clicking the "Create" button display a waiting spinner?  
 **Desired Result:** Yes  
 * 4 - When brought to the Quiz Admin page, does a "Quiz Sucessfully Created" confirmation flash display?  
 **Desired Result:** Yes
@@ -535,11 +539,11 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** Yes  
 * 4 - If the Rounds field is left blank, does a notification display when the "Update" button is clicked?  
 **Desired Result:** Yes  
-* 5 - Does the field accept numerical characters only?
+* 5 - Does the field accept numerical characters only?  
 **Desired Result:** Yes  
-* 6 - If a number greater than 10 is entered, does a notification displaye when the "Update" button is clicked?
+* 6 - If a number greater than 10 is entered, does a notification displaye when the "Update" button is clicked?  
 **Desired Result:** Yes  
-* 7 - When a number is entered, do a corresponding number of Category fields display beneath, left to right?
+* 7 - When a number is entered, do a corresponding number of Category fields display beneath, left to right?  
 **Desired Result:** Yes  
 
 ### **3.6.5.3 - Category Field(s)** (Quiz Admin Page)   
@@ -630,7 +634,7 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** Yes  
 * 2 - Does clicking the "Update" button refresh the page (if all fields correctly completed)?  
 **Desired Result:** Yes  
-* 3 - Does clicking the "Update" button display a waiting spinner?
+* 3 - Does clicking the "Update" button display a waiting spinner?  
 **Desired Result:** Yes  
 * 4 - When the page refreshes, does a "Quiz Sucessfully Updated" confirmation flash display?  
 **Desired Result:** Yes
@@ -656,17 +660,17 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** No  
 
 ### **3.6.6 - All Quizzes Button**
-1 - Is the "All Quizzes" button present?  
+* 1 - Is the "All Quizzes" button present?  
 **Desired Result:** Yes  
-2 - Does clicking the "All Quizzes" bring the User to their profile page?  
+* 2 - Does clicking the "All Quizzes" bring the User to their profile page?  
 **Desired Result:** Yes  
 
 ### **3.6.7 - Delete Button**
-1 - Is the "Delete" button present?  
+* 1 - Is the "Delete" button present?  
 **Desired Result:** Yes  
-2 - Does clicking the "Delete" bring the User to their profile page?  
+* 2 - Does clicking the "Delete" bring the User to their profile page?  
 **Desired Result:** Yes  
-3 - Does clicking the "Delete" remove the quiz data from the database?  
+* 3 - Does clicking the "Delete" remove the quiz data from the database?  
 **Desired Result:** Yes  
 
 ## **3.7 Quiz Admin - Player**  
@@ -743,5 +747,5 @@ Universal elements affect all pages of the website and apply regardless of wheth
 **Desired Result:** Yes  
 * 2 - Prior to the game being started, does the Total Quiz Score state something like "game not started"?  
 **Desired Result:** Yes 
-* 3 - Does the Total Quiz Score reflect the total for all questions answered and rounds played?
-**Desired Result:** Yes 
+* 3 - Does the Total Quiz Score reflect the total for all questions answered and rounds played?  
+**Desired Result:** Yes  

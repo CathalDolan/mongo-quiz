@@ -89,9 +89,10 @@ def login():
                     return render_template("quiz_admin.html")
                 else:
                     flash("Welcome, {}".format(existing_user["username"]))
-                    # Username needs to be from Session so as to match Profile page
-                    return redirect(url_for("profile",
-                            username=session["user"]))
+                    # Username needs to be from Session...
+                    # ...so as to match Profile page
+                    return redirect(
+                        url_for("profile", username=session["user"]))
 
             # If password doesn't match
             else:
@@ -117,8 +118,8 @@ def profile(username):
     for quiz in quizzes:
         for invitees in quiz["invitees"]:
             print("INVITEES: ", invitees)
-    return render_template("profile.html",
-            username=username, quizzes=quizzes)
+    return render_template(
+        "profile.html", username=username, quizzes=quizzes)
 
 
 @app.route("/logout")
@@ -145,10 +146,11 @@ def create():
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                print("\n\nCategory: ", request.form.get("round{}".format(num)), "\n\n")
-                # categories.append(json.loads(request.form.get("round{}".format(num))))
-                categories.append(json.loads(request.
-                        form.get("round{}".format(num))))
+                print("\n\nCategory: ", request.form.get(
+                    "round{}".format(num)), "\n\n")
+                categories.append(
+                    json.loads(request.form.get(
+                        "round{}".format(num))))
                 num += 1
             else:
                 break
@@ -161,7 +163,7 @@ def create():
             }]
 
         existing_user = mongo.db.users.find_one(
-        {"username": session["user"]})
+            {"username": session["user"]})
 
         # Var so Invitees go into DB as a list from form
         invitee_list = request.form.get("invitees")
@@ -185,23 +187,29 @@ def create():
             "created": timestampStr
         }
         # Insert the quiz_details dictionary into the database
-        # Creating a var allows the data to be returned. Needed so as to get _id
+        # Creating a var allows the data to be returned.
+        # Needed so as to get _id
         result = mongo.db.quizzes.insert_one(quiz_details)
 
         # Get the total of the three Difficulty fields...
-        difficulty_total = (quiz_details['easy'] +
-                quiz_details['medium'] + quiz_details['hard'])
-        # ...then validate whether Difficulty totals match the number of Questions
+        difficulty_total = quiz_details['easy'] \
+            + quiz_details['medium'] \
+            + quiz_details['hard']
+        # ...then validate whether Difficulty totals...
+        # ...match the number of Questions
         if difficulty_total == quiz_details['questions']:
             flash("Your quiz has been created!")
-            return redirect(url_for("quiz_admin",
-                    quiz_id=result.inserted_id))
+            return redirect(
+                url_for("quiz_admin", quiz_id=result.inserted_id))
         else:
-            flash("The total for all 3 Difficulty levels must equal the number of questions.")
-            return render_template("create.html",
-                    quiz_details=quiz_details)
+            flash(
+                "The total for all 3 Difficulty \
+                levels must equal the number of questions.")
+            return render_template(
+                "create.html", quiz_details=quiz_details)
 
-    # quiz_details being empty is to do with redirection after register/login if Quiz create beforehand
+    # quiz_details being empty is to do with redirection...
+    # ...after register/login if Quiz create beforehand
     return render_template("create.html", quiz_details="")
 
 
@@ -221,7 +229,9 @@ def update_quiz(quiz_id):
         num = 1
         while True:
             if 'round{}'.format(num) in request.form:
-                categories.append(json.loads(request.form.get("round{}".format(num))))
+                categories.append(json.loads(
+                    request.form.get(
+                        "round{}".format(num))))
                 num += 1
             else:
                 break
@@ -252,14 +262,18 @@ def update_quiz(quiz_id):
         }
 
         # Validate whether Difficulty totals match the number of Questions
-        difficulty_total = quiz_details['easy'] + quiz_details['medium'] + quiz_details['hard']
+        difficulty_total = quiz_details['easy'] \
+            + quiz_details['medium'] \
+            + quiz_details['hard']
         if difficulty_total == quiz_details['questions']:
             mongo.db.quizzes.update({"_id": ObjectId(quiz_id)}, quiz_details)
             flash("Quiz details updated")
-            return redirect(url_for("quiz_admin",
-                    quiz_id=quiz_id))
+            return redirect(
+                url_for("quiz_admin", quiz_id=quiz_id))
         else:
-            flash("The total for all 3 Difficulty levels must equal the number of questions.")
+            flash(
+                "The total for all 3 Difficulty levels \
+                must equal the number of questions.")
             return render_template("create.html", quiz_details=quiz_details)
 
     return render_template("quiz_admin.html")
@@ -299,7 +313,9 @@ def quiz_admin(quiz_id):
             # Extract the Easy Questions from the API
             if int(difficulty['easy']) > 0:
                 easy_amount = str(difficulty['easy'])
-                url = "https://opentdb.com/api.php?amount=" + easy_amount + "&category=" + category_id + "&difficulty=easy&type=multiple&token=" + quiz_token
+                url = "https://opentdb.com/api.php?amount=" \
+                    + easy_amount + "&category=" + category_id \
+                    + "&difficulty=easy&type=multiple&token=" + quiz_token
                 payload = {}
                 headers = {}
                 q_response1 = requests.request(
@@ -309,14 +325,18 @@ def quiz_admin(quiz_id):
                 quiz_questions.append(easy_questions)
 
                 for all_details in easy_questions:
-                    all_details['all_answers'] = all_details['incorrect_answers']
-                    all_details['all_answers'].append(all_details['correct_answer'])
+                    all_details['all_answers'] \
+                        = all_details['incorrect_answers']
+                    all_details['all_answers'].append(
+                        all_details['correct_answer'])
                     random.shuffle(all_details['all_answers'])
 
             # Extract the Medium Questions from the API
             if int(difficulty['medium']) > 0:
                 medium_amount = str(difficulty['medium'])
-                url = "https://opentdb.com/api.php?amount=" + medium_amount + "&category=" + category_id + "&difficulty=medium&type=multiple&token=" + quiz_token
+                url = "https://opentdb.com/api.php?amount=" \
+                    + medium_amount + "&category=" + category_id \
+                    + "&difficulty=medium&type=multiple&token=" + quiz_token
                 payload = {}
                 headers = {}
                 q_response2 = requests.request(
@@ -326,15 +346,20 @@ def quiz_admin(quiz_id):
                 quiz_questions.append(medium_questions)
 
                 for all_details in medium_questions:
-                    all_details['all_answers'] = all_details['incorrect_answers']
-                    all_details['all_answers'].append(all_details['correct_answer'])
-                    # Shuffle documentation from https://note.nkmk.me/en/python-random-shuffle/
+                    all_details['all_answers'] \
+                        = all_details['incorrect_answers']
+                    all_details['all_answers'].append(
+                        all_details['correct_answer'])
+                    # Shuffle documentation from
+                    # https://note.nkmk.me/en/python-random-shuffle/
                     random.shuffle(all_details['all_answers'])
 
             # Extract the Hard Questions from the API
             if int(difficulty['hard']) > 0:
                 hard_amount = str(difficulty['hard'])
-                url = "https://opentdb.com/api.php?amount=" + hard_amount + "&category=" + category_id + "&difficulty=hard&type=multiple&token=" + quiz_token
+                url = "https://opentdb.com/api.php?amount=" \
+                    + hard_amount + "&category=" + category_id \
+                    + "&difficulty=hard&type=multiple&token=" + quiz_token
                 payload = {}
                 headers = {}
                 q_response3 = requests.request(
@@ -344,15 +369,16 @@ def quiz_admin(quiz_id):
                 quiz_questions.append(hard_questions)
 
                 for all_details in hard_questions:
-                    all_details['all_answers'] =\
-                        all_details['incorrect_answers']
+                    all_details['all_answers'] \
+                        = all_details['incorrect_answers']
                     all_details['all_answers'].append(
                         all_details['correct_answer'])
                     random.shuffle(all_details['all_answers'])
 
-    return render_template("quiz_admin.html",
-            quizzes=[quiz], quiz_questions=quiz_questions,
-            url_quiz_id=url_quiz_id, username=username)
+    return render_template(
+        "quiz_admin.html", quizzes=[quiz],
+        quiz_questions=quiz_questions,
+        url_quiz_id=url_quiz_id, username=username)
 
 
 @app.route("/remove_quiz/<quiz_id>")

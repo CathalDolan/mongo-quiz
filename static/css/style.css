@@ -78,7 +78,7 @@ h5 {
 }
 
 
-/*--- Buttons ---*/
+/* --- Buttons --- */
 
 .answer_button.btn-small {
     text-transform: capitalize;
@@ -129,7 +129,7 @@ p, .answer_button.btn-small {
 }
 
 
-/* Generic Positioning */
+/* --- Generic Positioning --- */
 
 h1 {
     margin-top: 25px;
@@ -183,16 +183,9 @@ h1 {
     box-shadow: none!important;
 }
 
-.parallax-container {
-    height: 320px;
-}
-@media (max-width: 576px) {  
-    .parallax-container {
-    height: 220px;
-    }
-}
 
-/*--- Center logo at top of the page ---*/
+
+/* --- Center logo at top of the page --- */
 .nav-div {
   position: relative;
 }
@@ -206,18 +199,6 @@ h1 {
     .brand-logo {
         transform: translate(-50%, 15%);
     }
-}
-
-
-/*--- Navbar Start ---*/
-
-.navbar {
-    position: absolute;
-    z-index:999999999;
-}
-
-.sidenav {
-    z-index:999999999;
 }
 
 .nav-logo {
@@ -234,10 +215,40 @@ h1 {
     max-height: 60px;
 }
 
+[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+    left: 14px;
+}
+
+div.categories_row.col.s12 {
+    margin-left: 45px;
+    padding: 0;
+    width: auto;
+}
+@media (max-width: 996px) {  
+    div.categories_row.col.s12 {
+    margin-left: 42px;
+    }
+}
+
+/* --- Navbar & Footer Start --- */
+
+.navbar {
+    position: absolute;
+    z-index:999999999;
+}
+
+.sidenav {
+    z-index:999999999;
+}
+
 .page-footer, .page-footer a {
     color: var(--black);
     background-color: var(--white);
 }
+
+/* --- Navbar & Footer Finish --- */
+
+/* --- Cards, Tabs & Collapsibles Start --- */
 
 .card-panel.tabs-panel {
     padding-top: 0;
@@ -298,50 +309,15 @@ div#test1.col.s12.active {
     }
 }
 
-[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
-    left: 14px;
-}
-div.categories_row.col.s12 {
-    margin-left: 45px;
-    padding: 0;
-    width: auto;
-}
-@media (max-width: 996px) {  
-    div.categories_row.col.s12 {
-    margin-left: 42px;
-    }
-}
-
 .collapsible-header {
     background-color: var(--green);
     color: var(--white);
     font-weight: 600;
 }
 
-/* Profile Page: Remove padding on Create button except for top which aligns it with the text on larger screens */
-.profile-create-button.paddingR0 {
-    padding-right: 0;
-    padding-top: 20px;
-}
-@media (max-width: 576px) {  
-    .profile-create-button.paddingR0 {
-    padding-top: 0;
-    text-align: center;
-    }
-}
+/* --- Cards, Tabs & Collapsibles Finish --- */
 
-.profile-delete-button.paddingR0 {
-    padding-top: 10px;
-}
-@media (max-width: 576px) {  
-    .profile-delete-button.paddingR0, .profile-open-button.paddingR0{
-        padding-top: 10px;
-        text-align: center;
-    }
-}
-
-
-/* ---------------- Quiz Admin Page Start -------------------- */
+/* --- Quiz Admin Page Start --- */
 /* Better space the individual rounds within the main Rounds collapsible */
 .collapsible-body {
     padding: 15px;
@@ -492,7 +468,7 @@ i.quiz.fas {
 }
 
 
-/*----- {Profile Page Start ------ */
+/*----- Profile Page Start ------ */
 /* Remove unwanted white spases */
 #quiz-details-row {
     margin-bottom: 0;
@@ -514,4 +490,35 @@ i.quiz.fas {
 }
 #quiz-link-h3 {
     margin-top: 0;
+}
+
+/* --- Remove padding on Create button except for top which aligns it with the text on larger screens --- */
+.profile-create-button.paddingR0 {
+    padding-right: 0;
+    padding-top: 20px;
+}
+@media (max-width: 576px) {  
+    .profile-create-button.paddingR0 {
+    padding-top: 0;
+    text-align: center;
+    }
+}
+
+.profile-delete-button.paddingR0 {
+    padding-top: 10px;
+}
+@media (max-width: 576px) {  
+    .profile-delete-button.paddingR0, .profile-open-button.paddingR0{
+        padding-top: 10px;
+        text-align: center;
+    }
+}
+
+.parallax-container {
+    height: 320px;
+}
+@media (max-width: 576px) {  
+    .parallax-container {
+    height: 220px;
+    }
 }
