@@ -27,6 +27,7 @@
                                 <!-- Extract the individual categories -->
                                 {% set ns2 = namespace(q_num2=0) %}
                                 {% for category in quiz.categories %}
+                                    {% set rounds_loop = loop %} <!-- TIM TESTING -->
                                     {% set ns2.q_num2 = ns2.q_num2+1 %}
                                     <li>
                                         <!-- Individual Rounds Header Section -->
@@ -49,8 +50,8 @@
                                                         </div>
                                                         <div class="answer_button_row row">
                                                             {% for answer in questions.all_answers %}
-                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %} addScoreFn({{ ns2.q_num2 }}); {% endif %}"
-                                                                    class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6 {% if answer|safe == questions.correct_answer|safe %}correct-answer{% endif %}"
+                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %}addScoreFn({{ ns2.q_num2 }});{% endif %}"
+                                                                    class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6 {% if answer|safe == questions.correct_answer|safe %}correct-answer-{{rounds_loop.index}}{% endif %}"
                                                                     value="{{ answer }}">
                                                                     {{ answer|safe }}
                                                                 </button>
@@ -62,24 +63,24 @@
                                                 {% endfor %}
                                             {% endfor %}
                                         </div>
-                                        <!-- <div>
+                                        <div>
                                             <center>
                                                 <h6><strong>This Round Score: </strong>
                                                 <span id="count{{ ns2.q_num2 }}">Game not played yet</span></h6>
                                             </center>
-                                        </div> -->
+                                        </div>
                                     </li>
                                 {% endfor %}
                             </ul>
                         </div>
                     </li>
                     <!-- Total Scores Section -->
-                    <div>
+                    <!-- <div>
                         <center>
                             <h3>Total Quiz Score:</h3>
-                            <p id="score-number"><span id="count">Game not played yet</span></p> <!-- count{{ ns2.q_num2 }} -->
+                            <p id="score-number"><span id="count">Game not played yet</span></p> count{{ ns2.q_num2 }}
                         </center>
-                    </div>
+                    </div> -->
 
                     <!-- Total Scores Modal -->
                     <div id="myModal" class="modal">

@@ -344,8 +344,10 @@ def quiz_admin(quiz_id):
                 quiz_questions.append(hard_questions)
 
                 for all_details in hard_questions:
-                    all_details['all_answers'] = all_details['incorrect_answers']
-                    all_details['all_answers'].append(all_details['correct_answer'])
+                    all_details['all_answers'] =\
+                        all_details['incorrect_answers']
+                    all_details['all_answers'].append(
+                        all_details['correct_answer'])
                     random.shuffle(all_details['all_answers'])
 
     return render_template("quiz_admin.html",

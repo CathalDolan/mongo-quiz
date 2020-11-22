@@ -112,9 +112,19 @@ let clicks = 0;
 function addScoreFn(round) {
     console.log(round);
     clicks++;
-    document.getElementById('count').innerHTML = clicks;// 'count${round}'
+    document.getElementById(`count${round}`).innerHTML = clicks;
     openModalFn(clicks); 
-};
+}
+
+
+// Tim testing calculate correct answers in each round:
+const correctBtns = document.querySelectorAll("[class^='correct-answer-']");
+console.log(correctBtns)
+correctBtns.forEach((btn) => {
+    console.log(btn);
+});
+
+
 
 // Functions to display a modal with the total quiz scores
 // From: https://www.w3schools.com/howto/howto_css_modals.asp
