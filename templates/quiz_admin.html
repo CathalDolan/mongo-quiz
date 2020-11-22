@@ -52,7 +52,7 @@
                                                         </div>
                                                         <div class="answer_button_row row">
                                                             {% for answer in questions.all_answers %}
-                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %}addScoreFn({{ ns2.q_num2 }});{% endif %}"
+                                                                <button type="button" onclick="{% if answer|safe == questions.correct_answer|safe %}addScoreFn();{% endif %}"
                                                                     class="answer_button btn-small waves-effect waves-light bg-color-green text-shadow col s12 m6 {% if answer|safe == questions.correct_answer|safe %}correct-answer{% endif %}"
                                                                     value="{{ answer }}">
                                                                     {{ answer|safe }}
@@ -68,8 +68,7 @@
                                         <div class="center-align">
                                             <h6>
                                                 <strong>This Round Score: </strong>
-                                                <span id="correct-in-round-{{ rounds_loop.index }}">Game not played yet</span>
-                                                <!-- <span id="count{{ ns2.q_num2 }}">Game not played yet</span> -->
+                                                <span id="correct-in-round-{{ rounds_loop.index }}">Round not played yet</span>
                                             </h6>
                                         </div>
                                     </li>
@@ -78,20 +77,9 @@
                         </div>
                     </li>
                     <!-- Total Scores Section -->
-                    <!-- <div>
-                        <center>
-                            <h3>Total Quiz Score:</h3>
-                            <p id="score-number"><span id="count">Game not played yet</span></p> count{{ ns2.q_num2 }}
-                        </center>
-                    </div> -->
-
-                    <!-- Total Scores Modal -->
-                    <div id="myModal" class="modal">
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p>Correct & Right! Your Total Quiz Score is: <span id="count2">0</span></p>
-                        </div>
+                    <div class="center-align">
+                        <h3>Total Quiz Score:</h3>
+                        <p id="score-number"><span id="count">Game not played yet</span></p>
                     </div>
 
                     <!-- Span is here so as to dynamically create unique ID's that can be accessed in JS -->

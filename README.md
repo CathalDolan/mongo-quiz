@@ -143,7 +143,7 @@ one of the lines of code will be included.
 
 ### **5.3.3 JavaScript**  
 * **Website:** https://jslint.com/  
-* **Result:** Instances of "Double Quotes" ignore as a decision was made to use single quotes  
+* **Result:** Instances of "Double Quotes" ignored as a decision was made to use single quotes  
 
 ### **5.3.4 Python**  
 * **Website:** http://pep8online.com/  

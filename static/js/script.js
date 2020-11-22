@@ -11,8 +11,8 @@ $(document).ready(function(){
 
 // Functions below are used to validate Difficulty qty matches Questions qty
 // Couple with "if difficulty_total == quiz_details['questions']:" in def(create) in app.py
-if(document.getElementById("questions")) {
-    document.getElementById("questions").addEventListener("keyup", getQuestionsDataFn);
+if(document.getElementById('questions')) {
+    document.getElementById('questions').addEventListener('keyup', getQuestionsDataFn);
 }
 
 function getQuestionsDataFn() {
@@ -123,39 +123,12 @@ $(".answer_button").on("click", function (event) {
     });
 });
 
-// Function to count the scores by recording a value of 1 for each correct answer in Quiz Admin
+// Function to count the Total Score by recording a value of 1 for each correct answer in Quiz Admin
 let clicks = 0;
-function addScoreFn(round) {
-    // console.log(round);
-    // clicks++;
-    // document.getElementById(`count${round}`).innerHTML = clicks;
-    // openModalFn(clicks); 
+function addScoreFn() {
+    clicks++;
+    document.getElementById('count').innerHTML = clicks;
 }
-
-
-
-
-
-// Functions to display a modal with the total quiz scores
-// From: https://www.w3schools.com/howto/howto_css_modals.asp
-var modal = document.getElementById("myModal");
-var span = document.getElementsByClassName("close")[0];
-
-function openModalFn(clicks) {
-  modal.style.display = "block";
-  document.getElementById('count2').innerHTML = clicks;
-  console.log("Clicks: ")
-};
-
-span.onclick = function() {
-  modal.style.display = "none";
-};
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};
 
 // Function to display the waiting preloader
 function preLoaderFn() {
