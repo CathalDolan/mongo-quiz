@@ -91,7 +91,7 @@ let roundScore;
 let roundScoreInt;
 $(".answer_button").on("click", function (event) {
     // only target $(this) specific round's score element/span
-    roundScore = $(this).parent().parent(".collapsible-body").siblings(".center-align").children("h6").children("span[id^='correct-in-round-']")[0];
+    roundScore = $(this).parent().parent(".collapsible-body").siblings(".center-align").children("h5").children("span[id^='correct-in-round-']")[0];
     // convert round's score (as integer)
     roundScoreInt = parseInt($(roundScore).text());
     if ($(this).hasClass("correct-answer")) {

@@ -119,7 +119,7 @@ Stuff and stuff
 [Back to Contents](#contents)  
 
 ## **5.1 Texting Link**
-Link to testing suite
+The Testing suite is contained in a separate file: <TESTING.md>
 
 ## **5.2 Known Bugs**  
 - Invitee quizes not working. Fixed with the if statements.  

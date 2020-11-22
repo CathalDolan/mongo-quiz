@@ -416,49 +416,12 @@ i.quiz.fas {
     font-size: 30px;
 }
 
+#round-collapsible-header {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 /*--- Quiz Admin Page - Details Section Finish ---*/
-
-/*------ The Modal (background) ------*/
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 50%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: #f5b5d280;
-}
-@media (max-width: 576px) {  
-    .modal {
-    width: 90%;
-    }
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: var(--white);
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 2px solid var(--green);
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: var(--green);
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
 
 /* Preloader */
 #preloader {

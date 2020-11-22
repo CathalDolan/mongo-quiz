@@ -31,10 +31,10 @@
                                     {% set ns2.q_num2 = ns2.q_num2+1 %}
                                     <li>
                                         <!-- Individual Rounds Header Section -->
-                                        <div class="collapsible-header">
-                                            <h6 class="inline-block">
+                                        <div id="round-collapsible-header" class="collapsible-header">
+                                            <p class="inline-block">
                                                 <strong>Round <span id="round{{ ns2.q_num2 }}">{{ ns2.q_num2 }}</span> - </strong>{{ category.name }}
-                                            </h6>
+                                            </p>
                                             <!-- <h6 id="loop_index" class="inline-block">{{ loop.index|int }}</h6> -->
                                         </div>
                                         <!-- Individual Rounds Body Section for Answers -->
@@ -66,10 +66,10 @@
                                             {% endfor %}
                                         </div>
                                         <div class="center-align">
-                                            <h6>
+                                            <h5>
                                                 <strong>This Round Score: </strong>
                                                 <span id="correct-in-round-{{ rounds_loop.index }}">Round not played yet</span>
-                                            </h6>
+                                            </h5>
                                         </div>
                                     </li>
                                 {% endfor %}
