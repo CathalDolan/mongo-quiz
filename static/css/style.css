@@ -77,6 +77,9 @@ h5 {
     }
 }
 
+
+/*--- Buttons ---*/
+
 .answer_button.btn-small {
     text-transform: capitalize;
 }
@@ -124,6 +127,7 @@ p, .answer_button.btn-small {
         float: right;
     }
 }
+
 
 /* Generic Positioning */
 
@@ -173,7 +177,8 @@ h1 {
     display: flex;
 }
 
-/* Misc CSS */
+
+/*--- Misc CSS ---*/
 .no-shadows {
     box-shadow: none!important;
 }
@@ -187,7 +192,7 @@ h1 {
     }
 }
 
-/* Center logo at top of the page */
+/*--- Center logo at top of the page ---*/
 .nav-div {
   position: relative;
 }
@@ -202,14 +207,9 @@ h1 {
         transform: translate(-50%, 15%);
     }
 }
-/* .brand-logo a {
-    position: relative;
-    z-index: 999999999;
-} Not working. */
 
 
-
-/* Navbar */
+/*--- Navbar Start ---*/
 
 .navbar {
     position: absolute;
@@ -340,7 +340,8 @@ div.categories_row.col.s12 {
     }
 }
 
-/* ---------------- Quiz Admin Page -------------------- */
+
+/* ---------------- Quiz Admin Page Start -------------------- */
 /* Better space the individual rounds within the main Rounds collapsible */
 .collapsible-body {
     padding: 15px;
@@ -371,7 +372,7 @@ div.categories_row.col.s12 {
     width: 175px;
 }
 
-/* Quiz Admin Page - Details Section Start */
+/*--- Details Section Start ---*/
 /* Centre aligns and sizes the form within the card */
 #details-form-row{
     display: block;
@@ -434,9 +435,14 @@ i.quiz.fas {
      word-wrap:break-word;
 }
 
-/* Quiz Admin Page - Details Section Finish */
+#score-number {
+    margin-top: 0;
+    font-size: 30px;
+}
 
-/* The Modal (background) */
+/*--- Quiz Admin Page - Details Section Finish ---*/
+
+/*------ The Modal (background) ------*/
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -484,6 +490,7 @@ i.quiz.fas {
     margin-right: auto;
     margin-bottom: 25px;
 }
+
 
 /*----- {Profile Page Start ------ */
 /* Remove unwanted white spases */

@@ -76,8 +76,8 @@
                     <!-- Total Scores Section -->
                     <div>
                         <center>
-                            <h6><strong>Total Quiz Score: </strong>
-                            <span id="count">Game not played yet</span></h6> <!-- count{{ ns2.q_num2 }} -->
+                            <h3>Total Quiz Score:</h3>
+                            <p id="score-number"><span id="count">Game not played yet</span></p> <!-- count{{ ns2.q_num2 }} -->
                         </center>
                     </div>
 
@@ -244,7 +244,7 @@
                 {% if quiz.user_id == username._id %}
                     <div class="row alignC">
                         <h3 id="quiz-link-h3">Quiz Link</h3>
-                        <p>Copy the link below and send it to your friends. But remember, in order for them to participate, you must include the email address in the "Players" section in <strong>DETAILS</strong>.</p>
+                        <p>Copy the link below and send it to your friends. But remember, in order for them to participate, you must include their email address in the "Players" section in <strong>DETAILS</strong>.</p>
                         <p id="game-link" >https://mongo-quiz.herokuapp.com/quiz_admin/{{ quiz._id }}</p>
                     </div>
                 {% endif %}
