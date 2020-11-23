@@ -24,6 +24,9 @@ However, as the nuances between each are relatively small, for the purpose of av
 repetition, the testing instructions that follow, are taken from the point of view of desktop testing.
 The exception to this being the inital "Universal" section. 
 
+---
+---
+
 # **1 Universal**  
 [Back to Contents](#contents)
 
@@ -49,6 +52,9 @@ in or not.
 **Desired Result:** Yes  
 * 3 - Test: Does "About" link bring User to About page?  
 **Desired Result:** Yes  
+
+---
+---
 
 # **2 Logged Out User**
 [Back to Contents](#contents)
@@ -196,6 +202,9 @@ in or not.
 * 2 - Does clicking the "Register" link bring the User to the Register page?  
 **Desired Result:** Yes
 
+---
+---
+
 # **3 Logged In User**
 [Back to Contents](#contents)  
 ## **3.1 Navbar** (Logged In User)
@@ -276,6 +285,8 @@ in or not.
 * 7 - Is the created date shown?  
 **Desired Result:** Yes  
 * 8 - Is the created date correct?  
+**Desired Result:** Yes  
+* 9 - Is the tab of the quiz currenly being viewed highlighted with a pink underline?  
 **Desired Result:** Yes  
 
 ### **3.4.4 - Open Button**
@@ -749,3 +760,6 @@ in or not.
 **Desired Result:** Yes 
 * 3 - Does the Total Quiz Score reflect the total for all questions answered and rounds played?  
 **Desired Result:** Yes  
+
+---
+---
