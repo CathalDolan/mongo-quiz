@@ -159,9 +159,9 @@ best interacted with.
 Non-logged in Users will be shown a Register button which takes them to the Register page. logged
 in Users will be shown the Create button that takes them to the Create a Quiz page.
 * **Wireframes**  
--- [Desktop](/images/wireframes/002_about_desktop.png)  
--- [Tablet](/images/wireframes/002_about_tablet.png)  
--- [Mobile](/images/wireframes/002_about_mobile.png)  
+-- [Desktop](static/images/wireframes/002_about_desktop.png)  
+-- [Tablet](static/images/wireframes/002_about_tablet.png)  
+-- [Mobile](static/images/wireframes/002_about_mobile.png)  
 
 ## **3.3 Register Page**  
 The Register page allows visitors to register an account. As the site is fun based, minimial
@@ -175,17 +175,17 @@ database and navigates the User to their profile. Should they not wish to procee
 click cancel or simply navigate away from the page.
 
 * **Wireframes**  
--- [Desktop](/images/wireframes/003_register_desktop.png)  
--- [Tablet](/images/wireframes/003_register_tablet.png)  
--- [Mobile](/images/wireframes/003_register_mobile.png)  
+-- [Desktop](static/images/wireframes/003_register_desktop.png)  
+-- [Tablet](static/images/wireframes/003_register_tablet.png)  
+-- [Mobile](static/images/wireframes/003_register_mobile.png)  
 
 ## **3.4 Login Page**  
 The Login page allows Users that already regsitered to access the site by providing their email
 address and password. Once logged in they are brought to their Profile page. 
 * **Wireframes**  
--- [Desktop](/images/wireframes/004_login_desktop.png)  
--- [Tablet](/images/wireframes/004_login_tablet.png)  
--- [Mobile](/images/wireframes/004_login_mobile.png)  
+-- [Desktop](static/images/wireframes/004_login_desktop.png)  
+-- [Tablet](static/images/wireframes/004_login_tablet.png)  
+-- [Mobile](static/images/wireframes/004_login_mobile.png)  
 
 ## **3.5 Profile Page**  
 The Profile page serves two purposes. The first to give Users access to their personal information,
@@ -201,9 +201,9 @@ a "Remove" button. Clicking it removes their participation in the Quiz by removi
 from the list of invitees of that quiz in the database. Clicking "Remove" doesn't affect any other
 players. 
 * **Wireframes**  
--- [Desktop](/images/wireframes/005_profile_desktop.png)  
--- [Tablet](/images/wireframes/005_profile_tablet.png)  
--- [Mobile](/images/wireframes/005_profile_mobile.png)  
+-- [Desktop](static/images/wireframes/005_profile_desktop.png)  
+-- [Tablet](static/images/wireframes/005_profile_tablet.png)  
+-- [Mobile](static/images/wireframes/005_profile_mobile.png)  
 
 ## **3.6 Create a Quiz Page**  
 The Create a Quiz page allows Users to create a new quiz. It consists of multiple fields, each of
@@ -231,9 +231,9 @@ functionality on the site.
 click this button, the data is added to the database. 
 
 * **Wireframes**  
--- [Desktop](/images/wireframes/006_create_desktop.png)  
--- [Tablet](/images/wireframes/006_create_tablet.png)  
--- [Mobile](/images/wireframes/006_create_mobile.png)  
+-- [Desktop](static/images/wireframes/006_create_desktop.png)  
+-- [Tablet](static/images/wireframes/006_create_tablet.png)  
+-- [Mobile](static/images/wireframes/006_create_mobile.png)  
 
 ## **3.7 Quiz Admin Page**  
 **Rounds & Questions:** The Quiz Admin page is where Users play the game. Each quiz has a dedicated 
@@ -241,9 +241,9 @@ Admin page that includes a collapsible "Rounds" section where Users can see each
 and the questions associated with each. The rounds are numbered sequentially, and each has its own
 collapsible card.
 * **Wireframes**  
--- [Desktop](/images/wireframes/007_quiz_admin_desktop.png)  
--- [Tablet](/images/wireframes/007_quiz_admin_tablet.png)  
--- [Mobile](/images/wireframes/007_quiz_admin_mobile.png)  
+-- [Desktop](static/images/wireframes/007_quiz_admin_desktop.png)  
+-- [Tablet](static/images/wireframes/007_quiz_admin_tablet.png)  
+-- [Mobile](static/images/wireframes/007_quiz_admin_mobile.png)  
 
 **Questions, Answers & Scores:** The questions are sequentially numbered and are accompanied by the
 difficulty level and four possible answers. Where a User clicks the correct answer, it goes green and
@@ -252,9 +252,9 @@ one goes green, and the other two incorrect answers do not change.At the end of 
 to display that round's score. It increments by one for each correct answer. Beneath all of the rounds,
 the Total Quiz Score is displayed. It displays a running total for all rounds and questions answered. 
 * **Wireframes**  
--- [Desktop](/images/wireframes/008_quiz_admin_rounds_desktop.png)  
--- [Tablet](/images/wireframes/008_quiz_admin_rounds_tablet.png)  
--- [Mobile](/images/wireframes/008_quiz_admin_rounds_mobile.png)  
+-- [Desktop](static/images/wireframes/008_quiz_admin_rounds_desktop.png)  
+-- [Tablet](static/images/wireframes/008_quiz_admin_rounds_tablet.png)  
+-- [Mobile](static/images/wireframes/008_quiz_admin_rounds_mobile.png)  
 
 **Quiz Details:** If the page has been accessed by the owner of the quiz, a "Details" section also
 displays. This expandible card lists all of the QUiz details and player email addresses. The User
@@ -262,9 +262,9 @@ can change any of these details and click "Update" to update the quiz. Beneath t
 is a unique link that can be given to other players to bring them to the page to play the game 
 (provided they are registered and logged in).
 * **Wireframes**  
--- [Desktop](/images/wireframes/009_quiz_admin_details_desktop.png)  
--- [Tablet](/images/wireframes/009_quiz_admin_details_tablet.png)  
--- [Mobile](/images/wireframes/009_quiz_admin_details_mobile.png)  
+-- [Desktop](static/images/wireframes/009_quiz_admin_details_desktop.png)  
+-- [Tablet](static/images/wireframes/009_quiz_admin_details_tablet.png)  
+-- [Mobile](static/images/wireframes/009_quiz_admin_details_mobile.png)  
 
 ## **3.8 Log Out**  
 The Logout functionality is activated by clicking "Logout" in the navbar. This activates
